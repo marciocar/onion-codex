@@ -233,7 +233,7 @@ Há pares/trios de agentes com nomes semelhantes cuja diferenciação não está
 
 #### Hierarquia e discoverability
 
-O Sistema de Níveis (descrito em [docs/onion/levels-system.md](../onion/levels-system.md)) é o mecanismo previsto para hierarquizar comandos por familiaridade do operador (starter, intermediate, advanced). Validar empiricamente: o `levels-system` cobre adequadamente tanto o ciclo product/* quanto o engineer/* como **ciclos completos**, não como conjunto de comandos isolados?
+O Sistema de Níveis (antes descrito em `docs/onion/levels-system.md`, doc removido em 2026-06-03 por estar atrelado à visão v4.0 abandonada) era o mecanismo previsto para hierarquizar comandos por familiaridade do operador (starter, intermediate, advanced). Validar empiricamente: o `levels-system` cobre adequadamente tanto o ciclo product/* quanto o engineer/* como **ciclos completos**, não como conjunto de comandos isolados?
 
 ### 2.5 Padrões Estruturais
 
@@ -450,7 +450,7 @@ Nem tudo virou dívida. As três análises produziram insights que **continuam v
 
 - Distinção entre as três dimensões do ciclo (produto/engenharia/compliance) — incorporada à Seção 2.2 desta análise
 - Conceito de **workflows faseados retomáveis** — incorporado à Seção 2.4 e elevado a princípio formal
-- Necessidade de **starter kit** para reduzir barreira de entrada — concretizada no sistema de níveis ([levels-system.md](../onion/levels-system.md))
+- Necessidade de **starter kit** para reduzir barreira de entrada — concretizada no sistema de níveis (`levels-system.md`, doc removido em 2026-06-03 junto com a visão v4.0)
 - Validação empírica em projeto-alvo como critério de qualidade — incorporada à Seção 5 e P3
 - Importância de meta-specs como mecanismo de validação — incorporada à Seção 3.1 e P2
 

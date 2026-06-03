@@ -23,8 +23,8 @@ Este projeto é o **Sistema Onion** — um framework de comandos `.claude/` para
 ## 📊 Estatísticas da Documentação
 
 ### Documentação Principal
-- **64 arquivos markdown** em `docs/`
-- **26 arquivos** em `docs/onion/` (Sistema Onion)
+- **66 arquivos markdown** em `docs/`
+- **11 arquivos** em `docs/onion/` (Sistema Onion)
 - **25 arquivos** em `docs/knowledge-base/` (Knowledge Bases)
   - 13 arquivos em `concepts/` (Conceitos fundamentais)
   - 7 arquivos em `frameworks/` (Frameworks e metodologias)
@@ -57,7 +57,7 @@ Este projeto é o **Sistema Onion** — um framework de comandos `.claude/` para
   - 1 em `research/`, 1 em `deployment/`
 
 ### Total
-- **64 arquivos** de documentação markdown
+- **66 arquivos** de documentação markdown
 - **78 comandos invocáveis** em 9 categorias + root (+ 12 fragmentos `common/` + 3 READMEs)
 - **49 agentes** especializados em 9 categorias
 - **4 skills** (`.claude/skills/`)
@@ -70,7 +70,8 @@ Este projeto é o **Sistema Onion** — um framework de comandos `.claude/` para
 docs/
 ├── INDEX.md                    # Este arquivo (hub central)
 │
-├── onion/                      # Sistema Onion (26 arquivos)
+├── onion/                      # Sistema Onion (11 arquivos)
+│   ├── index.md                # Índice da seção
 │   ├── commands-guide.md       # Guia completo de comandos
 │   ├── agents-reference.md     # Referência de agentes
 │   ├── engineering-flows.md    # Fluxos de engenharia
@@ -80,11 +81,7 @@ docs/
 │   ├── tools-reference.md      # Referência de ferramentas
 │   ├── claude-code-commands-architecture.md  # Arquitetura de comandos
 │   ├── end-to-end-validation-tests.md  # Testes de validação E2E
-│   ├── sistema-engenharia-reversa-guia-uso.md  # Engenharia reversa
-│   ├── levels-system.md        # Sistema de níveis progressivos
-│   ├── INSTALLATION.md         # Guia de instalação
-│   ├── RELEASE-NOTES-v4.0-beta.md  # Notas de release v4.0
-│   └── [outros arquivos de release e implementação]
+│   └── sistema-engenharia-reversa-guia-uso.md  # Engenharia reversa
 │
 ├── knowledge-base/             # Knowledge Bases (25 arquivos)
 │   ├── concepts/               # Conceitos fundamentais (13 arquivos)
@@ -144,11 +141,10 @@ docs/
 - **[Referência de Agentes](onion/agents-reference.md)** - Lista e descrição de todos os agentes especializados
 - **[Fluxos de Engenharia](onion/engineering-flows.md)** - Workflows detalhados para desenvolvimento
 - **[Sistema de Testes e Validação](onion/testing-validation-system.md)** - Framework completo de testes e validação
-- **[Sistema de Níveis](onion/levels-system.md)** - Descoberta progressiva de comandos (v4.0) ✨ NOVO
 
 #### Integrações e Configuração
 - **[Configuração Inicial](onion/getting-started.md)** - Setup completo do sistema
-- **[Instalação](onion/INSTALLATION.md)** - Guia de instalação do Sistema Onion
+- **[Guias de Aplicação](applying/README.md)** - Aplicar o Onion em projetos novos, legados ou regulados
 - Integração com Task Manager (Jira/ClickUp/Asana/Linear): use `/meta:setup-integration` — adapters em `.claude/utils/task-manager/adapters/`
 
 #### Referências Técnicas
@@ -160,10 +156,6 @@ docs/
 - **[Testes de Validação E2E](onion/end-to-end-validation-tests.md)** - Testes end-to-end do sistema
 - **[Guia de Engenharia Reversa](onion/sistema-engenharia-reversa-guia-uso.md)** - Engenharia reversa de projetos
 
-#### Release Notes e Anúncios
-- **[Release Notes v4.0 Beta](onion/RELEASE-NOTES-v4.0-beta.md)** - Novidades da versão 4.0 ✨ NOVO
-- **[Anúncio v4.0 Beta.1](onion/ANNOUNCEMENT-v4.0-beta.1-docs.md)** - Anúncio da versão beta
-
 ### 🚀 Início Rápido
 
 **Novo no sistema?** Comece aqui:
@@ -171,7 +163,6 @@ docs/
 1. **[Configuração Inicial](onion/getting-started.md)** - Setup do ambiente
 2. **[Guia de Comandos](onion/commands-guide.md)** - Aprenda os comandos principais
 3. **[Exemplos Práticos](onion/practical-examples.md)** - Veja casos de uso reais
-4. **[Sistema de Níveis](onion/levels-system.md)** - Entenda a descoberta progressiva (v4.0) ✨ NOVO
 
 **Comando de entrada:**
 ```bash
@@ -259,9 +250,9 @@ Guias de aplicação do Onion em projetos novos, legados ou regulados:
 - **[Análise de Alternativas Unleash](analysis/unleash-alternatives-analysis.md)** - Análise comparativa
 
 ### Planos de Execução
-- **[Plano de Saneamento Onion 2026-05](plans/onion-saneamento-plan-2026-05.md)** ✨ NOVO - Roadmap executável das 19 recomendações da análise de maio/2026 (status: aprovado, em execução)
-- **[Onion v4 Epic](plans/onion-v4-epic.md)** ⚠️ HISTÓRICO - Plano abandonado em 2026-05-18
-- **[Onion v4 Migration Plan](plans/onion-v4-migration-plan.md)** ⚠️ HISTÓRICO - Plano abandonado em 2026-05-18
+- **[Plano de Saneamento Onion 2026-05](plans/onion-saneamento-plan-2026-05.md)** - Roadmap executável das 19 recomendações da análise de maio/2026 (status: executado-parcialmente)
+
+> Os planos `onion-v4-epic` e `onion-v4-migration-plan` (visão v4.0/CLI) foram **abandonados em 2026-05-18** e removidos em 2026-06-03 (recuperáveis via histórico git).
 
 ---
 
@@ -274,7 +265,6 @@ Guias de aplicação do Onion em projetos novos, legados ou regulados:
 2. [Guia de Comandos](onion/commands-guide.md) - Seção "Comandos de Engenharia"
 3. [Fluxos de Engenharia](onion/engineering-flows.md)
 4. [Sistema de Testes e Validação](onion/testing-validation-system.md)
-5. [Sistema de Níveis](onion/levels-system.md) - Descoberta progressiva ✨ NOVO
 
 **Comandos essenciais:**
 - `/engineer/start` - Iniciar desenvolvimento
@@ -342,7 +332,7 @@ Guias de aplicação do Onion em projetos novos, legados ou regulados:
 **Comece com:**
 1. [Arquitetura de Comandos](onion/claude-code-commands-architecture.md)
 2. [Meta Especificações](meta-specs/index.md)
-4. [Release Notes v4.0](onion/RELEASE-NOTES-v4.0-beta.md) - Arquitetura Multi-Context ✨ NOVO
+3. [Revisão Analítica do Sistema Onion — Maio/2026](analysis/onion-review-2026-05.md)
 
 **Recursos:**
 - Agentes de arquitetura: `@c4-architecture-specialist`, `@mermaid-specialist`
@@ -353,7 +343,7 @@ Guias de aplicação do Onion em projetos novos, legados ou regulados:
 
 **Comece com:**
 1. [Configuração Inicial](onion/getting-started.md)
-2. [Instalação](onion/INSTALLATION.md)
+2. [Guias de Aplicação](applying/README.md)
 3. [Referência de Ferramentas](onion/tools-reference.md)
 
 **Comandos essenciais:**
@@ -418,12 +408,11 @@ Guias de aplicação do Onion em projetos novos, legados ou regulados:
 ## 🔗 Links Rápidos
 
 ### Documentação Essencial
-- [README Principal](../../README.md) - Visão geral do Sistema Onion v4.0 Beta
+- [README Principal](../README.md) - Visão geral do Sistema Onion
 - [Guia de Comandos](onion/commands-guide.md) - Todos os comandos
 - [Referência de Agentes](onion/agents-reference.md) - Todos os agentes
 - [Sistema de Testes e Validação](onion/testing-validation-system.md) - Framework completo
-- [Sistema de Níveis](onion/levels-system.md) - Descoberta progressiva ✨ NOVO
-- [Release Notes v4.0](onion/RELEASE-NOTES-v4.0-beta.md) - Novidades da versão ✨ NOVO
+- [Guias de Aplicação](applying/README.md) - Onion em projetos novos, legados ou regulados
 
 ### Knowledge Bases
 - [Task Manager Abstraction](knowledge-base/concepts/task-manager-abstraction.md)
@@ -436,7 +425,7 @@ Guias de aplicação do Onion em projetos novos, legados ou regulados:
 
 ### Configuração
 - [Configuração Inicial](onion/getting-started.md)
-- [Instalação](onion/INSTALLATION.md)
+- [Guias de Aplicação](applying/README.md)
 - [Adapters de Task Manager](../.claude/utils/task-manager/adapters/) (Jira, ClickUp, Asana, Linear)
 
 ---
@@ -457,16 +446,6 @@ Guias de aplicação do Onion em projetos novos, legados ou regulados:
   - 4 camadas integradas (Knowledge Base, Agentes, Comandos de Teste, Comandos de Validação)
   - Guia completo para desenvolvedores, QA e times cross-funcionais
 
-- **[Sistema de Níveis](onion/levels-system.md)** (v4.0)
-  - Descoberta progressiva de comandos
-  - Organização por níveis (starter, intermediate, advanced)
-  - Redução de 90% no tempo de onboarding
-
-- **[Release Notes v4.0 Beta](onion/RELEASE-NOTES-v4.0-beta.md)**
-  - Arquitetura Multi-Context
-  - Melhorias significativas em onboarding e organização
-  - Suporte multi-IDE
-
 - **Comandos de Produto Expandidos**
   - `/product/extract-meeting` - Extração inteligente de insights de reuniões
   - `/product/consolidate-meetings` - Consolidação de múltiplas reuniões
@@ -486,7 +465,7 @@ Guias de aplicação do Onion em projetos novos, legados ou regulados:
 1. **Comandos**: Consulte [Guia de Comandos](onion/commands-guide.md)
 2. **Exemplos**: Veja casos práticos em [Exemplos Práticos](onion/practical-examples.md)
 3. **Configuração**: Siga [Configuração Inicial](onion/getting-started.md)
-4. **Instalação**: Consulte [Instalação](onion/INSTALLATION.md) ✨ NOVO
+4. **Aplicação em projetos**: Consulte [Guias de Aplicação](applying/README.md)
 5. **Testes**: Consulte [Sistema de Testes e Validação](onion/testing-validation-system.md)
 
 ### 🔧 Comandos de Debug
