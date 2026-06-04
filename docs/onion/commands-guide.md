@@ -1,8 +1,8 @@
-# 🎯 Guia Completo de Comandos
+# 🎯 Guia Completo de Skills
 
-> **Versão**: 4.1.0-beta.1 | **Última atualização**: 2026-05-15 | **Total**: 75 comandos (94 arquivos .md incl. templates/helpers)
+> **Versão**: 4.1.0-beta.1 | **Última atualização**: 2026-05-15 | **Total**: 75 skills (94 arquivos incl. templates/helpers)
 
-Este guia documenta todos os comandos disponíveis no sistema `.claude/`, organizados por categoria e função.
+Este guia documenta todas as skills invocáveis disponíveis no sistema `.codex/`, organizadas por categoria e função. Cada skill é um `SKILL.md` em `.agents/skills/<slug>/` e é invocada no chat do Codex pelo seu `$slug`.
 
 ## 📊 Resumo v3.0
 
@@ -28,50 +28,50 @@ Este guia documenta todos os comandos disponíveis no sistema `.claude/`, organi
 
 ---
 
-## 🎯 Como Usar os Comandos
+## 🎯 Como Usar as Skills
 
-### ⚡ **CRÍTICO: Claude Code Commands vs Terminal**
+### ⚡ **CRÍTICO: Skills do Codex vs Terminal**
 
-**TODOS** os comandos deste guia são **[Claude Code Commands](https://docs.claude.com/en/docs/claude-code/slash-commands)** executados no **chat da Claude Code**:
+**TODAS** as skills deste guia são **Skills do Codex** invocadas no **chat do Codex** pelo `$slug` da skill (use `/skills` para listar as disponíveis):
 
 ```markdown
-# ✅ CORRETO - No chat da Claude Code:
-/git/init                       # GitFlow setup inteligente
-/git/feature/start "login"      # Iniciar feature branch
-/engineer/start                 # Ambiente de desenvolvimento
-/product/task "implementar login"
+# ✅ CORRETO - No chat do Codex:
+$git-init                       # GitFlow setup inteligente
+$git-feature-start "login"      # Iniciar feature branch
+$engineer-start                 # Ambiente de desenvolvimento
+$product-task "implementar login"
 
 # ❌ INCORRETO - NÃO são comandos bash/terminal:
-$ /git/init                    # Comando não encontrado
+$ $git-init                    # Comando não encontrado
 $ ./engineer/start             # Não é executável
 ```
 
 ### 🚀 **Padronização v3.0 (Novembro 2025)**
-**Todos os comandos foram padronizados** com:
-- Headers YAML obrigatórios (`name`, `description`, `version: "3.0.0"`)
+**Todas as skills foram padronizadas** com:
+- `SKILL.md` com frontmatter obrigatório (`name`, `description`)
 - Limite de 400 linhas (otimização de tokens)
-- Prompts modulares em `common/prompts/`
+- Prompts modulares em `docs/onion/shared/`
 - Validações automatizadas nos geradores
 
-📚 **[Leia mais sobre a arquitetura](claude-code-commands-architecture.md)**
+📚 **[Leia mais sobre a arquitetura](codex-skills-architecture.md)**
 
 ### 📋 Sintaxe Geral
 ```bash
-/categoria/comando "parâmetro"
+$categoria-skill "parâmetro"
 ```
 
 ---
 
 ## 🔧 Comandos de Engenharia
 
-### `/engineer/start`
+### `$engineer-start`
 **Propósito**: Iniciar desenvolvimento de uma funcionalidade  
 **Input**: Tasks do ClickUp para trabalhar  
 **Integração ClickUp**: ✅ Lê tasks e context
 
 ```bash
 # Exemplo de uso
-/engineer/start
+$engineer-start
 # → Sistema solicita ID da task ClickUp
 # → Analisa requisitos e dependências
 # → Configura ambiente de desenvolvimento
@@ -79,19 +79,19 @@ $ ./engineer/start             # Não é executável
 
 **Fluxo detalhado**:
 1. Verifica se está em feature branch (ou cria uma)
-2. Cria pasta `.claude/sessions/<feature_slug>`
+2. Cria pasta `.codex/sessions/<feature_slug>`
 3. Solicita input de tasks ClickUp
 4. Analisa contexto, objetivos e abordagem
 5. Identifica dependências e requisitos de teste
 
-### `/engineer/work`
+### `$engineer-work`
 **Propósito**: Trabalhar em uma funcionalidade específica  
 **Input**: Pasta ou especificação de trabalho  
 **Integração ClickUp**: ✅ Atualiza progresso
 
 ```bash
 # Exemplo de uso
-/engineer/work "implementar autenticação JWT"
+$engineer-work "implementar autenticação JWT"
 # → Sistema analisa arquivos do projeto
 # → Identifica fase atual no plan.md
 # → Apresenta próximos passos
@@ -104,14 +104,14 @@ $ ./engineer/start             # Não é executável
 4. Usa sub-agentes apropriados para desenvolvimento
 5. Atualiza progresso no plan.md
 
-### `/engineer/pr`
+### `$engineer-pr`
 **Propósito**: Criar Pull Request e atualizar ClickUp  
 **Input**: Branch com código para review  
 **Integração ClickUp**: ✅ Move para "in progress" + tag "under-review"
 
 ```bash
 # Exemplo de uso
-/engineer/pr
+$engineer-pr
 # → Executa testes automaticamente
 # → Faz commit das mudanças
 # → Atualiza status ClickUp
@@ -125,14 +125,14 @@ $ ./engineer/start             # Não é executável
 4. Cria Pull Request com detalhes da implementação
 5. Aguarda e processa feedback automatizado
 
-### `/engineer/pr-update` 🆕
+### `$engineer-pr-update` 🆕
 **Propósito**: Atualizar Pull Request existente com mudanças adicionais  
 **Input**: Mudanças pendentes após PR criado  
 **Integração ClickUp**: ✅ Documenta updates automáticos
 
 ```bash
 # Exemplo de uso
-/engineer/pr-update
+$engineer-pr-update
 # → Detecta mudanças pendentes automaticamente
 # → Commit inteligente com tipo contextual
 # → Push para branch do PR existente
@@ -146,14 +146,14 @@ $ ./engineer/start             # Não é executável
 4. Push automático para atualizar PR
 5. Comentário detalhado no ClickUp
 
-### `/engineer/validate-phase-sync` 🆕
+### `$engineer-validate-phase-sync` 🆕
 **Propósito**: Validar sincronização entre fases e subtasks ClickUp  
 **Input**: Sessão de desenvolvimento ativa  
 **Integração ClickUp**: ✅ Corrige inconsistências automaticamente
 
 ```bash
 # Exemplo de uso
-/engineer/validate-phase-sync
+$engineer-validate-phase-sync
 # → Analisa plan.md vs status subtasks
 # → Identifica discrepâncias
 # → Corrige status automaticamente
@@ -165,59 +165,59 @@ $ ./engineer/start             # Não é executável
 - Validar antes de finalizar desenvolvimento
 - Corrigir status desatualizados retroativamente
 
-### `/engineer/pre-pr`
+### `$engineer-pre-pr`
 **Propósito**: Validações antes do Pull Request  
 **Input**: Código atual da branch  
 **Integração ClickUp**: ✅ Valida status da task
 
 ```bash
 # Exemplo de uso
-/engineer/pre-pr
+$engineer-pre-pr
 # → Executa validações de qualidade
 # → Verifica testes e cobertura
 # → Valida padrões de código
 ```
 
-### `/engineer/plan`
+### `$engineer-plan`
 **Propósito**: Criar ou revisar plano de desenvolvimento  
 **Input**: Especificações da funcionalidade  
 **Integração ClickUp**: ✅ Sincroniza com task details
 
 ```bash
 # Exemplo de uso
-/engineer/plan "feature: sistema de notificações"
+$engineer-plan "feature: sistema de notificações"
 # → Cria plano estruturado em fases
 # → Define milestones e dependências
 # → Estima tempo e recursos
 ```
 
-### `/engineer/docs`
+### `$engineer-docs`
 **Propósito**: Gerar documentação técnica da implementação  
 **Input**: Código implementado  
 **Integração ClickUp**: ✅ Adiciona docs como comentário
 
 ```bash
 # Exemplo de uso
-/engineer/docs
+$engineer-docs
 # → Analisa código implementado
 # → Gera documentação técnica
 # → Atualiza arquivos README/docs
 ```
 
-### `/engineer/bump`
+### `$engineer-bump`
 **Propósito**: Atualizar versão e preparar release  
 **Input**: Tipo de versão (major/minor/patch)  
 **Integração ClickUp**: ✅ Cria task de release
 
 ```bash
 # Exemplo de uso
-/engineer/bump patch
+$engineer-bump patch
 # → Atualiza package.json/version
 # → Cria changelog
 # → Prepara tags de release
 ```
 
-### `/engineer/warm-up`
+### `$engineer-warm-up`
 **Propósito**: Aquecimento e configuração do ambiente de engenharia  
 **Input**: Contexto do projeto  
 **Integração ClickUp**: ✅ Verifica configuração workspace
@@ -226,14 +226,14 @@ $ ./engineer/start             # Não é executável
 
 ## 📋 Comandos de Produto
 
-### `/product/task`
+### `$product-task`
 **Propósito**: Criar nova task no ClickUp  
 **Input**: Descrição da funcionalidade/bug  
 **Integração ClickUp**: ✅ Cria task completa com detalhes
 
 ```bash
 # Exemplo de uso
-/product/task "Implementar sistema de autenticação OAuth2"
+$product-task "Implementar sistema de autenticação OAuth2"
 # → Analisa requisitos
 # → Cria task estruturada no ClickUp
 # → Define critérios de aceitação
@@ -251,14 +251,14 @@ $ ./engineer/start             # Não é executável
    - Estimativa de esforço
    - Etiquetas relevantes
 
-### `/product/collect`
+### `$product-collect`
 **Propósito**: Coletar e salvar ideias/bugs  
 **Input**: Descrição da ideia ou problema  
 **Integração ClickUp**: ✅ Salva no backlog ClickUp
 
 ```bash
 # Exemplo de uso
-/product/collect "Usuários reportam lentidão no carregamento da dashboard"
+$product-collect "Usuários reportam lentidão no carregamento da dashboard"
 # → Esclarece detalhes do problema
 # → Categoriza o tipo (bug/feature)
 # → Salva no ClickUp com prioridade apropriada
@@ -270,14 +270,14 @@ $ ./engineer/start             # Não é executável
 3. Determina prioridade e urgência
 4. Salva no ClickUp com informações estruturadas
 
-### `/product/refine`
+### `$product-refine`
 **Propósito**: Refinar requisitos de uma funcionalidade  
 **Input**: Task existente ou especificação inicial  
 **Integração ClickUp**: ✅ Atualiza task com refinamentos
 
 ```bash
 # Exemplo de uso
-/product/refine 
+$product-refine 
 # → Analisa task atual do ClickUp
 # → Identifica gaps nos requisitos
 # → Adiciona detalhes e esclarecimentos
@@ -289,30 +289,30 @@ $ ./engineer/start             # Não é executável
 3. Faz perguntas específicas sobre funcionalidade
 4. Atualiza task ClickUp ou arquivo local
 
-### `/product/light-arch`
+### `$product-light-arch`
 **Propósito**: Esboçar arquitetura inicial  
 **Input**: Requisitos da funcionalidade  
 **Integração ClickUp**: ✅ Adiciona detalhes como comentário
 
 ```bash
 # Exemplo de uso
-/product/light-arch
+$product-light-arch
 # → Discute abordagem arquitetural
 # → Define componentes principais
 # → Salva decisões no ClickUp
 ```
 
-### `/product/spec`
+### `$product-spec`
 **Propósito**: Criar especificação técnica detalhada  
 **Input**: Requisitos refinados  
 **Integração ClickUp**: ✅ Vincula spec à task
 
-### `/product/check`
+### `$product-check`
 **Propósito**: Verificar qualidade e completude dos requisitos  
 **Input**: Documentação de requisitos  
 **Integração ClickUp**: ✅ Adiciona checklist de validação
 
-### `/product/warm-up`
+### `$product-warm-up`
 **Propósito**: Aquecimento do contexto de produto  
 **Input**: Informações do projeto/produto  
 **Integração ClickUp**: ✅ Sincroniza com workspace data
@@ -321,25 +321,25 @@ $ ./engineer/start             # Não é executável
 
 ## 📚 Comandos de Documentação
 
-### `/docs/build-tech-docs`
+### `$docs-build-tech-docs`
 **Propósito**: Gerar documentação técnica abrangente  
 **Input**: Codebase e especificações  
 **Integração ClickUp**: ✅ Cria task de documentação
 
 ```bash
 # Exemplo de uso
-/docs/build-tech-docs
+$docs-build-tech-docs
 # → Analisa estrutura do projeto
 # → Gera documentação multi-arquivo
 # → Cria contexto otimizado para IA
 ```
 
-### `/docs/build-business-docs`
+### `$docs-build-business-docs`
 **Propósito**: Gerar documentação de negócio  
 **Input**: Informações de produto e mercado  
 **Integração ClickUp**: ✅ Organiza docs por workspace
 
-### `/docs/build-compliance` 🆕
+### `$docs-build-compliance` 🆕
 **Propósito**: Gerar documentação de compliance (ISO 27001, ISO 22301, PMBOK, SOC2)  
 **Input**: Frameworks desejados ou checklist de due diligence  
 **Integração ClickUp**: ✅ Rastreia compliance requirements  
@@ -347,24 +347,24 @@ $ ./engineer/start             # Não é executável
 
 ```bash
 # Exemplo de uso - Modo Seletivo
-/docs/build-compliance frameworks="iso27001,soc2"
+$docs-build-compliance frameworks="iso27001,soc2"
 # → Gera apenas ISO 27001 (SGSI) + SOC2 (Trust Services)
 # → Output: docs/compliance-context/security/ + docs/compliance-context/soc2/
 
 # Exemplo de uso - Modo Due Diligence
-/docs/build-compliance due-diligence="docs/serasa-requirements.md"
+$docs-build-compliance due-diligence="docs/serasa-requirements.md"
 # → Analisa checklist automaticamente
 # → Detecta frameworks necessários (ISO 22301 + SOC2)
 # → Gera docs/compliance-context/ com 8/8 requisitos cobertos
 
 # Exemplo de uso - Modo Interativo
-/docs/build-compliance
+$docs-build-compliance
 # → Analisa projeto (business/technical context)
 # → Sugere frameworks relevantes
 # → Pergunta confirmação ao usuário
 
 # Exemplo de uso - Modo Completo
-/docs/build-compliance frameworks="all"
+$docs-build-compliance frameworks="all"
 # → Gera todos os 4 frameworks (22 documentos)
 # → ISO 27001, ISO 22301, PMBOK, SOC2
 ```
@@ -390,12 +390,12 @@ $ ./engineer/start             # Não é executável
 - **Serasa Experian**: 8/8 requisitos cobertos (ISO 22301: 5 reqs, SOC2: 3 reqs) ✅
 - Cross-references automáticos entre frameworks (ISO 27001 ↔ SOC2: ~70% overlap)
 
-### `/docs/build-index`
+### `$docs-build-index`
 **Propósito**: Criar índice de projetos  
 **Input**: Múltiplos projetos  
 **Integração ClickUp**: ✅ Inclui IDs de space/workspace
 
-### `/docs/refine-vision`
+### `$docs-refine-vision`
 **Propósito**: Refinar visão e estratégia do produto  
 **Input**: Visão atual e feedback  
 **Integração ClickUp**: ✅ Atualiza descrições de projeto
@@ -404,14 +404,14 @@ $ ./engineer/start             # Não é executável
 
 ## ⚙️ Meta Comandos
 
-### `/meta/create-agent`
+### `$meta-create-agent`
 **Propósito**: Criar novo agente especializado  
 **Input**: Requisitos e especialidade do agente  
 **Integração ClickUp**: ➖ Não aplicável
 
 ```bash
 # Exemplo de uso
-/meta/create-agent "especialista em testes de performance"
+$meta-create-agent "especialista em testes de performance"
 # → Analisa requisitos do agente
 # → Cria arquivo .md com configuração
 # → Define ferramentas e modelo apropriados
@@ -421,12 +421,12 @@ $ ./engineer/start             # Não é executável
 
 ## 🌟 Comandos Globais
 
-### `/all-tools`
+### `$all-tools`
 **Propósito**: Listar todas as ferramentas e comandos disponíveis  
 **Input**: Nenhum  
 **Integração ClickUp**: ➖ Informacional apenas
 
-### `/warm-up`
+### `$warm-up`
 **Propósito**: Aquecimento geral do sistema  
 **Input**: Contexto geral  
 **Integração ClickUp**: ✅ Valida conectividade
@@ -437,17 +437,17 @@ $ ./engineer/start             # Não é executável
 
 ```mermaid
 graph TD
-    A[/product/task] --> B[Task criada no ClickUp]
-    B --> C[/engineer/start]
+    A[$product-task] --> B[Task criada no ClickUp]
+    B --> C[$engineer-start]
     C --> D[Análise e planejamento]
-    D --> E[/engineer/work]
+    D --> E[$engineer-work]
     E --> F[Desenvolvimento iterativo]
     F --> G{Pronto?}
     G -->|Não| E
-    G -->|Sim| H[/engineer/pre-pr]
-    H --> I[/engineer/pr]
+    G -->|Sim| H[$engineer-pre-pr]
+    H --> I[$engineer-pr]
     I --> J{Mudanças adicionais?}
-    J -->|Sim| K[/engineer/pr-update]
+    J -->|Sim| K[$engineer-pr-update]
     K --> J
     J -->|Não| L[Merge & Deploy]
     L --> M[Task marcada como concluída]
@@ -460,24 +460,24 @@ graph TD
 
 | Comando | Status | Ação |
 |---------|--------|------|
-| `/engineer/start` | ✅ | Lê tasks + cria Phase-Subtask mapping |
-| `/engineer/work` | ✅ | Auto-sync de subtasks status |
-| `/engineer/pr` | ✅ | Move para "in progress" + tag "under-review" |
-| `/engineer/pr-update` | ✅ | Documenta updates automáticos |
-| `/engineer/validate-phase-sync` | ✅ | Corrige status inconsistentes |
-| `/product/task` | ✅ | Cria task |
-| `/product/collect` | ✅ | Salva no backlog |
-| `/product/refine` | ✅ | Atualiza task |
-| `/product/light-arch` | ✅ | Adiciona comentário |
-| `/docs/build-*` | ✅ | Organiza por workspace |
+| `$engineer-start` | ✅ | Lê tasks + cria Phase-Subtask mapping |
+| `$engineer-work` | ✅ | Auto-sync de subtasks status |
+| `$engineer-pr` | ✅ | Move para "in progress" + tag "under-review" |
+| `$engineer-pr-update` | ✅ | Documenta updates automáticos |
+| `$engineer-validate-phase-sync` | ✅ | Corrige status inconsistentes |
+| `$product-task` | ✅ | Cria task |
+| `$product-collect` | ✅ | Salva no backlog |
+| `$product-refine` | ✅ | Atualiza task |
+| `$product-light-arch` | ✅ | Adiciona comentário |
+| `$docs-build-*` | ✅ | Organiza por workspace |
 
 ## 💡 Dicas de Uso
 
-1. **Sempre comece com `/product/task`** para funcionalidades novas
-2. **Use `/engineer/start`** para iniciar desenvolvimento organizado
-3. **Execute `/engineer/pr`** quando código estiver pronto para review
+1. **Sempre comece com `$product-task`** para funcionalidades novas
+2. **Use `$engineer-start`** para iniciar desenvolvimento organizado
+3. **Execute `$engineer-pr`** quando código estiver pronto para review
 4. **Aproveite a integração ClickUp** para rastreamento automático
-5. **Consulte `/all-tools`** quando não souber qual comando usar
+5. **Consulte `$all-tools`** quando não souber qual comando usar
 
 ---
 

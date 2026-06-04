@@ -7,6 +7,9 @@ piloto: auto-piloto no próprio onion-claude (cenário legacy)
 desbloqueia: T3.6 (definição de piloto) resolvido via auto-piloto
 ---
 
+> ⚠️ **Documento histórico** — registro datado anterior à migração para OpenAI Codex (2026-06). Referências a Claude Code / `.claude/` refletem o estado da época. Ver `docs/knowledge-base/platforms/openai-codex.md`.
+
+
 # Retrospectiva T3.2 — Validação de `/docs:build-*-docs`
 
 Validação ponta a ponta dos comandos de geração de documentação do Onion,

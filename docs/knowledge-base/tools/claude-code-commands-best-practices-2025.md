@@ -1,4 +1,4 @@
-# Claude Code Commands Best Practices 2025
+# Codex Commands Best Practices 2025
 
 ---
 
@@ -14,17 +14,17 @@
 
 ### Fontes
 
-- [Claude Code Official Documentation](https://docs.claude.com/en/docs/claude-code/overview)
-- [Claude Code 1.7 Update - Skywork.ai](https://skywork.ai/blog/cursor-1-7-vibe-coding-workflow-2025/)
-- [Claude Code Best Practices - GitHub](https://github.com/digitalchild/cursor-best-practices)
-- [Maximizing Claude Code Use - Medium](https://extremelysunnyyk.medium.com/)
-- [Claude Code AI Review 2025 - Skywork.ai](https://skywork.ai/blog/cursor-ai-review-2025-agent-refactors-privacy/)
+- [Codex Official Documentation](https://docs.claude.com/en/docs/codex/overview)
+- [Codex 1.7 Update - Skywork.ai](https://skywork.ai/blog/cursor-1-7-vibe-coding-workflow-2025/)
+- [Codex Best Practices - GitHub](https://github.com/digitalchild/cursor-best-practices)
+- [Maximizing Codex Use - Medium](https://extremelysunnyyk.medium.com/)
+- [Codex AI Review 2025 - Skywork.ai](https://skywork.ai/blog/cursor-ai-review-2025-agent-refactors-privacy/)
 
 ---
 
 ## 🎯 Visão Geral
 
-Este documento consolida as melhores práticas para criação e uso de comandos personalizados no Claude Code em 2025, focando em eficiência, manutenibilidade e integração com sistemas de IA.
+Este documento consolida as melhores práticas para criação e uso de comandos personalizados no Codex em 2025, focando em eficiência, manutenibilidade e integração com sistemas de IA.
 
 ---
 
@@ -34,7 +34,7 @@ Este documento consolida as melhores práticas para criação e uso de comandos 
 
 ```
 projeto/
-├── .claude/
+├── .codex/
 │   ├── commands/           # Comandos personalizados
 │   │   ├── categoria/      # Organização por categoria
 │   │   │   └── comando.md  # Arquivo do comando
@@ -97,7 +97,7 @@ Descrição breve do propósito (1-2 linhas).
 
 ---
 
-## 🔧 Funcionalidades do Claude Code 2025
+## 🔧 Funcionalidades do Codex 2025
 
 ### 1. Hooks (Beta)
 
@@ -111,7 +111,7 @@ Permitem observar, controlar e estender o loop do Agente.
 
 **Exemplo de Hook:**
 ```yaml
-# .claude/hooks/audit-hook.yaml
+# .codex/hooks/audit-hook.yaml
 name: audit-shell-commands
 trigger: before_shell_command
 action:
@@ -123,7 +123,7 @@ action:
 
 ### 2. Deep Links para Prompts
 
-Gera links que abrem prompts diretamente no Claude Code.
+Gera links que abrem prompts diretamente no Codex.
 
 **Benefícios:**
 - Reutilização de prompts complexos
@@ -277,7 +277,7 @@ Sem integrações, gere output em formato compatível.
 # Comando com Contexto de Sessão
 
 ## Verificar Sessão
-1. Buscar `.claude/sessions/<feature>/context.md`
+1. Buscar `.codex/sessions/<feature>/context.md`
 2. Carregar contexto existente
 3. Atualizar com novas informações
 
@@ -416,8 +416,8 @@ Se Z e X mas não Y, faça C.
 
 ## 📚 Recursos Adicionais
 
-- [Claude Code Documentation](https://docs.claude.com/en/docs/claude-code/overview)
-- [Claude Code Changelog](https://docs.claude.com/en/release-notes/claude-code)
+- [Codex Documentation](https://docs.claude.com/en/docs/codex/overview)
+- [Codex Changelog](https://docs.claude.com/en/release-notes/codex)
 - [Community Best Practices](https://github.com/digitalchild/cursor-best-practices)
 - [Prompt Engineering Guide](https://www.promptingguide.ai)
 

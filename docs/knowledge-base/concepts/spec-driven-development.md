@@ -88,7 +88,7 @@ Com base na análise de ferramentas existentes, identificam-se **três níveis p
 
 **Exemplo**:
 ```
-.claude/sessions/auth-oauth2/
+.codex/sessions/auth-oauth2/
 ├── context.md      # Spec inicial
 ├── plan.md         # Plano de fases
 └── decisions.md    # Decisões arquiteturais
@@ -190,7 +190,7 @@ feature-name/
 
 **Características**:
 - CLI que cria estrutura de workspace
-- Integração com múltiplos assistentes (Copilot, Claude Code, etc.)
+- Integração com múltiplos assistentes (Copilot, Codex, etc.)
 - Workflow extenso: Research → Planning → Design → Implementation
 - Nível: **Spec-First** (com potencial para Spec-Anchored)
 
@@ -525,11 +525,11 @@ SDD é **complementar** à estratégia Spec-as-Code do Sistema Onion:
 
 | Comando | Uso em SDD |
 |---------|------------|
-| `/product/spec` | Criar spec inicial |
-| `/product/refine` | Refinar spec |
-| `/engineer/plan` | Planejar implementação baseada em spec |
-| `/engineer/start` | Iniciar desenvolvimento com spec |
-| `/engineer/work` | Implementar seguindo spec |
+| `$product-spec` | Criar spec inicial |
+| `$product-refine` | Refinar spec |
+| `$engineer-plan` | Planejar implementação baseada em spec |
+| `$engineer-start` | Iniciar desenvolvimento com spec |
+| `$engineer-work` | Implementar seguindo spec |
 
 ### Agentes Relacionados
 

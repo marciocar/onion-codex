@@ -1,6 +1,6 @@
 # 📚 Índice - Knowledge Bases
 
-> **Última atualização**: 2025-12-20 | **Gerado por**: `/docs/build-index knowbase`
+> **Última atualização**: 2026-06-04 | **Gerado por**: `$docs-build-index knowbase`
 
 Bem-vindo ao índice das **Knowledge Bases** do Sistema Onion. Este documento organiza todos os 24 arquivos de conhecimento estruturado para consumo por IA e referência técnica.
 
@@ -18,11 +18,11 @@ As **Knowledge Bases** são documentos estruturados que servem como fonte de ver
 
 ## 📊 Estatísticas
 
-- **31 arquivos** de knowledge bases
+- **32 arquivos** de knowledge bases
 - **14 conceitos** fundamentais
 - **11 frameworks** e metodologias
 - **3 ferramentas** documentadas
-- **1 plataforma** documentada
+- **2 plataformas** documentadas
 - **1 categoria patterns** (padrões de implementação — ex.: SDAAL)
 - **1 categoria architectures** (C4/ADR)
 - **1 categoria meta** (criação de comandos/agentes)
@@ -39,7 +39,7 @@ docs/knowledge-base/
 ├── concepts/          # 14 arquivos - Conceitos fundamentais
 ├── frameworks/        # 11 arquivos - Frameworks e metodologias
 ├── tools/             # 3 arquivos - Ferramentas e recursos
-├── platforms/         # 1 arquivo - Plataformas e tecnologias
+├── platforms/         # 2 arquivos - Plataformas e tecnologias
 ├── patterns/          # 1 arquivo - Padrões de implementação (SDAAL examples)
 ├── architectures/     # 1 arquivo - C4 + ADR patterns
 └── meta/              # 1 arquivo - Padrões de criação de comandos
@@ -187,7 +187,7 @@ Documentação completa de ferramentas utilizadas:
    - Otimizações para português
    - Integração com Sistema Onion
 
-2. **[Claude Code Commands Best Practices 2025](tools/claude-code-commands-best-practices-2025.md)** - Boas práticas de comandos Claude Code
+2. **[Codex Commands Best Practices 2025](tools/claude-code-commands-best-practices-2025.md)** - Boas práticas de comandos Codex
    - Padrões de design
    - Estrutura recomendada
    - Melhores práticas
@@ -203,6 +203,12 @@ Documentação de plataformas integradas:
    - Visão geral da plataforma
    - Funcionalidades principais
    - Integração com Sistema Onion
+
+2. **[OpenAI Codex](platforms/openai-codex.md)** - Agente de codificação da OpenAI ✨ NOVO
+   - Interfaces: Desktop App, IDE Extension, CLI, Cloud
+   - Configuração: AGENTS.md, config.toml, Rules, Skills
+   - Subagents, Memories, Sites e Chronicle
+   - Tabela comparativa com Claude Code / Sistema Onion
 
 ---
 
@@ -250,9 +256,10 @@ Documentação de provedores de serviços integrados:
 ### Ferramentas e Integrações
 
 - [Whisper](tools/whisper.md)
-- [Claude Code Commands Best Practices](tools/claude-code-commands-best-practices-2025.md)
+- [Codex Commands Best Practices](tools/claude-code-commands-best-practices-2025.md)
 - [Microsoft Graph Teams API](providers/microsoft-graph-teams-api-guia-completo.md)
 - [Runflow](platforms/runflow.md)
+- [OpenAI Codex](platforms/openai-codex.md)
 
 ---
 
@@ -272,7 +279,7 @@ Documentação de provedores de serviços integrados:
 
 **Ferramentas:**
 - [Whisper](tools/whisper.md)
-- [Claude Code Commands Best Practices](tools/claude-code-commands-best-practices-2025.md)
+- [Codex Commands Best Practices](tools/claude-code-commands-best-practices-2025.md)
 
 ### 📋 Product Owners
 
@@ -318,8 +325,8 @@ Documentação de provedores de serviços integrados:
 - [Meta Especificações](../meta-specs/index.md) - Especificações de alto nível
 
 ### Comandos Relacionados
-- `/docs/build-index` - Reconstruir índices
-- `/meta/create-knowledge-base` - Criar novas knowledge bases
+- `$docs-build-index` - Reconstruir índices
+- `$meta-create-knowledge-base` - Criar novas knowledge bases
 
 ### Agentes Relacionados
 - `@research-agent` - Pesquisa e análise
@@ -332,7 +339,8 @@ Documentação de provedores de serviços integrados:
 
 | Data | Mudança |
 |------|---------|
-| 2025-12-20 | Índice reconstruído com 24 arquivos |
+| 2026-06-04 | Adicionado OpenAI Codex (platforms) — 32 arquivos total |
+| 2025-12-20 | Índice reconstruído com 31 arquivos |
 | 2025-12-02 | Adicionado Spec-Driven Development |
 | 2025-12-02 | Adicionado Whisper knowledge base |
 | 2025-11-24 | Criação inicial do índice |
@@ -342,6 +350,12 @@ Documentação de provedores de serviços integrados:
 ## 🆕 Novidades Recentes
 
 ### ✨ Adicionado Recentemente
+
+- **[OpenAI Codex](platforms/openai-codex.md)** (2026-06-04)
+  - Agente de codificação OpenAI — equivalente ao Claude Code
+  - 4 interfaces: Desktop App, IDE Extension, CLI, Cloud
+  - Configuração completa: AGENTS.md, config.toml, Skills, Rules, Subagents
+  - Tabela de equivalência com Sistema Onion / Claude Code
 
 - **[Spec-Driven Development](concepts/spec-driven-development.md)** (2025-12-02)
   - Metodologia emergente completa
@@ -362,17 +376,17 @@ Documentação de provedores de serviços integrados:
 
 ## 🔄 Manutenção
 
-Este índice é gerado automaticamente pelo comando `/docs/build-index knowbase`.
+Este índice é gerado automaticamente pelo comando `$docs-build-index knowbase`.
 
 **Para atualizar:**
 ```bash
-/docs/build-index knowbase     # Reconstruir este índice
-/docs/build-index              # Reconstruir índice principal
+$docs-build-index knowbase     # Reconstruir este índice
+$docs-build-index              # Reconstruir índice principal
 ```
 
 ---
 
-**Última atualização:** 2025-12-20  
+**Última atualização:** 2026-06-04  
 **Versão:** 4.1.0-beta.1  
 **Mantido por:** Sistema Onion
 

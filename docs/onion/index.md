@@ -1,6 +1,6 @@
 # 📚 Índice - Sistema Onion
 
-> **Última atualização**: 2026-06-03 | **Gerado por**: `/docs:build-index onion` | **Revisado**: auditoria manual
+> **Última atualização**: 2026-06-03 | **Gerado por**: `$docs-build-index onion` | **Revisado**: auditoria manual
 
 Bem-vindo ao índice da documentação do **Sistema Onion**. Este documento organiza os 11 documentos de documentação operacional do sistema em `docs/onion/`.
 
@@ -8,11 +8,11 @@ Bem-vindo ao índice da documentação do **Sistema Onion**. Este documento orga
 
 ## 🎯 Visão Geral
 
-O **Sistema Onion** é um **framework template em `.claude/`** — instalável em qualquer projeto (novo, legado ou regulado), plataforma única Claude Code, sem produto npm e sem CLI standalone. Inclui:
-- 🤖 **78 comandos invocáveis** Claude Code em 9 categorias
-- 🎯 **49 agentes de IA especializados** em 9 categorias
-- 🧩 **4 skills** em `.claude/skills/` (`onion`, `onion-patterns`, `onion-validation`, `language-standards`)
-- 🧅 **Skill + Comando `/onion`** — ponto de entrada inteligente
+O **Sistema Onion** é um **framework template em `.codex/`** — instalável em qualquer projeto (novo, legado ou regulado), plataforma única Codex, sem produto npm e sem CLI standalone. Inclui:
+- 🤖 **78 skills invocáveis** Codex (`$slug`) em 9 categorias
+- 🎯 **49 subagentes de IA especializados** em 9 categorias
+- 🧩 **4 skills núcleo** em `.agents/skills/` (`onion`, `onion-patterns`, `onion-validation`, `language-standards`)
+- 🧅 **Skill `$onion`** — ponto de entrada inteligente
 - 🔗 **Task Manager Abstraction** plugável (Jira, ClickUp, Asana, Linear)
 - 🏗️ **Spec as Code Multi-Context** — business, technical e meta-specs
 
@@ -21,9 +21,9 @@ O **Sistema Onion** é um **framework template em `.claude/`** — instalável e
 ## 📊 Estatísticas
 
 - **11 documentos** em `docs/onion/`
-- **78 comandos invocáveis** Claude Code em `.claude/commands/`
-- **49 agentes** IA em `.claude/agents/`
-- **4 skills** em `.claude/skills/`
+- **78 skills invocáveis** Codex em `.agents/skills/`
+- **49 subagentes** IA em `.codex/agents/`
+- **4 skills núcleo** em `.agents/skills/`
 
 ---
 
@@ -33,14 +33,14 @@ O **Sistema Onion** é um **framework template em `.claude/`** — instalável e
 
 **Comece aqui se você é novo no Sistema Onion:**
 
-1. **[Guia de Comandos](commands-guide.md)** - Documentação dos comandos disponíveis
-   - 78 comandos invocáveis em 9 categorias
+1. **[Guia de Skills](commands-guide.md)** - Documentação das skills disponíveis
+   - 78 skills invocáveis em 9 categorias
    - Exemplos de uso e workflows
    - Integrações com Task Managers
 
-2. **[Referência de Agentes](agents-reference.md)** - Lista e descrição dos agentes especializados
-   - 49 agentes em 9 categorias
-   - Quando usar cada agente
+2. **[Referência de Subagentes](agents-reference.md)** - Lista e descrição dos subagentes especializados
+   - 49 subagentes em 9 categorias
+   - Quando usar cada subagente
    - Capacidades e especializações
 
 3. **[Fluxos de Engenharia](engineering-flows.md)** - Workflows detalhados para desenvolvimento
@@ -63,7 +63,7 @@ O **Sistema Onion** é um **framework template em `.claude/`** — instalável e
    - Configuração de integrações
    - Workflows básicos
 
-2. **Task Manager Abstraction** — configure provider (Jira/ClickUp/Asana/Linear) via `.env` e `/meta:setup-integration`. Adapters técnicos em [`.claude/utils/task-manager/adapters/`](../../.claude/utils/task-manager/adapters/).
+2. **Task Manager Abstraction** — configure provider (Jira/ClickUp/Asana/Linear) via `.env` e `$meta-setup-integration`. Adapters técnicos em [`.agents/skills/task-manager/references/adapters/`](../../.agents/skills/task-manager/references/adapters/).
 
 3. **Aplicação em projetos-alvo** — ver guias em [`docs/applying/`](../applying/) (greenfield, legado, regulado).
 
@@ -81,7 +81,7 @@ O **Sistema Onion** é um **framework template em `.claude/`** — instalável e
    - Configuração
    - Uso e exemplos
 
-3. **[Arquitetura de Comandos](claude-code-commands-architecture.md)** - Estrutura interna dos comandos
+3. **[Arquitetura de Skills](codex-skills-architecture.md)** - Estrutura interna das skills
    - Padrões de design
    - Estrutura de arquivos
    - Best practices
@@ -132,13 +132,13 @@ O **Sistema Onion** é um **framework template em `.claude/`** — instalável e
 - Explore: [Agents Reference](agents-reference.md) - Seção Testing
 
 #### 🏗️ Arquitetos
-- Comece com: [Claude Code Commands Architecture](claude-code-commands-architecture.md)
+- Comece com: [Codex Skills Architecture](codex-skills-architecture.md)
 - Explore: [Engineering Flows](engineering-flows.md)
 
 #### 🔧 Administradores
 - Comece com: [Getting Started](getting-started.md)
 - Aplique em projetos: [`docs/applying/`](../applying/)
-- Configure Task Manager: `/meta:setup-integration` (adapters em `.claude/utils/task-manager/adapters/`)
+- Configure Task Manager: `$meta-setup-integration` (adapters em `.agents/skills/task-manager/references/adapters/`)
 
 ---
 
@@ -147,8 +147,8 @@ O **Sistema Onion** é um **framework template em `.claude/`** — instalável e
 ### Documentação Essencial
 - [README Principal](../../README.md) - Visão geral do Sistema Onion
 - [Índice Central](../INDEX.md) - Hub de navegação completo
-- [Guia de Comandos](commands-guide.md) - Todos os comandos
-- [Referência de Agentes](agents-reference.md) - Todos os agentes
+- [Guia de Skills](commands-guide.md) - Todas as skills
+- [Referência de Subagentes](agents-reference.md) - Todos os subagentes
 
 ### Knowledge Bases Relacionadas
 - [Task Manager Abstraction](../knowledge-base/concepts/task-manager-abstraction.md)
@@ -158,7 +158,7 @@ O **Sistema Onion** é um **framework template em `.claude/`** — instalável e
 
 ### Configuração
 - [Getting Started](getting-started.md)
-- [Adapters de Task Manager](../../.claude/utils/task-manager/adapters/)
+- [Adapters de Task Manager](../../.agents/skills/task-manager/references/adapters/)
 
 ---
 
@@ -175,12 +175,12 @@ O **Sistema Onion** é um **framework template em `.claude/`** — instalável e
 
 ## 🔄 Manutenção
 
-Este índice é gerado pelo comando `/docs:build-index onion`.
+Este índice é gerado pelo comando `$docs-build-index onion`.
 
 **Para atualizar:**
 ```bash
-/docs:build-index onion        # Reconstruir este índice
-/docs:build-index              # Reconstruir índice principal
+$docs-build-index onion        # Reconstruir este índice
+$docs-build-index              # Reconstruir índice principal
 ```
 
 ---

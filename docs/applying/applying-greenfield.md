@@ -6,9 +6,9 @@
 
 ## Pré-requisitos
 
-- Claude Code instalado
+- CLI do `codex` instalada e autenticada (`codex --version`)
 - Git instalado
-- Acesso ao repositório do Onion (para copiar `.claude/` e estrutura `docs/`)
+- Acesso ao repositório do Onion (para copiar `.codex/`, `.agents/` e estrutura `docs/`)
 - Decisão sobre Task Manager: Jira, ClickUp, Asana, Linear ou `none` (operação offline)
 - Decisão sobre se o projeto exige compliance regulatório (se sim, ver também [applying-regulated.md](./applying-regulated.md))
 
@@ -36,20 +36,23 @@ git init
 
 ## Passo 2 — Copiar o Onion
 
-Copiar do repositório do Onion para o projeto-alvo:
+Copiar do repositório do Onion para o projeto-alvo (modelo de ativação do Codex: `.codex/` + `.agents/` + `AGENTS.md`):
 
-- `.claude/` integral (comandos, agentes, skills, utils, sessions estrutura)
+- `.codex/` integral (subagentes em `.codex/agents/`, sessions em `.codex/sessions/`, utils em `.codex/utils/`)
+- `.agents/skills/` integral (skills invocáveis e fragmentos compartilhados, incluindo `task-manager/references/`)
 - `docs/meta-specs/` (constituição do framework — pode ser referenciada via symlink ou cópia)
 - `docs/sdaal/` (KB do padrão SDAAL)
 - Templates de `docs/business-context/README.md`, `docs/technical-context/README.md`, `docs/compliance-context/README.md`
-- `CLAUDE.md` (ajustar conforme passo 4)
+- `AGENTS.md` (raiz — ponto de entrada lido pelo `codex`; ajustar conforme passo 4)
 - `.env.example` (renomear para `.env` e configurar)
 
 Estrutura resultante mínima no projeto-alvo:
 
 ```
 meu-projeto/
-├── .claude/                # Operacional Onion
+├── .codex/                 # Subagentes, sessions, utils do Onion
+├── .agents/
+│   └── skills/             # Skills invocáveis + fragmentos compartilhados
 ├── docs/
 │   ├── business-context/   # Vazio inicialmente (será populado)
 │   ├── technical-context/  # Vazio inicialmente
@@ -57,7 +60,7 @@ meu-projeto/
 │   ├── meta-specs/         # Constituição (cópia ou referência)
 │   ├── sdaal/              # Referência do padrão SDAAL
 │   └── knowledge-base/     # Vazio inicialmente
-├── CLAUDE.md
+├── AGENTS.md               # Ponto de entrada do Codex
 └── .env (não commitado)
 ```
 
@@ -66,7 +69,7 @@ meu-projeto/
 ## Passo 3 — Configurar integrações
 
 ```bash
-/meta:setup-integration
+$meta-setup-integration
 ```
 
 O comando guiará a configuração de:
@@ -75,13 +78,13 @@ O comando guiará a configuração de:
 - Variáveis específicas do provider escolhido
 - MCPs aplicáveis
 
-Se for operar offline (sem Task Manager): definir `TASK_MANAGER_PROVIDER=none`. Comandos `/product:*` continuarão funcionando mas não persistirão em Task Manager externo.
+Se for operar offline (sem Task Manager): definir `TASK_MANAGER_PROVIDER=none`. As skills `$product-*` continuarão funcionando mas não persistirão em Task Manager externo.
 
 ---
 
-## Passo 4 — Adaptar CLAUDE.md ao projeto-alvo
+## Passo 4 — Adaptar AGENTS.md ao projeto-alvo
 
-O CLAUDE.md do Onion é genérico. Para o projeto-alvo, ajustar:
+O AGENTS.md do Onion é genérico. Para o projeto-alvo, ajustar:
 
 1. Substituir descrição "Sistema Onion" pela descrição do projeto-alvo
 2. Manter as seções de Task Manager Abstraction (são úteis)
@@ -93,7 +96,7 @@ O CLAUDE.md do Onion é genérico. Para o projeto-alvo, ajustar:
 ## Passo 5 — Gerar contexto de negócio inicial
 
 ```bash
-/docs:build-business-docs
+$docs-build-business-docs
 ```
 
 O comando passará por:
@@ -109,7 +112,7 @@ Em greenfield, este passo define a base estratégica antes de qualquer código.
 ## Passo 6 — Gerar contexto técnico inicial
 
 ```bash
-/docs:build-tech-docs
+$docs-build-tech-docs
 ```
 
 O comando passará por:
@@ -127,23 +130,23 @@ Em greenfield, este passo define a arquitetura intencional antes da implementaç
 ### Camada Produto
 
 ```bash
-/product:collect    # Coletar ideias iniciais de features
-/product:refine     # Refinar via perguntas
-/product:spec       # Criar spec da primeira feature
-/product:task       # Decompor em tasks
-/product:estimate   # Estimar story points
-/product:feature    # Criar no Task Manager (se configurado)
+$product-collect    # Coletar ideias iniciais de features
+$product-refine     # Refinar via perguntas
+$product-spec       # Criar spec da primeira feature
+$product-task       # Decompor em tasks
+$product-estimate   # Estimar story points
+$product-feature    # Criar no Task Manager (se configurado)
 ```
 
 ### Camada Engenharia
 
 ```bash
-/engineer:plan      # Planejar implementação
-/engineer:start     # Criar sessão de desenvolvimento
-/engineer:work      # Executar fase atual
+$engineer-plan      # Planejar implementação
+$engineer-start     # Criar sessão de desenvolvimento
+$engineer-work      # Executar fase atual
 # ... iterar work até pronto
-/engineer:pre-pr    # Validação pré-PR
-/engineer:pr        # Abrir Pull Request
+$engineer-pre-pr    # Validação pré-PR
+$engineer-pr        # Abrir Pull Request
 ```
 
 ---
@@ -153,9 +156,9 @@ Em greenfield, este passo define a arquitetura intencional antes da implementaç
 A cada mudança significativa de produto ou arquitetura:
 
 ```bash
-/docs:build-business-docs   # Atualizar business context
-/docs:build-tech-docs       # Atualizar technical context
-/docs:build-index           # Reconstruir INDEX
+$docs-build-business-docs   # Atualizar business context
+$docs-build-tech-docs       # Atualizar technical context
+$docs-build-index           # Reconstruir INDEX
 ```
 
 ---
@@ -167,7 +170,7 @@ Se durante a evolução do projeto surgir requisito regulatório:
 ```bash
 mkdir -p docs/compliance-context
 # Copiar README de docs/compliance-context/README.md do Onion
-/docs:build-compliance-docs
+$docs-build-compliance-docs
 ```
 
 Detalhes em [applying-regulated.md](./applying-regulated.md).
@@ -176,36 +179,37 @@ Detalhes em [applying-regulated.md](./applying-regulated.md).
 
 ## Troubleshooting
 
-### Comando não é reconhecido
+### Skill não é reconhecida
 
-- Verificar que `.claude/` foi copiado integralmente
-- Confirmar que Claude Code está rodando no diretório correto do projeto-alvo
-- Recarregar o workspace
+- Verificar que `.agents/skills/` foi copiado integralmente
+- Confirmar que o `codex` está rodando no diretório correto do projeto-alvo (onde fica o `AGENTS.md`)
+- Reiniciar a sessão do `codex`
 
 ### Task Manager não responde
 
 - Verificar variáveis em `.env`
-- Rodar `/meta:setup-integration` novamente
+- Rodar `$meta-setup-integration` novamente
 - Validar token/credenciais com o provider
 
-### Agente não encontrado
+### Subagente não encontrado
 
-- Verificar que `.claude/agents/` foi copiado
-- Confirmar que o agente está na categoria correta (`agents/<categoria>/<nome>.md`)
+- Verificar que `.codex/agents/` foi copiado
+- Confirmar que o subagente está na categoria correta (`.codex/agents/<categoria>/<nome>.md`)
 
 ---
 
-## Checklist de "primeiro comando útil"
+## Checklist de "primeira skill útil"
 
 Considera-se Onion operacional no projeto-alvo quando:
 
-- [ ] `.claude/` copiado integralmente
+- [ ] `.codex/` e `.agents/skills/` copiados integralmente
+- [ ] `AGENTS.md` presente na raiz do projeto-alvo
 - [ ] `.env` configurado com `TASK_MANAGER_PROVIDER`
-- [ ] `/meta:setup-integration` executado sem erros
-- [ ] `/docs:build-business-docs` gerou `business-context/` populado
-- [ ] `/docs:build-tech-docs` gerou `technical-context/` populado
-- [ ] Primeiro `/product:task` criou task com sucesso (ou foi processado offline)
-- [ ] Primeiro `/engineer:start` criou sessão em `.claude/sessions/`
+- [ ] `$meta-setup-integration` executado sem erros
+- [ ] `$docs-build-business-docs` gerou `business-context/` populado
+- [ ] `$docs-build-tech-docs` gerou `technical-context/` populado
+- [ ] Primeiro `$product-task` criou task com sucesso (ou foi processado offline)
+- [ ] Primeiro `$engineer-start` criou sessão em `.codex/sessions/`
 
 ---
 

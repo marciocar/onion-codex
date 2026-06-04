@@ -1,0 +1,42 @@
+# 🧅 Sistema Onion — Codex execution rules
+# Sintaxe: Starlark. Hierarquia de decisão: forbidden > prompt > allow.
+# Validar com: codex execpolicy check "<comando>"
+
+# ── Git read-only (auto-permitido) ───────────────────────────
+prefix_rule(
+    pattern = ["git", ["status", "branch", "log", "diff", "show"]],
+    decision = "allow",
+    justification = "Inspeção read-only do repositório",
+)
+
+# ── Inspeção de arquivos do framework e ambiente ─────────────
+prefix_rule(
+    pattern = ["ls"],
+    decision = "allow",
+    justification = "Listar diretórios (.codex/, .agents/, etc.)",
+)
+
+prefix_rule(
+    pattern = ["cat", ".env"],
+    decision = "allow",
+    justification = "Detecção do TASK_MANAGER_PROVIDER",
+)
+
+prefix_rule(
+    pattern = ["wc", "-l"],
+    decision = "allow",
+    justification = "Checar limites de linhas de skills/subagentes",
+)
+
+prefix_rule(
+    pattern = ["find", ".codex"],
+    decision = "allow",
+    justification = "Descobrir artefatos do framework",
+)
+
+# ── Operações destrutivas exigem confirmação ─────────────────
+prefix_rule(
+    pattern = ["git", "push", "--force"],
+    decision = "forbidden",
+    justification = "Force push proibido sem revisão humana",
+)

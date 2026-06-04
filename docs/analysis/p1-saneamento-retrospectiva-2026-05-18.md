@@ -5,6 +5,9 @@ fonte: docs/plans/onion-saneamento-plan-2026-05.md (tarefas P1)
 tipo: retrospectiva
 ---
 
+> ⚠️ **Documento histórico** — registro datado anterior à migração para OpenAI Codex (2026-06). Referências a Claude Code / `.claude/` refletem o estado da época. Ver `docs/knowledge-base/platforms/openai-codex.md`.
+
+
 # Retrospectiva — P1 Saneamento Estrutural
 
 ## T1.1 — Auditar comandos vestigiais

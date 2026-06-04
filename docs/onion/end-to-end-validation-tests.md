@@ -2,7 +2,7 @@
 
 ## 🧪 **Objetivo dos Testes**
 
-Validar completamente a integração entre o Sistema de Engenharia Reversa Universal e o comando `/docs/build-tech-docs`, garantindo:
+Validar completamente a integração entre o Sistema de Engenharia Reversa Universal e o comando `$docs-build-tech-docs`, garantindo:
 - **100% Compatibility** - Output aceito pelo build-tech-docs
 - **Performance Targets** - <2min para projetos médios 
 - **Quality Assurance** - 90%+ das informações preservadas
@@ -75,12 +75,12 @@ performance_indicators: {
 ### **Integration Test**
 ```bash
 # Step 1: Generate consolidated doc
-$ /docs/reverse-consolidate /example/react-spa-typescript
+$ $docs-reverse-consolidate /example/react-spa-typescript
 ✅ Output: docs/onion/consolidated-project-documentation.md (14.2KB)
 ⏱️ Time: 1.7 seconds
 
 # Step 2: Feed to build-tech-docs  
-$ /docs/build-tech-docs docs/onion/consolidated-project-documentation.md
+$ $docs-build-tech-docs docs/onion/consolidated-project-documentation.md
 ✅ Generated 9 files in docs/react-spa-typescript/specs/technical/
 ⏱️ Time: 2.8 minutes (vs 25+ minutes manual)
 🚀 Acceleration: 9x faster
@@ -156,12 +156,12 @@ api_metrics: {
 ### **Integration Test**
 ```bash
 # Step 1: Generate consolidated doc
-$ /docs/reverse-consolidate /example/nodejs-express-api
+$ $docs-reverse-consolidate /example/nodejs-express-api
 ✅ Output: docs/onion/consolidated-project-documentation.md (12.1KB)
 ⏱️ Time: 1.9 seconds
 
 # Step 2: Feed to build-tech-docs
-$ /docs/build-tech-docs docs/onion/consolidated-project-documentation.md  
+$ $docs-build-tech-docs docs/onion/consolidated-project-documentation.md  
 ✅ Generated 9 files in docs/nodejs-express-api/specs/technical/
 ⏱️ Time: 3.1 minutes (vs 30+ minutes manual)
 🚀 Acceleration: 10x faster
@@ -237,12 +237,12 @@ fullstack_metrics: {
 ### **Integration Test**
 ```bash
 # Step 1: Generate consolidated doc
-$ /docs/reverse-consolidate /example/nextjs-fullstack
+$ $docs-reverse-consolidate /example/nextjs-fullstack
 ✅ Output: docs/onion/consolidated-project-documentation.md (16.8KB)
 ⏱️ Time: 2.3 seconds
 
 # Step 2: Feed to build-tech-docs
-$ /docs/build-tech-docs docs/onion/consolidated-project-documentation.md
+$ $docs-build-tech-docs docs/onion/consolidated-project-documentation.md
 ✅ Generated 9 files in docs/nextjs-fullstack/specs/technical/
 ⏱️ Time: 3.8 minutes (vs 35+ minutes manual)
 🚀 Acceleration: 9x faster
@@ -322,12 +322,12 @@ python_metrics: {
 ### **Integration Test**
 ```bash
 # Step 1: Generate consolidated doc
-$ /docs/reverse-consolidate /example/django-webapp  
+$ $docs-reverse-consolidate /example/django-webapp  
 ✅ Output: docs/onion/consolidated-project-documentation.md (13.6KB)
 ⏱️ Time: 2.0 seconds
 
 # Step 2: Feed to build-tech-docs
-$ /docs/build-tech-docs docs/onion/consolidated-project-documentation.md
+$ $docs-build-tech-docs docs/onion/consolidated-project-documentation.md
 ✅ Generated 9 files in docs/django-webapp/specs/technical/
 ⏱️ Time: 3.4 minutes (vs 28+ minutes manual)  
 🚀 Acceleration: 8x faster
@@ -403,13 +403,13 @@ project_metrics: {
 ### **Integration Test**
 ```bash
 # Step 1: Generate consolidated doc
-$ /docs/reverse-consolidate /example/rust-wasm-project
+$ $docs-reverse-consolidate /example/rust-wasm-project
 ⚠️ Low confidence detection (68%)
 ✅ Output: docs/onion/consolidated-project-documentation.md (9.8KB)
 ⏱️ Time: 1.4 seconds
 
 # Step 2: Feed to build-tech-docs
-$ /docs/build-tech-docs docs/onion/consolidated-project-documentation.md
+$ $docs-build-tech-docs docs/onion/consolidated-project-documentation.md
 ⚠️ More Q&A required due to generic template
 ✅ Generated 9 files in docs/rust-wasm-project/specs/technical/  
 ⏱️ Time: 6.2 minutes (vs 40+ minutes manual)
@@ -508,7 +508,7 @@ Total Time: ~18 minutes (vs 120+ minutes manual)
 ### **✅ Functional Requirements Met**
 - [x] **Sistema detecta 5+ tipos** de projeto automaticamente (React, Node.js, Full-stack, Python, Generic)
 - [x] **Gera documento consolidado** em formato híbrido (YAML + Markdown)
-- [x] **Integra perfeitamente** com `/docs/build-tech-docs` (100% success rate)
+- [x] **Integra perfeitamente** com `$docs-build-tech-docs` (100% success rate)
 - [x] **Processa projetos** em <2 minutos (average 1.9s for 1k files)
 
 ### **✅ Quality Requirements Met**  
@@ -519,7 +519,7 @@ Total Time: ~18 minutes (vs 120+ minutes manual)
 
 ### **✅ Integration Requirements Met**
 - [x] **Compatible** com build-tech-docs (100% integration success)
-- [x] **Funciona via Claude Code Commands** (standard command pattern)
+- [x] **Funciona via Codex Commands** (standard command pattern)
 - [x] **Auto-updates ClickUp** (integrated with session management)
 - [x] **Session management** integrado (standard Onion patterns)
 

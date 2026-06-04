@@ -44,7 +44,7 @@ projeto/
 ├── .env                    # Configurações reais (NÃO versionar)
 ├── .env.example            # Template documentado (versionar)
 ├── .gitignore              # Inclui .env
-└── .claude/
+└── .codex/
     └── docs/
         └── configuration/
             └── setup-guide.md  # Guia de configuração

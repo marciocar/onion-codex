@@ -257,8 +257,8 @@ Request → @product-agent (estratégia)
 ## Contexto Automático
 
 Ao invocar este agente, incluir:
-1. Sessão atual: @.claude/sessions/<feature>/context.md
-2. Padrões do projeto: @.claude/rules/
+1. Sessão atual: @.codex/sessions/<feature>/context.md
+2. Padrões do projeto: @.codex/rules/
 3. Última atividade: últimos 5 arquivos modificados
 ```
 
@@ -283,7 +283,7 @@ Nível 4: Projeto completo (@codebase)
 ```yaml
 context:
   include:
-    - ".claude/sessions/current/*"
+    - ".codex/sessions/current/*"
     - "src/components/<component>/*"
   exclude:
     - "node_modules/"
@@ -451,7 +451,7 @@ Revisar código para qualidade, mantendo padrões do projeto.
 | Expert Agent | `@clickup-specialist`, `@react-developer` |
 | Meta Agent | `@agent-creator-specialist` |
 | Peer Review | `@code-reviewer` + desenvolvedor |
-| Context Injection | Sessions em `.claude/sessions/` |
+| Context Injection | Sessions em `.codex/sessions/` |
 
 ### Template de Agente Onion
 

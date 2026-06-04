@@ -1,6 +1,6 @@
 # Technical Context
 
-> Arquitetura de contexto técnico do projeto — gerada e mantida pelo comando `/docs:build-tech-docs`.
+> Arquitetura de contexto técnico do projeto — gerada e mantida pelo comando `$docs-build-tech-docs`.
 
 ---
 
@@ -45,7 +45,7 @@ docs/technical-context/
 ## Como gerar / atualizar
 
 ```bash
-/docs:build-tech-docs <fontes-de-input>
+$docs-build-tech-docs <fontes-de-input>
 ```
 
 O comando faz três fases:
@@ -75,5 +75,5 @@ O comando faz três fases:
 
 ---
 
-**Comando responsável**: `/docs:build-tech-docs`
-**Template-base**: `.claude/commands/common/templates/technical_context_template.md`
+**Comando responsável**: `$docs-build-tech-docs`
+**Template-base**: `docs/onion/shared/technical_context_template.md`

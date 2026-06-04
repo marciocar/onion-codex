@@ -1,8 +1,8 @@
 ---
-title: Padrões de Criação de Comandos Claude Code
+title: Padrões de Criação de Comandos Codex
 category: meta
 tags:
-  - claude-code-commands
+  - codex-commands
   - command-patterns
   - templates
   - anti-patterns
@@ -11,9 +11,9 @@ status: reference
 date: 2026-06-02
 ---
 
-# Padrões de Criação de Comandos Claude Code
+# Padrões de Criação de Comandos Codex
 
-> **Catálogo de referência** consumido pelo `@command-creator-specialist` (`.claude/agents/meta/command-creator-specialist.md`).
+> **Catálogo de referência** consumido pelo `@command-creator-specialist` (`.codex/agents/meta/command-creator-specialist.md`).
 > O agente mantém a **lógica de orquestração** (FASES 1-6, Filosofia Core) inline e **referencia este documento** para templates por categoria, anti-patterns, best practices e templates rápidos.
 > Ao criar um comando, o agente deve **ler este KB** para aplicar os padrões adequados.
 
@@ -49,9 +49,9 @@ Todo comando criado deve ter frontmatter YAML. Campos:
 - Geram artefatos (.md files)
 
 **Exemplos:**
-- `/meta/create-agent` - Criar novo agente
-- `/meta/create-command` - Criar novo comando
-- `/meta/update-docs` - Atualizar documentação do sistema
+- `$meta-create-agent` - Criar novo agente
+- `$meta-create-command` - Criar novo comando
+- `$meta-update-docs` - Atualizar documentação do sistema
 
 **Template:**
 ```markdown
@@ -77,15 +77,15 @@ Comando meta que [ação] do sistema.
 
 **Padrões:**
 - Integram com ClickUp MCP (tasks)
-- Gerenciam sessions (.claude/sessions/)
+- Gerenciam sessions (.codex/sessions/)
 - Coordenam múltiplos agentes
 - Workflows complexos e iterativos
 
 **Exemplos:**
-- `/engineer/start` - Iniciar desenvolvimento
-- `/engineer/work` - Trabalhar em feature
-- `/engineer/pr` - Criar pull request
-- `/engineer/docs` - Gerar documentação
+- `$engineer-start` - Iniciar desenvolvimento
+- `$engineer-work` - Trabalhar em feature
+- `$engineer-pr` - Criar pull request
+- `$engineer-docs` - Gerar documentação
 
 **Template:**
 ```markdown
@@ -135,10 +135,10 @@ TASK_ID=$(clickup_get_task_id_from_session)
 - Workflows de decomposição e especificação
 
 **Exemplos:**
-- `/product/task` - Criar task com decomposição
-- `/product/spec` - Especificar funcionalidade
-- `/product/feature` - Planejar feature completa
-- `/product/refine` - Refinar requisitos
+- `$product-task` - Criar task com decomposição
+- `$product-spec` - Especificar funcionalidade
+- `$product-feature` - Planejar feature completa
+- `$product-refine` - Refinar requisitos
 
 **Template:**
 ```markdown
@@ -186,10 +186,10 @@ TASK_ID=$(clickup_create_task "$TASK_NAME" "$LIST_ID")
 - Integram com ClickUp (opcional)
 
 **Exemplos:**
-- `/git/init` - Inicializar Git Flow
-- `/git/feature/start` - Iniciar feature branch
-- `/git/feature/finish` - Finalizar feature
-- `/git/hotfix/start` - Iniciar hotfix
+- `$git-init` - Inicializar Git Flow
+- `$git-feature-start` - Iniciar feature branch
+- `$git-feature-finish` - Finalizar feature
+- `$git-hotfix-start` - Iniciar hotfix
 
 **Template:**
 ```markdown
@@ -279,9 +279,9 @@ Gere documentação de [framework]:
 - Output em docs/
 
 **Exemplos:**
-- `/docs/generate/api` - Gerar docs de API
-- `/docs/update/index` - Atualizar INDEX.md
-- `/docs/diagram/c4` - Gerar diagramas C4
+- `$docs-generate-api` - Gerar docs de API
+- `$docs-update-index` - Atualizar INDEX.md
+- `$docs-diagram-c4` - Gerar diagramas C4
 
 **Template:**
 ```markdown
@@ -330,7 +330,7 @@ Inicia desenvolvimento de feature...
 **Por quê:** Duplica comando existente
 **Correto:** Estender comando existente ou criar sub-comando especializado
 
-### ❌ Anti-Pattern 3: Confusão Terminal vs Claude Code Command
+### ❌ Anti-Pattern 3: Confusão Terminal vs Codex Command
 
 ```markdown
 # RUIM
@@ -342,8 +342,8 @@ $ /engineer/work
 ```
 ```
 
-**Por quê:** Claude Code Commands NÃO são executados no terminal
-**Correto:** Sempre especificar "No chat da Claude Code"
+**Por quê:** Codex Commands NÃO são executados no terminal
+**Correto:** Sempre especificar "No chat da Codex"
 
 ### ❌ Anti-Pattern 4: Instruções Vagas para Agentes
 
@@ -445,11 +445,11 @@ Instruções para agentes devem:
 
 **VALIDAÇÃO** não é opcional:
 - Checklist completo antes de finalizar
-- Teste de invocação no chat Claude Code
+- Teste de invocação no chat Codex
 - Documentação de integração
 - Aprovação de qualidade
 
-### ✅ 8. Claude Code Commands Clarity
+### ✅ 8. Codex Commands Clarity
 
 **SEMPRE** deixar claro:
 - Comandos são executados no chat

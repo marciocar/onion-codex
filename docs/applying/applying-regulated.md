@@ -6,9 +6,9 @@
 
 ## Pré-requisitos
 
-- Claude Code instalado
+- CLI do `codex` instalada e autenticada (`codex --version`)
 - Git instalado
-- Acesso ao repositório do Onion
+- Acesso ao repositório do Onion (para copiar `.codex/`, `.agents/` e `AGENTS.md`)
 - **Clareza sobre o framework regulatório aplicável** (ou disposição para descobrir via discovery)
 - Patrocinador interno responsável por compliance (CISO, Compliance Officer, Diretor Jurídico)
 - Decisão sobre Task Manager
@@ -78,7 +78,7 @@ Sem esse mapeamento, a documentação gerada vira "obra-de-arte" sem dono.
 ## Passo 3 — Gerar contexto de compliance
 
 ```bash
-/docs:build-compliance-docs
+$docs-build-compliance-docs
 ```
 
 O comando passa por:
@@ -168,7 +168,7 @@ Esse mapa permite **uma única evidência atender múltiplos frameworks** durant
 Após o build, comparar o estado atual (`as-is`) com o estado-alvo de cada framework (`to-be`):
 
 ```bash
-/product:task --source=docs/compliance-context/05-audit/gaps.md
+$product-task --source=docs/compliance-context/05-audit/gaps.md
 ```
 
 Decompõe gaps em tasks executáveis pela equipe técnica e de processos.
@@ -192,17 +192,17 @@ Compliance **não é silo isolado**. Integrar:
 ### Workflow de Produto + Compliance
 
 ```bash
-/product:spec       # Spec deve referenciar requisitos de compliance aplicáveis
-/product:task       # Tasks de compliance entram no mesmo backlog
-/validate:workflow  # Validação inclui critérios de compliance
+$product-spec       # Spec deve referenciar requisitos de compliance aplicáveis
+$product-task       # Tasks de compliance entram no mesmo backlog
+$validate-workflow  # Validação inclui critérios de compliance
 ```
 
 ### Workflow de Engenharia + Compliance
 
 ```bash
-/engineer:plan      # Plano considera controles aplicáveis (ex: logging, criptografia)
-/engineer:pre-pr    # Validação pré-PR inclui checklist de compliance
-/engineer:pr        # PR description referencia controle implementado
+$engineer-plan      # Plano considera controles aplicáveis (ex: logging, criptografia)
+$engineer-pre-pr    # Validação pré-PR inclui checklist de compliance
+$engineer-pr        # PR description referencia controle implementado
 ```
 
 ### Code review com lente de compliance
@@ -216,7 +216,7 @@ Compliance **não é silo isolado**. Integrar:
 Antes de auditoria externa:
 
 ```bash
-/docs:validate-docs --scope=compliance
+$docs-validate-docs --scope=compliance
 ```
 
 Verifica:

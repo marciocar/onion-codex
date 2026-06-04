@@ -1,6 +1,6 @@
 ---
 title: Meta-spec — Arquitetura do Sistema Onion
-date: 2026-05-18
+date: 2026-06-04
 version: 1.0.0
 level: L0
 status: active
@@ -27,59 +27,67 @@ Referências relacionadas:
 ### 1.1 Root do framework
 
 ```
-.claude/                    # Operacional — artefatos invocáveis pelo Claude Code
+.codex/                     # Operacional — configuração, subagentes, regras e estado do Codex
+.agents/                    # Skills invocáveis (cross-client, padrão Agent Skills)
 docs/                       # Documentação consumida por humanos e IA
 README.md                   # Identidade e ponto de entrada
-CLAUDE.md                   # Regras de operação para Claude Code
+AGENTS.md                   # Regras de operação para o Codex
 CONTRIBUTING.md             # Guidelines para evolução
 .env, .env.example          # Configuração de providers e integrações
 ```
 
-### 1.2 Estrutura de `.claude/`
+### 1.2 Estrutura de `.codex/`
 
 ```
-.claude/
-├── agents/                 # Agentes especializados
-│   ├── compliance/         # 5 agentes — frameworks regulatórios
-│   ├── deployment/         # 1 agente — containerização
-│   ├── development/        # ~20 agentes — especialistas técnicos
-│   ├── git/                # 4 agentes — review pré-PR
-│   ├── meta/               # 5 agentes — orquestração e criação
-│   ├── product/            # 8 agentes — discovery e spec
-│   ├── research/           # 1 agente — pesquisa
-│   ├── review/             # 2 agentes — code review
-│   └── testing/            # 3 agentes — testes
+.codex/
+├── config.toml             # Configuração central do Codex (modelos, MCP servers, defaults)
+├── rules/                  # Regras de permissão (Starlark)
+│   └── default.rules       # Política de permissões padrão (era allow/deny do settings.json)
+├── hooks.json              # Automação a nível de evento (hooks)
 │
-├── commands/               # Comandos invocáveis
-│   ├── common/             # Templates e prompts compartilhados
-│   ├── development/        # Comandos de desenvolvimento
-│   ├── docs/               # Geração e validação de documentação
-│   ├── engineer/           # Workflow faseado de implementação
-│   ├── git/                # GitFlow (feature/, hotfix/, release/)
-│   ├── global/             # Comandos transversais
-│   ├── meta/               # Criação de artefatos do Onion
-│   ├── product/            # Workflow faseado de descoberta e spec
-│   ├── quick/              # Análises pontuais
-│   ├── test/               # Estratégias de teste
-│   ├── validate/           # Validação (test-strategy/, qa-points/, collab/)
-│   ├── onion.md            # Ponto de entrada inteligente
-│   └── warm-up.md          # Preparação geral de contexto
-│
-├── skills/                 # Skills (cérebro)
-│   └── onion/              # Orquestrador master
+├── agents/                 # Subagentes especializados (arquivos flat, TOML)
+│   ├── react-developer.toml      # development — especialistas técnicos
+│   ├── nodejs-specialist.toml
+│   ├── product-agent.toml        # product — discovery e spec
+│   ├── task-specialist.toml
+│   ├── iso-27001-specialist.toml # compliance — frameworks regulatórios
+│   ├── metaspec-gate-keeper.toml # meta — orquestração e criação
+│   ├── code-reviewer.toml        # review/git — code review
+│   ├── test-engineer.toml        # testing
+│   └── docker-specialist.toml    # deployment
+│   # 9 agrupamentos de domínio permanecem conceituais; os arquivos são flat
 │
 ├── sessions/               # Estado persistente de workflows faseados
 │   └── <feature>/          # Por feature em desenvolvimento
 │
-├── utils/                  # Abstrações e utilitários
-│   └── task-manager/       # Task Manager Abstraction (factory, interface, types, detector, adapters/)
-│
-├── rules/                  # Regras complementares (opcional)
-├── docs/                   # Documentação interna do .claude/ (opcional)
+├── utils/                  # Utilitários operacionais do Codex (opcional)
+├── rules/                  # (ver acima)
 └── validation/             # Scripts de validação (opcional)
 ```
 
-### 1.3 Estrutura de `docs/`
+### 1.3 Estrutura de `.agents/`
+
+```
+.agents/
+└── skills/                 # Skills invocáveis — uma pasta por skill
+    ├── onion/
+    │   └── SKILL.md        # Orquestrador master / ponto de entrada
+    ├── product-collect/
+    │   └── SKILL.md        # Workflow faseado de descoberta e spec
+    ├── engineer-plan/
+    │   └── SKILL.md        # Workflow faseado de implementação
+    ├── git-fast-commit/
+    │   └── SKILL.md        # GitFlow (feature/release/hotfix via slugs)
+    ├── meta-create-agent/
+    │   └── SKILL.md        # Criação de artefatos do Onion
+    ├── docs-build-tech-docs/
+    │   └── SKILL.md        # Geração e validação de documentação
+    └── task-manager/
+        ├── SKILL.md        # Task Manager Abstraction (skill)
+        └── references/     # factory, interface, types, detector, adapters/
+```
+
+### 1.4 Estrutura de `docs/`
 
 ```
 docs/
@@ -97,6 +105,7 @@ docs/
 ├── plans/                  # Planos de execução
 │
 ├── onion/                  # Documentação operacional (guias, referências, releases)
+│   └── shared/             # Templates e prompts compartilhados (era .claude/commands/common/)
 │
 ├── knowledge-base/         # KBs estruturadas para consumo por IA
 │   ├── concepts/
@@ -114,29 +123,30 @@ docs/
 
 ---
 
-## 2. Separação `.claude/` vs `docs/`
+## 2. Separação operacional (`.codex/` + `.agents/`) vs `docs/`
 
-| Aspecto | `.claude/` | `docs/` |
+| Aspecto | `.codex/` + `.agents/` | `docs/` |
 |---|---|---|
 | Natureza | Operacional | Documentação |
-| Consumido por | Claude Code (em runtime) | Humanos + IA (em leitura) |
-| Formato | Markdown estruturado para execução | Markdown para consumo informacional |
+| Consumido por | Codex (em runtime) | Humanos + IA (em leitura) |
+| Formato | TOML/Markdown estruturado para execução | Markdown para consumo informacional |
 | Versionamento | Junto com PRs que alteram comportamento | Junto com PRs que mudam doutrina ou descobertas |
-| Acesso pelo usuário final | Indireto via invocação (`/<comando>`, `@<agente>`) | Direto via leitura de arquivos |
+| Acesso pelo usuário final | Indireto via invocação (`$<skill>`, `@<subagente>`) | Direto via leitura de arquivos |
 
-**Regra**: artefato invocável vive em `.claude/`; descrição/explicação/análise vive em `docs/`.
+**Regra**: artefato invocável vive em `.codex/` (config, subagentes, regras, hooks, sessões) ou `.agents/` (skills); descrição/explicação/análise vive em `docs/`.
 
 ---
 
 ## 3. Princípio de framework instalável
 
-O Sistema Onion deve ser **instalável em qualquer projeto** (novo, legado ou regulado) **copiando ou clonando `.claude/` e `docs/`** sem necessidade de adaptação de paths absolutos.
+O Sistema Onion deve ser **instalável em qualquer projeto** (novo, legado ou regulado) **copiando ou clonando `.codex/`, `.agents/` e `docs/`** (mais `AGENTS.md` no root) sem necessidade de adaptação de paths absolutos.
 
 ### 3.1 Premissas que o framework PODE assumir sobre o projeto-alvo
 
-- Tem `.claude/` no root do projeto (estrutura padrão do Claude Code)
-- Tem um arquivo `CLAUDE.md` no root que pode ser sobrescrito ou estendido
-- Pode ter `.env` no root (criado a partir de `.env.example` via `/meta:setup-integration`)
+- Tem `.codex/` no root do projeto (estrutura padrão do Codex)
+- Tem `.agents/` no root para skills (padrão Agent Skills)
+- Tem um arquivo `AGENTS.md` no root que pode ser sobrescrito ou estendido
+- Pode ter `.env` no root (criado a partir de `.env.example` via `$meta-setup-integration`)
 - Pode (mas não precisa) ter `docs/` para os contextos spec-as-code
 
 ### 3.2 Premissas que o framework NÃO PODE assumir
@@ -149,9 +159,9 @@ O Sistema Onion deve ser **instalável em qualquer projeto** (novo, legado ou re
 
 ### 3.3 Implicações
 
-- Comandos e agentes devem usar **paths relativos** ou variáveis de ambiente
-- Configuração específica do projeto-alvo vai em `.env` (não em comandos/agentes)
-- Detecção de stack/linguagem deve ser dinâmica (`/docs:reverse-consolidate`)
+- Skills e subagentes devem usar **paths relativos** ou variáveis de ambiente
+- Configuração específica do projeto-alvo vai em `.env` (não em skills/subagentes)
+- Detecção de stack/linguagem deve ser dinâmica (`$docs-reverse-consolidate`)
 
 ---
 
@@ -161,66 +171,65 @@ O Sistema Onion deve ser **instalável em qualquer projeto** (novo, legado ou re
 
 ```mermaid
 graph TD
-    Commands[commands/*]
-    Agents[agents/*]
-    Skills[skills/*]
-    Utils[utils/task-manager]
+    Skills[.agents/skills/*]
+    Agents[.codex/agents/*]
+    Orchestrator[skill: onion]
+    TaskMgr[.agents/skills/task-manager/references]
     Docs[docs/knowledge-base/*]
-    Sessions[sessions/*]
+    Sessions[.codex/sessions/*]
 
-    Commands -->|invocam| Agents
-    Commands -->|invocam| Skills
-    Commands -->|consomem| Utils
-    Commands -->|persistem/leem| Sessions
+    Skills -->|invocam| Agents
+    Skills -->|consomem| TaskMgr
+    Skills -->|persistem/leem| Sessions
 
     Agents -->|consomem| Docs
-    Agents -->|consomem| Utils
+    Agents -->|consomem| TaskMgr
     Agents -->|delegam para| Agents
 
-    Skills -->|orquestram| Commands
-    Skills -->|orquestram| Agents
-    Skills -->|consomem| Docs
+    Orchestrator -->|orquestra| Skills
+    Orchestrator -->|orquestra| Agents
+    Orchestrator -->|consome| Docs
 
-    Utils -.->|referencia| Docs
+    TaskMgr -.->|referencia| Docs
 ```
 
 ### 4.2 Regras de dependência
 
 | De → Para | Permitido | Notas |
 |---|---|---|
-| `commands/*` → `agents/*` | Sim | Padrão de delegação |
-| `commands/*` → `skills/*` | Sim | Quando precisa de orquestração |
-| `commands/*` → `utils/*` | Sim | Abstrações reutilizáveis (Task Manager) |
-| `commands/*` → `sessions/*` | Sim | Workflows faseados persistem estado |
-| `agents/*` → `agents/*` | Sim | Delegação entre especialistas |
-| `agents/*` → `docs/knowledge-base/*` | Sim | KBs como referência |
-| `agents/*` → `utils/*` | Sim | Especialmente Task Manager |
-| `agents/*` → `commands/*` | **Não** | Agente não invoca comando diretamente — sugere ao usuário |
-| `skills/*` → `commands/*`, `agents/*`, `docs/*` | Sim | Skills são orquestradores |
-| `utils/*` → `agents/*`, `commands/*` | **Não** | Abstrações devem ser puras |
-| `compliance/` → `engineer/` (direto) | **Não** | Coordenação via `meta/` ou `docs/build-compliance-docs` |
+| `skills/*` → `.codex/agents/*` | Sim | Padrão de delegação |
+| `skills/*` → skill orquestradora (`onion`) | Sim | Quando precisa de orquestração |
+| `skills/*` → `task-manager/references` | Sim | Abstrações reutilizáveis (Task Manager) |
+| `skills/*` → `.codex/sessions/*` | Sim | Workflows faseados persistem estado |
+| `.codex/agents/*` → `.codex/agents/*` | Sim | Delegação entre especialistas |
+| `.codex/agents/*` → `docs/knowledge-base/*` | Sim | KBs como referência |
+| `.codex/agents/*` → `task-manager/references` | Sim | Especialmente Task Manager |
+| `.codex/agents/*` → `skills/*` | **Não** | Subagente não invoca skill diretamente — sugere ao usuário |
+| skill orquestradora → `skills/*`, `.codex/agents/*`, `docs/*` | Sim | Orquestradores |
+| `task-manager/references` → `.codex/agents/*`, `skills/*` | **Não** | Abstrações devem ser puras |
+| compliance → engineer (direto) | **Não** | Coordenação via meta ou `$docs-build-compliance-docs` |
 
 ### 4.3 Acoplamento entre dimensões
 
-As três dimensões peer (produto, engenharia, compliance) **não devem ter dependências cruzadas diretas** em nível de comando. Coordenação acontece via:
+As três dimensões peer (produto, engenharia, compliance) **não devem ter dependências cruzadas diretas** em nível de skill. Coordenação acontece via:
 
 - **Sessions** (estado compartilhado)
-- **Meta-comandos** em `meta/`
-- **Skills** orquestradoras (`skill: onion`)
+- **Meta-skills** (`$meta-*`)
+- **Skill orquestradora** (`$onion`)
 - **Documentação consolidada** em `docs/`
 
 ---
 
 ## 5. Plataforma alvo
 
-**Sistema Onion roda exclusivamente em Claude Code.**
+**Sistema Onion roda exclusivamente em OpenAI Codex.**
 
 Implicações:
 
 - Não há suporte planejado para Cursor, Continue, Cline ou outras CLIs
 - Não há CLI standalone (`onion init/add/migrate` foram abandonados em 2026-05-18)
 - Não há produto npm distribuído
-- Mudanças na plataforma Claude Code (estrutura de `.claude/`, formato de skills, novas tools) podem exigir atualização do framework
+- Mudanças na plataforma Codex (estrutura de `.codex/`/`.agents/`, formato de skills/subagentes, `config.toml`, novas tools) podem exigir atualização do framework
 
 ---
 
@@ -234,18 +243,18 @@ Implicações:
 
 ### 6.2 Sessões e estado
 
-- `.claude/sessions/<feature>/` é estado runtime, não versionado por padrão
-- `.gitignore` deve excluir `.claude/sessions/` em projetos-alvo se o estado for individual
-- No repo do Onion (este repositório), `.claude/sessions/` pode ser preservado para teste/exemplo
+- `.codex/sessions/<feature>/` é estado runtime, não versionado por padrão
+- `.gitignore` deve excluir `.codex/sessions/` em projetos-alvo se o estado for individual
+- No repo do Onion (este repositório), `.codex/sessions/` pode ser preservado para teste/exemplo
 
 ---
 
 ## 7. Proibições explícitas
 
-- **Proibido** criar diretório de primeiro nível fora dos listados em Seções 1.2 e 1.3 sem PR específico para esta meta-spec
+- **Proibido** criar diretório de primeiro nível fora dos listados em Seções 1.2, 1.3 e 1.4 sem PR específico para esta meta-spec
 - **Proibido** introduzir `.onion/` ou estrutura agnóstica alternativa (abandonado em 2026-05-18)
 - **Proibido** criar `packages/` ou diretório de pacote distribuível (abandonado em 2026-05-18)
-- **Proibido** comando invocar agente fora da relação permitida (ver Seção 4.2)
+- **Proibido** skill ou subagente invocar artefato fora da relação permitida (ver Seção 4.2)
 - **Proibido** depender de path absoluto
 
 ---
@@ -256,5 +265,5 @@ Mudanças nesta spec exigem:
 
 1. PR específico para `docs/meta-specs/architecture.md`
 2. Atualização do campo `version`
-3. Avaliação de impacto em comandos/agentes existentes
+3. Avaliação de impacto em skills/subagentes existentes
 4. Aprovação por `@metaspec-gate-keeper`

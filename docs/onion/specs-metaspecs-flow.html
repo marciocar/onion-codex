@@ -323,8 +323,8 @@
     <h1>Specs &amp; Meta-Specs</h1>
     <p class="lead">O fluxo completo de <strong>criação</strong> e <strong>validação</strong> de especificações no framework Onion — da constituição (L0) à sessão de trabalho (L3).</p>
     <div class="hero-meta">
-      <span>🧅 Framework template em <code style="background:none;color:var(--accent);padding:0">.claude/</code></span>
-      <span>Plataforma única: Claude Code</span>
+      <span>🧅 Framework template em <code style="background:none;color:var(--accent);padding:0">.codex/</code></span>
+      <span>Plataforma única: Codex</span>
       <span>Atualizado 2026-05-29</span>
     </div>
   </div>
@@ -356,14 +356,14 @@
           <h3>Domain Specs — Contexto</h3>
           <span class="layer-sub">business / technical / compliance-context/</span>
         </div>
-        <p>Regras de negócio e domínio do projeto-alvo. Geradas por comandos <span class="path">/docs:build-*</span>.</p>
+        <p>Regras de negócio e domínio do projeto-alvo. Geradas por comandos <span class="path">$docs-build-*</span>.</p>
       </div>
 
       <div class="layer" style="--layer-color: #4ade80">
         <div class="layer-top">
           <span class="lvl">L2</span>
           <h3>Feature Specs — PRD</h3>
-          <span class="layer-sub">/product:spec</span>
+          <span class="layer-sub">$product-spec</span>
         </div>
         <p>Especificações de feature: problema, requisitos funcionais e não-funcionais, critérios de sucesso.</p>
       </div>
@@ -372,7 +372,7 @@
         <div class="layer-top">
           <span class="lvl">L3</span>
           <h3>Task Specs — Sessões</h3>
-          <span class="layer-sub">.claude/sessions/&lt;feature-slug&gt;/</span>
+          <span class="layer-sub">.codex/sessions/&lt;feature-slug&gt;/</span>
         </div>
         <p>Contexto de trabalho persistente e retomável: <span class="path">context.md</span>, <span class="path">plan.md</span>, <span class="path">architecture.md</span>.</p>
       </div>
@@ -392,7 +392,7 @@
         <div class="card-icon">📋</div>
         <h3>Specs de Produto</h3>
         <div class="card-tag">L2 · features &amp; PRD</div>
-        <p>Leva um requisito a PRD completo. O <code>/product:spec</code> já confere meta-specs inline e pede esclarecimento se houver violação.</p>
+        <p>Leva um requisito a PRD completo. O <code>$product-spec</code> já confere meta-specs inline e pede esclarecimento se houver violação.</p>
       </div>
       <div class="card" style="--card-accent: #38bdf8">
         <div class="card-icon">🗂️</div>
@@ -405,25 +405,25 @@
     <div style="margin-top: 32px">
       <div class="kicker" style="color:var(--text-faint);font-size:12px;margin-bottom:14px;letter-spacing:0.1em">PIPELINE · DISCOVERY → BACKLOG</div>
       <div class="flow">
-        <div class="flow-step"><div class="num">1</div><code>/product:collect</code><small>coletar ideias</small></div>
-        <div class="flow-step"><div class="num">2</div><code>/product:refine</code><small>refinar requisitos</small></div>
-        <div class="flow-step"><div class="num">3</div><code>/product:spec</code><small>PRD + check inline</small></div>
-        <div class="flow-step"><div class="num">4</div><code>/product:check</code><small>alinhamento formal</small></div>
-        <div class="flow-step"><div class="num">5</div><code>/product:task</code><small>decompor backlog</small></div>
+        <div class="flow-step"><div class="num">1</div><code>$product-collect</code><small>coletar ideias</small></div>
+        <div class="flow-step"><div class="num">2</div><code>$product-refine</code><small>refinar requisitos</small></div>
+        <div class="flow-step"><div class="num">3</div><code>$product-spec</code><small>PRD + check inline</small></div>
+        <div class="flow-step"><div class="num">4</div><code>$product-check</code><small>alinhamento formal</small></div>
+        <div class="flow-step"><div class="num">5</div><code>$product-task</code><small>decompor backlog</small></div>
       </div>
     </div>
 
     <div style="margin-top: 32px">
       <div class="kicker" style="color:var(--text-faint);font-size:12px;margin-bottom:14px;letter-spacing:0.1em">SPECS DE CONTEXTO (L1)</div>
-      <pre><span class="c-cmd">/docs:build-business-docs</span>    <span class="c-arrow">→</span> docs/business-context/
-<span class="c-cmd">/docs:build-tech-docs</span>        <span class="c-arrow">→</span> docs/technical-context/
-<span class="c-cmd">/docs:build-compliance-docs</span>  <span class="c-arrow">→</span> docs/compliance-context/
-<span class="c-cmd">/meta:create-knowledge-base</span>  <span class="c-arrow">→</span> docs/knowledge-base/&lt;category&gt;/</pre>
+      <pre><span class="c-cmd">$docs-build-business-docs</span>    <span class="c-arrow">→</span> docs/business-context/
+<span class="c-cmd">$docs-build-tech-docs</span>        <span class="c-arrow">→</span> docs/technical-context/
+<span class="c-cmd">$docs-build-compliance-docs</span>  <span class="c-arrow">→</span> docs/compliance-context/
+<span class="c-cmd">$meta-create-knowledge-base</span>  <span class="c-arrow">→</span> docs/knowledge-base/&lt;category&gt;/</pre>
     </div>
 
     <div style="margin-top: 32px">
       <div class="kicker" style="color:var(--text-faint);font-size:12px;margin-bottom:14px;letter-spacing:0.1em">META-SPECS (L0 · CONSTITUIÇÃO)</div>
-      <pre><span class="c-cmt"># Não há /meta:create-metaspec — edição manual em docs/meta-specs/</span>
+      <pre><span class="c-cmt"># Não há $meta-create-metaspec — edição manual em docs/meta-specs/</span>
 <span class="c-cmt"># As 5 atuais: architecture · agents · commands · code-standards · integrations</span>
 <span class="c-cmd">@metaspec-gate-keeper</span>  <span class="c-arrow">→</span> interpreta, extrai DNA, arbitra escopo</pre>
     </div>
@@ -445,7 +445,7 @@
         <tbody>
           <tr>
             <td>Requisito / feature vs meta-specs</td>
-            <td><code>/product:check</code></td>
+            <td><code>$product-check</code></td>
             <td>Relatório de <strong style="color:var(--green)">Alinhamento</strong> × <strong style="color:var(--red)">Desalinhamento</strong>, citando a meta-spec violada</td>
           </tr>
           <tr>
@@ -455,7 +455,7 @@
           </tr>
           <tr>
             <td>Antes do Pull Request</td>
-            <td><code>/engineer:pre-pr</code></td>
+            <td><code>$engineer-pre-pr</code></td>
             <td>Pipeline de pré-PR que inclui chamada ao gate-keeper</td>
           </tr>
           <tr>
@@ -465,12 +465,12 @@
           </tr>
           <tr>
             <td>Documentação gerada</td>
-            <td><code>/docs:validate-docs</code></td>
+            <td><code>$docs-validate-docs</code></td>
             <td>Consistência da documentação de contexto</td>
           </tr>
           <tr>
             <td>Workflows do Onion</td>
-            <td><code>/validate:workflow</code></td>
+            <td><code>$validate-workflow</code></td>
             <td>Completude e integridade dos fluxos</td>
           </tr>
         </tbody>
@@ -490,9 +490,9 @@
         <div class="card-icon">✨</div>
         <h3>Criar &amp; validar uma feature</h3>
         <div class="divider" style="margin:14px 0"></div>
-        <pre style="margin:0;background:var(--bg-soft)"><span class="c-cmd">/product:spec</span> "&lt;requisito&gt;"
+        <pre style="margin:0;background:var(--bg-soft)"><span class="c-cmd">$product-spec</span> "&lt;requisito&gt;"
   <span class="c-cmt"># PRD + confere meta-specs inline</span>
-<span class="c-cmd">/product:check</span> "&lt;feature&gt;"
+<span class="c-cmd">$product-check</span> "&lt;feature&gt;"
   <span class="c-cmt"># relatório de alinhamento</span>
 <span class="c-cmd">@metaspec-gate-keeper</span>
   <span class="c-cmt"># validação arquitetural profunda</span></pre>

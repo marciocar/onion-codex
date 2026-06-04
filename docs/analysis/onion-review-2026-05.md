@@ -15,6 +15,9 @@ predecessores-historicos:
 plano-execucao: docs/plans/onion-saneamento-plan-2026-05.md
 ---
 
+> ⚠️ **Documento histórico** — registro datado anterior à migração para OpenAI Codex (2026-06). Referências a Claude Code / `.claude/` refletem o estado da época. Ver `docs/knowledge-base/platforms/openai-codex.md`.
+
+
 # Revisão Analítica do Sistema Onion — Maio/2026
 
 ## Sumário

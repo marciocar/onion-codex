@@ -26,9 +26,9 @@ Cada guia documenta:
 
 ## Pré-requisitos comuns a todos os cenários
 
-1. **Claude Code instalado** — plataforma única do Onion
+1. **CLI do `codex` instalada e autenticada** (`codex --version`) — plataforma única do Onion
 2. **Git** instalado e funcional
-3. **Acesso ao repositório do Onion** (este repositório) para copiar `.claude/` e estrutura `docs/`
+3. **Acesso ao repositório do Onion** (este repositório) para copiar `.codex/`, `.agents/` e `AGENTS.md` + estrutura `docs/`
 4. **Conta em pelo menos um Task Manager** (Jira, ClickUp, Asana ou Linear) se o projeto usar tasks
 
 ---

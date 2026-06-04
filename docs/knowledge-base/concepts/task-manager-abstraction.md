@@ -17,7 +17,7 @@ O **Task Manager Abstraction** é uma camada de abstração que permite ao Siste
 
 ### Problema Resolvido
 
-Antes da abstração, comandos como `/product/task` e `/engineer/start` tinham chamadas diretas ao ClickUp MCP, criando:
+Antes da abstração, comandos como `$product-task` e `$engineer-start` tinham chamadas diretas ao ClickUp MCP, criando:
 - **Acoplamento forte** a um provedor específico
 - **Impossibilidade de trocar** de gerenciador sem refatoração
 - **Código duplicado** em múltiplos comandos
@@ -67,7 +67,7 @@ Uma camada de abstração baseada no **Adapter Pattern** que:
 ## 📁 Estrutura de Arquivos
 
 ```
-.claude/utils/task-manager/
+.agents/skills/task-manager/references/
 ├── README.md           # Visão geral da abstração
 ├── interface.md        # Interface ITaskManager
 ├── types.md            # Tipos compartilhados
@@ -228,7 +228,7 @@ await taskManager.addComment(taskId, `
 
 ### 1. Criar Adapter
 
-Crie um novo arquivo em `.claude/utils/task-manager/adapters/`:
+Crie um novo arquivo em `.agents/skills/task-manager/references/adapters/`:
 
 ```markdown
 # Nome do Provedor Adapter
@@ -337,10 +337,10 @@ Provedor configurado: clickup
 
 ## 🔗 Referências
 
-- Interface: `.claude/utils/task-manager/interface.md`
-- Factory: `.claude/utils/task-manager/factory.md`
-- Adapters: `.claude/utils/task-manager/adapters/`
-- Comando de setup: `/meta/setup-integration`
+- Interface: `.agents/skills/task-manager/references/interface.md`
+- Factory: `.agents/skills/task-manager/references/factory.md`
+- Adapters: `.agents/skills/task-manager/references/adapters/`
+- Comando de setup: `$meta-setup-integration`
 
 ---
 
@@ -350,5 +350,5 @@ Provedor configurado: clickup
 - [AI Agent Design Patterns](ai-agent-design-patterns.md)
 - [Spec-as-Code Strategy](spec-as-code-strategy.md)
 - [Configuration Management](configuration-management.md)
-- [Claude Code Commands Best Practices](../tools/claude-code-commands-best-practices-2025.md)
+- [Codex Commands Best Practices](../tools/codex-commands-best-practices-2025.md)
 

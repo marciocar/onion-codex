@@ -20,8 +20,8 @@ relacionado:
 # Padrões de Transformação de Consolidados em Tasks
 
 Frameworks reutilizáveis para transformar **conhecimento consolidado** (output de
-`/product/consolidate-meetings` ou `/docs/consolidate-documents`) em **contexto
-estruturado e tasks acionáveis**. Consumido pelo comando `/product/transform-consolidated`.
+`$product-consolidate-meetings` ou `$docs-consolidate-documents`) em **contexto
+estruturado e tasks acionáveis**. Consumido pelo comando `$product-transform-consolidated`.
 
 Preenche o gap entre conhecimento consolidado e tasks acionáveis:
 
@@ -77,7 +77,7 @@ Analise o seguinte documento consolidado e extraia TODOS os elementos acionávei
 Estruture a resposta em YAML para facilitar validação posterior.
 ```
 
-O resultado é salvo em `.claude/sessions/consolidated-transform/analysis-<timestamp>.yaml`.
+O resultado é salvo em `.codex/sessions/consolidated-transform/analysis-<timestamp>.yaml`.
 
 ---
 
@@ -187,7 +187,7 @@ tasks_to_create:
     context: "{{contexto_completo}}"
 ```
 
-Para cada tarefa aprovada, gerar invocação de `/product/collect` ou `/product/task`
+Para cada tarefa aprovada, gerar invocação de `$product-collect` ou `$product-task`
 com título, descrição (contexto completo), prioridade, owner, deadline, dependências,
 tags e referência ao documento de origem.
 
@@ -200,7 +200,7 @@ tags e referência ao documento de origem.
 
 ### Persistência
 
-Salvar em `.claude/sessions/consolidated-transform/`:
+Salvar em `.codex/sessions/consolidated-transform/`:
 - `analysis-<ts>.yaml` (sempre) · `context-<ts>.md` (se `!= tasks`)
 - `tasks-<ts>.yaml` e `commands-<ts>.sh` (se `!= context`)
 

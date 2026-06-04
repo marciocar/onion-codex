@@ -6,6 +6,9 @@ fonte-plano: ~/.claude/plans/preciso-que-fa-a-um-serialized-peach.md
 escopo: Fase 0 (estado "antes") do plano de V&V + T1.5 + T3.2
 ---
 
+> ⚠️ **Documento histórico** — registro datado anterior à migração para OpenAI Codex (2026-06). Referências a Claude Code / `.claude/` refletem o estado da época. Ver `docs/knowledge-base/platforms/openai-codex.md`.
+
+
 # Baseline de Verificação e Validação do Onion — Junho/2026
 
 Estado do framework **antes** da execução do plano de verificação/validação

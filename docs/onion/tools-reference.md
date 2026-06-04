@@ -268,6 +268,8 @@ function todo_write(
 
 ## 🔌 MCP Resources
 
+> ⚙️ **Configuração**: os servidores MCP do Codex são declarados em `.codex/config.toml`, cada um sob uma seção `[mcp_servers.<nome>]` (comando, args e variáveis de ambiente). As ferramentas abaixo operam sobre os servidores ali habilitados.
+
 ### `list_mcp_resources`
 ```typescript
 function list_mcp_resources(
@@ -1035,7 +1037,7 @@ graph TD
 
 ## 🌿 Comandos Git Gitflow
 
-Sistema completo de comandos Git com workflows Gitflow integrados ao Sistema Onion, **REFATORADO** para seguir padrão oficial Claude Code Commands com simplificação radical (87.3% redução de código) mantendo funcionalidade superior.
+Sistema completo de comandos Git com workflows Gitflow integrados ao Sistema Onion, **REFATORADO** para seguir padrão oficial Codex Commands com simplificação radical (87.3% redução de código) mantendo funcionalidade superior.
 
 ### ✨ Refatoração Completa - Janeiro 2025
 - **DE**: Scripts bash complexos (500-1000+ linhas cada) 
@@ -1046,23 +1048,23 @@ Sistema completo de comandos Git com workflows Gitflow integrados ao Sistema Oni
 ### Comandos Implementados
 ```typescript
 // Setup e Ajuda  
-'/git/help': void;           // Sistema de ajuda interativo + guidance
-'/git/init': void;           // Setup Gitflow automático
+'$git-help': void;           // Sistema de ajuda interativo + guidance
+'$git-init': void;           // Setup Gitflow automático
 
 // Feature Development  
-'/git/feature/start': (nome: string) => void;    // Criar feature backlog ClickUp
-'/git/feature/finish': void;                     // Merge + cleanup automático
+'$git-feature-start': (nome: string) => void;    // Criar feature backlog ClickUp
+'$git-feature-finish': void;                     // Merge + cleanup automático
 
 // Release Management
-'/git/release/start': (version: string) => void; // Release + versionamento
-'/git/release/finish': void;                     // Deploy production + tags
+'$git-release-start': (version: string) => void; // Release + versionamento
+'$git-release-finish': void;                     // Deploy production + tags
 
 // Emergency Hotfix
-'/git/hotfix/start': (nome: string) => void;     // Emergency setup < 2h SLA  
-'/git/hotfix/finish': void;                      // Deploy crítico emergencial
+'$git-hotfix-start': (nome: string) => void;     // Emergency setup < 2h SLA  
+'$git-hotfix-finish': void;                      // Deploy crítico emergencial
 
 // Workflow Híbrido
-'/engineer/hotfix': (desc: string, params?: {
+'$engineer-hotfix': (desc: string, params?: {
   'related-tasks'?: string;  // "id1,id2,id3"
   'tags'?: string;          // "urgent,critical"  
   'status'?: string;        // "In Progress"
@@ -1070,7 +1072,7 @@ Sistema completo de comandos Git com workflows Gitflow integrados ao Sistema Oni
 }) => void;                 // Task ClickUp + Git workflow completo
 
 // Pós-Merge
-'/git/sync': (branch?: string) => void;          // Sincronização automática
+'$git-sync': (branch?: string) => void;          // Sincronização automática
 ```
 
 ### Funcionalidades Principais
@@ -1084,25 +1086,25 @@ Sistema completo de comandos Git com workflows Gitflow integrados ao Sistema Oni
 ### Examples de Uso
 ```bash
 # Setup inicial
-/git/init
+$git-init
 
 # Feature development
-/git/feature/start "oauth-authentication"
-/engineer/start oauth-authentication  
-/git/feature/finish
+$git-feature-start "oauth-authentication"
+$engineer-start oauth-authentication  
+$git-feature-finish
 
 # Release workflow  
-/git/release/start "minor"    # 2.0.1 → 2.1.0
+$git-release-start "minor"    # 2.0.1 → 2.1.0
 # ... testing ...
-/git/release/finish
+$git-release-finish
 
 # Emergency hotfix
-/engineer/hotfix "Critical payment timeout" --related-tasks="123,456" --tags="urgent"
+$engineer-hotfix "Critical payment timeout" --related-tasks="123,456" --tags="urgent"
 # ... fix implementation ...
-/git/hotfix/finish
+$git-hotfix-finish
 
 # Synchronization
-/git/sync develop
+$git-sync develop
 ```
 
 ### Integração Sistema Onion

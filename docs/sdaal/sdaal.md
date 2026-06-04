@@ -8,7 +8,7 @@ tags:
   - sdaal
   - ai-patterns
   - spec-as-code
-  - claude-code
+  - codex
   - abstraction-layer
   - llm-runtime
   - prompt-engineering
@@ -169,7 +169,7 @@ flowchart TD
 Toda abstração SDAAL segue exatamente esta árvore:
 
 ```
-.claude/utils/<abstraction-name>/
+.codex/utils/<abstraction-name>/
 ├── README.md           # Visão geral e uso rápido
 ├── interface.md        # Contrato principal (interface TypeScript)
 ├── types.md            # Tipos de entrada/saída + enums
@@ -202,7 +202,7 @@ O fluxo abaixo descreve como o LLM "roda" uma operação SDAAL passo a passo:
 
 ```mermaid
 flowchart TD
-    START["1️⃣ Comando Onion invoca operação<br/>ex: /product:task create"] --> F1
+    START["1️⃣ Comando Onion invoca operação<br/>ex: $product-task create"] --> F1
     F1["2️⃣ IA lê factory.md<br/>localiza get&lt;Manager&gt;()"] --> F2
     F2["3️⃣ IA lê detector.md<br/>resolve provedor via .env"] --> F3
     F3["4️⃣ IA lê adapters/&lt;provider&gt;.md<br/>localiza método correspondente"] --> F4
@@ -218,7 +218,7 @@ flowchart TD
 ### Exemplo concreto — `createTask` no Sistema Onion
 
 ```
-Usuário: /product:task "Implementar feature X"
+Usuário: $product-task "Implementar feature X"
   │
   ▼
 [1] Comando lê factory.md → "Preciso chamar getTaskManager()"
@@ -242,7 +242,7 @@ Usuário: /product:task "Implementar feature X"
 [7] Comando devolve TaskOutput padronizado, alheio a qual provedor respondeu
 ```
 
-**O ponto crucial**: o comando `/product:task` **não tem nenhum conhecimento sobre ClickUp**. Se amanhã o time migrar para Jira, basta trocar `TASK_MANAGER_PROVIDER=jira` no `.env`. Os passos [3]–[6] passam a usar `adapters/jira.md` e a interface `mcp_atlassian_*` automaticamente. O comando permanece intocado.
+**O ponto crucial**: o comando `$product-task` **não tem nenhum conhecimento sobre ClickUp**. Se amanhã o time migrar para Jira, basta trocar `TASK_MANAGER_PROVIDER=jira` no `.env`. Os passos [3]–[6] passam a usar `adapters/jira.md` e a interface `mcp_atlassian_*` automaticamente. O comando permanece intocado.
 
 ---
 
@@ -269,9 +269,9 @@ Esses padrões existem há décadas em código. **A inovação do SDAAL é execu
 
 ### 10.1 A implementação de referência: Task Manager Abstraction
 
-A abstração `.claude/utils/task-manager/` é o caso canônico de SDAAL no Onion. Ela conecta **um conjunto de comandos** (`/product:task`, `/product:spec`, `/engineer:start`, `/engineer:work`, `/product:feature`, `/product:validate-task`) a **quatro provedores intercambiáveis** (ClickUp, Jira, Asana, Linear) **sem que nenhum desses comandos tenha conhecimento direto do provedor ativo**.
+A abstração `.agents/skills/task-manager/references/` é o caso canônico de SDAAL no Onion. Ela conecta **um conjunto de comandos** (`$product-task`, `$product-spec`, `$engineer-start`, `$engineer-work`, `$product-feature`, `$product-validate-task`) a **quatro provedores intercambiáveis** (ClickUp, Jira, Asana, Linear) **sem que nenhum desses comandos tenha conhecimento direto do provedor ativo**.
 
-A interface `ITaskManager` (ver [interface.md](../../.claude/utils/task-manager/interface.md)) define ~15 métodos cobrindo CRUD de tasks, subtasks, comentários, status, busca, projetos e validação. Cada adapter em `adapters/` materializa esses métodos para o seu provedor:
+A interface `ITaskManager` (ver [interface.md](../../.agents/skills/task-manager/references/interface.md)) define ~15 métodos cobrindo CRUD de tasks, subtasks, comentários, status, busca, projetos e validação. Cada adapter em `adapters/` materializa esses métodos para o seu provedor:
 
 - `clickup.md` → chama `mcp_ClickUp_clickup_*`
 - `jira.md` → chama Jira REST API v3 com ADF
@@ -295,7 +295,7 @@ A interface `ITaskManager` (ver [interface.md](../../.claude/utils/task-manager/
 
 LLMs alucinam quando precisam **decidir** sem informação suficiente. SDAAL elimina decisões discricionárias:
 
-- O agente que executa `/product:task` **não escolhe** qual MCP tool chamar — ele lê `factory.md`, segue para `detector.md`, vai até `adapters/<provider>.md`, e encontra a chamada exata documentada.
+- O agente que executa `$product-task` **não escolhe** qual MCP tool chamar — ele lê `factory.md`, segue para `detector.md`, vai até `adapters/<provider>.md`, e encontra a chamada exata documentada.
 - Cada mapeamento de campo está em uma **tabela explícita** no adapter. Não há "o agente decide como mapear `priority`" — está escrito que `urgent → 1` no ClickUp e `urgent → Highest` no Jira.
 - O fallback `none.md` garante que **nunca há um caminho indefinido**. Se o provedor falha, o agente segue um spec determinístico de degradação.
 
@@ -303,7 +303,7 @@ O efeito prático: **o LLM ganha um modelo mental estável do domínio**, o que 
 
 ### 10.4 SDAAL como ativo arquitetural *compounding*
 
-Cada abstração SDAAL que o time adiciona ao Onion **multiplica o valor** sem multiplicar a complexidade. O comando [`/meta:create-abstraction`](../../.claude/commands/meta/create-abstraction.md) materializa o padrão em segundos, e o [`abstraction-template`](../../.claude/commands/common/templates/abstraction-template.md) garante consistência estrutural. O catálogo planejado inclui:
+Cada abstração SDAAL que o time adiciona ao Onion **multiplica o valor** sem multiplicar a complexidade. O comando [`$meta-create-abstraction`](../../.agents/skills/meta/create-abstraction.md) materializa o padrão em segundos, e o [`abstraction-template`](../../docs/onion/shared/abstraction-template.md) garante consistência estrutural. O catálogo planejado inclui:
 
 | Abstração | Provedores | Status |
 |---|---|---|
@@ -315,11 +315,11 @@ Cada abstração SDAAL que o time adiciona ao Onion **multiplica o valor** sem m
 | `meeting-transcription` | Whisper, AssemblyAI, Deepgram, none | 📝 Roadmap |
 | `calendar-manager` | Google Calendar, Outlook, Apple, none | 📝 Roadmap |
 
-Cada uma dessas abstrações, materializada via `/meta:create-abstraction`, herda automaticamente: convenção de arquivos, padrões GoF traduzidos, fallback `none`, factory + detector, e contrato versionado. **O custo marginal da quarta abstração é menor do que o da primeira** — esse é o efeito *compounding* arquitetural.
+Cada uma dessas abstrações, materializada via `$meta-create-abstraction`, herda automaticamente: convenção de arquivos, padrões GoF traduzidos, fallback `none`, factory + detector, e contrato versionado. **O custo marginal da quarta abstração é menor do que o da primeira** — esse é o efeito *compounding* arquitetural.
 
 ### 10.5 Sinergia com a skill `onion`
 
-A skill `.claude/skills/onion/` carrega automaticamente o contexto da abstração ativa quando agentes como `@onion`, `@product-agent`, `@task-specialist` são invocados. Isso significa que:
+A skill `.agents/skills/onion/` carrega automaticamente o contexto da abstração ativa quando agentes como `@onion`, `@product-agent`, `@task-specialist` são invocados. Isso significa que:
 
 - **Todos os agentes** compartilham o mesmo modelo mental do domínio.
 - **Comandos podem ser escritos uma vez** e ainda assim funcionam em qualquer provedor configurado.
@@ -402,7 +402,7 @@ Essa frase é a contribuição central do padrão. Se ela ressoar com sua experi
 ### ✅ Use SDAAL quando…
 
 - Existem **múltiplos provedores intercambiáveis** para o mesmo capability (task manager, notificação, LLM, storage, calendário, etc.).
-- O sistema é **operado primariamente por agentes IA** (Claude Code, Cursor, Continue, agentes próprios sobre Anthropic/OpenAI SDK).
+- O sistema é **operado primariamente por agentes IA** (Codex, Cursor, Continue, agentes próprios sobre Anthropic/OpenAI SDK).
 - **Independência de fornecedor** é critério estratégico (compliance, custo, soberania de dados).
 - A organização **versiona conhecimento operacional** e quer que ele seja consumível tanto por humanos quanto por agentes.
 - Há **disciplina cultural** para manter specs vivas (revisão obrigatória, dono claro por abstração).
@@ -600,7 +600,7 @@ adapters/
 **❌ Errado** — abstração sem responsável, sem revisão periódica, sem registro de mudanças:
 
 ```yaml
-# .claude/utils/task-manager/README.md
+# .agents/skills/task-manager/references/README.md
 title: Task Manager Abstraction
 # (sem dono, sem data, sem revisão programada)
 ```
@@ -657,9 +657,9 @@ E um checklist de revisão em `README.md`:
 
 - KB técnica completa: [`docs/knowledge-base/concepts/specification-driven-ai-abstraction-layer.md`](../knowledge-base/concepts/specification-driven-ai-abstraction-layer.md)
 - Apresentação visual: [`docs/sdaal/index.html`](./index.html)
-- Implementação de referência: [`.claude/utils/task-manager/`](../../.claude/utils/task-manager/)
-- Comando gerador: [`.claude/commands/meta/create-abstraction.md`](../../.claude/commands/meta/create-abstraction.md)
-- Template canônico: [`.claude/commands/common/templates/abstraction-template.md`](../../.claude/commands/common/templates/abstraction-template.md)
+- Implementação de referência: [`.agents/skills/task-manager/references/`](../../.agents/skills/task-manager/references/)
+- Comando gerador: [`.agents/skills/meta/create-abstraction.md`](../../.agents/skills/meta/create-abstraction.md)
+- Template canônico: [`docs/onion/shared/abstraction-template.md`](../../docs/onion/shared/abstraction-template.md)
 - Conceito complementar (negócio): [`docs/knowledge-base/concepts/spec-as-code-strategy.md`](../knowledge-base/concepts/spec-as-code-strategy.md)
 - Conceito complementar (geração): [`docs/knowledge-base/concepts/spec-driven-development.md`](../knowledge-base/concepts/spec-driven-development.md)
 

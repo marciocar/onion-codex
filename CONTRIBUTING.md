@@ -2,13 +2,14 @@
 
 Obrigado por considerar contribuir com o Onion!
 
-O Onion é um **framework template em `.claude/`** — instalável em qualquer
-projeto (novo, legado ou regulado) para orquestrar produto, engenharia e
-compliance com Claude Code. **Não é produto npm, não é distribuído publicamente
-e não tem CLI standalone.** Plataforma única: **Claude Code**.
+O Onion é um **framework template em `.codex/` + `.agents/`** — instalável em
+qualquer projeto (novo, legado ou regulado) para orquestrar produto, engenharia
+e compliance com Codex. **Não é produto npm, não é distribuído publicamente e
+não tem CLI standalone próprio** — roda sobre o `codex` CLI. Plataforma única:
+**OpenAI Codex**.
 
-Por isso, contribuir aqui é **escrever Markdown + YAML** (comandos, agentes,
-skills, knowledge bases e documentação) — não código JavaScript/Node.
+Por isso, contribuir aqui é **escrever Markdown + TOML + YAML** (skills,
+subagentes, knowledge bases e documentação) — não código JavaScript/Node.
 
 ---
 
@@ -34,18 +35,26 @@ Seja respeitoso, colaborativo, inclusivo e profissional em todas as interações
 ## 🚀 Pré-requisitos
 
 - **Git**
-- **Claude Code** (plataforma única do framework)
+- **Codex CLI** (plataforma única do framework): `npm install -g @openai/codex`
+  (ou via `curl`/Homebrew). Autentique com conta ChatGPT ou OpenAI API key.
 
-Não há toolchain de build: o Onion é interpretado em runtime pelo Claude Code a
-partir de `.claude/` (Markdown + YAML). Não há `package.json`, Node ou pnpm.
+Não há toolchain de build: o Onion é interpretado em runtime pelo Codex a partir
+de `AGENTS.md` + `.codex/` + `.agents/skills/` (Markdown + TOML + YAML). Não há
+`package.json`, Node ou pnpm.
 
 ```bash
 # 1. Fork e clone
-git clone https://github.com/your-username/onion-claude.git
-cd onion-claude
+git clone https://github.com/your-username/onion-codex.git
+cd onion-codex
 
-# 2. Abra no Claude Code — comandos, agentes e skills carregam automaticamente.
-#    Para começar: /warm-up e depois /onion
+# 2. Instale o Codex CLI (se ainda não tiver) e abra o projeto
+npm install -g @openai/codex
+codex
+# → autenticar com conta ChatGPT ou OpenAI API key
+
+# O framework é ativado pela presença de AGENTS.md + .codex/ + .agents/skills/.
+# Skills e subagentes carregam automaticamente.
+# Para começar: $warm-up e depois $onion
 ```
 
 ---
@@ -53,35 +62,38 @@ cd onion-claude
 ## 🛠️ Estrutura do projeto
 
 ```
-onion-claude/
-├── .claude/                # Sistema Onion operacional
-│   ├── commands/           # Comandos por categoria (Markdown + frontmatter)
-│   ├── agents/             # Agentes especializados por domínio
-│   ├── skills/             # Skills (cérebro reutilizável)
-│   ├── utils/              # Utilitários (incl. task-manager abstraction)
-│   └── settings.json       # Hooks + permissions (versionado)
+onion-codex/
+├── .agents/
+│   └── skills/             # Skills invocáveis ($slug) por categoria
+│       └── task-manager/   # Task Manager Abstraction (references/)
+├── .codex/                 # Sistema Onion operacional (Codex-nativo)
+│   ├── agents/             # Subagentes especializados (*.toml) por domínio
+│   ├── sessions/           # Sessões persistentes de desenvolvimento
+│   ├── utils/              # Utilitários
+│   └── config.toml         # Configuração + permissions (versionado)
 ├── docs/                   # Documentação (Spec as Code)
 │   ├── meta-specs/         # L0 — "constituição" do framework
 │   ├── knowledge-base/     # Knowledge bases estruturadas
-│   ├── business-context/   # Gerado por /docs:build-business-docs
-│   ├── technical-context/  # Gerado por /docs:build-tech-docs
+│   │   └── platforms/openai-codex.md  # Fonte de verdade da plataforma
+│   ├── business-context/   # Gerado por $docs-build-business-docs
+│   ├── technical-context/  # Gerado por $docs-build-tech-docs
 │   └── onion/              # Guias e referências
-└── CLAUDE.md               # Project rules carregados pelo Claude Code
+└── AGENTS.md               # Project rules carregados pelo Codex
 ```
 
 ---
 
 ## 🤝 Tipos de contribuição
 
-- **🐛 Bugs** — abra uma issue com: comando/agente envolvido, o que aconteceu,
+- **🐛 Bugs** — abra uma issue com: skill/subagente envolvido, o que aconteceu,
   comportamento esperado, passos de reprodução.
-- **✨ Novos comandos/agentes/skills** — use os criadores do próprio framework:
-  `/meta:create-command`, `/meta:create-agent`, `/meta:create-skill`. Eles já
+- **✨ Novas skills/subagentes** — use os criadores do próprio framework:
+  `$meta-create-command`, `$meta-create-agent`, `$meta-create-skill`. Eles já
   aplicam os padrões das meta-specs.
 - **📚 Documentação e knowledge bases** — correções, clareza, exemplos,
-  `/meta:create-knowledge-base`.
+  `$meta-create-knowledge-base`.
 - **🔌 Integrações (Task Manager)** — novos adapters seguindo o padrão SDAAL em
-  `.claude/utils/task-manager/` (ver `docs/meta-specs/integrations.md`).
+  `.agents/skills/task-manager/references/` (ver `docs/meta-specs/integrations.md`).
 
 ---
 
@@ -92,21 +104,21 @@ Consulte antes de criar/alterar artefatos:
 
 | Você vai mexer em… | Consulte |
 |---|---|
-| Agente | [`agents.md`](docs/meta-specs/agents.md) — YAML obrigatório, categorias, limites de tamanho |
-| Comando | [`commands.md`](docs/meta-specs/commands.md) — frontmatter, `allowed-tools` (§1.3), workflows faseados, limites (§5) |
+| Subagente | [`agents.md`](docs/meta-specs/agents.md) — TOML obrigatório, categorias, limites de tamanho |
+| Skill | [`commands.md`](docs/meta-specs/commands.md) — frontmatter, permissions (§1.3), workflows faseados, limites (§5) |
 | Arquitetura/estrutura | [`architecture.md`](docs/meta-specs/architecture.md) — framework instalável, dependências |
 | Idioma/estilo/naming | [`code-standards.md`](docs/meta-specs/code-standards.md) |
-| Integração externa | [`integrations.md`](docs/meta-specs/integrations.md) — adapters, `.env`, `.mcp.json` |
+| Integração externa | [`integrations.md`](docs/meta-specs/integrations.md) — adapters, `.env`, MCP config |
 
 Pontos-chave:
 
-- **Tamanho**: agente ≤1.200 linhas (hard >1.500); comando ≤500 (hard >800).
+- **Tamanho**: subagente ≤1.200 linhas (hard >1.500); skill ≤500 (hard >800).
   Excedeu? Extraia conteúdo de referência para `docs/knowledge-base/` e mantenha
   o artefato como orquestrador enxuto.
-- **`allowed-tools`** em comandos sensíveis (git/escrita/Task Manager) — escopo
+- **Permissions** em skills sensíveis (git/escrita/Task Manager) — escopo
   mínimo (ver `commands.md §1.3`).
-- **Frontmatter YAML obrigatório** em comandos (`description`) e agentes
-  (`name`, `description`, `tools`, `model`).
+- **Frontmatter obrigatório** em skills (`description`, YAML) e subagentes
+  (`name`, `description`, `tools`, `model`, TOML).
 - **Sem assunções sobre o projeto-alvo**: nada de path absoluto; o framework é
   instalável em qualquer repo.
 
@@ -115,7 +127,7 @@ Pontos-chave:
 ## 🔀 Fluxo de Pull Request
 
 1. **Branch** a partir de `main` (GitFlow): `feature/...` ou `fix/...`
-   (ou use `/git:feature:start`).
+   (ou use `$git-feature-start`).
 2. **Mude** seguindo as meta-specs; atualize docs/índices afetados.
 3. **Valide** localmente (ver abaixo).
 4. **Commit** com Conventional Commits **em pt-BR** (ver próxima seção).
@@ -147,18 +159,18 @@ Tipos: `feat`, `fix`, `docs`, `refactor`, `chore`, `test`, `style`, `perf`.
 
 Antes de abrir o PR:
 
-- `/validate/workflow` — completude de workflows.
+- `$validate-workflow` — completude de workflows.
 - Skills `onion-validation` e `onion-patterns` — conformidade de artefatos
-  (YAML, categorias, limites de tamanho, naming).
+  (frontmatter, categorias, limites de tamanho, naming).
 - `@metaspec-gate-keeper` — validação de conformidade arquitetural contra as
   5 meta-specs.
 
 Checklist:
 
 - [ ] Segue as meta-specs aplicáveis.
-- [ ] Frontmatter YAML correto.
+- [ ] Frontmatter correto (YAML em skills, TOML em subagentes).
 - [ ] Dentro dos limites de tamanho (ou refatorado com extração para KB).
-- [ ] Documentação/índices atualizados (`/docs:build-index` se necessário).
+- [ ] Documentação/índices atualizados (`$docs-build-index` se necessário).
 - [ ] Commits em pt-BR, Conventional Commits.
 
 ---

@@ -1,6 +1,6 @@
 # 📚 Índice Central de Documentação
 
-> **Última atualização**: 2026-05-18 | **Gerado por**: `/docs:build-index` | **Revisado**: auditoria manual
+> **Última atualização**: 2026-05-18 | **Gerado por**: `$docs-build-index` | **Revisado**: auditoria manual
 
 Bem-vindo ao índice central de documentação do projeto. Este documento serve como hub de navegação para toda a documentação disponível.
 
@@ -8,11 +8,11 @@ Bem-vindo ao índice central de documentação do projeto. Este documento serve 
 
 ## 🎯 Visão Geral
 
-Este projeto é o **Sistema Onion** — um framework de comandos `.claude/` para uso interno com:
+Este projeto é o **Sistema Onion** — um framework de comandos `.codex/` para uso interno com:
 
-- 🤖 **78 comandos invocáveis** Claude Code em 9 categorias (+ 12 fragmentos compartilhados em `common/` e 3 READMEs)
+- 🤖 **78 comandos invocáveis** Codex em 9 categorias (+ 12 fragmentos compartilhados em `common/` e 3 READMEs)
 - 🎯 **49 agentes de IA especializados** em 9 categorias
-- 🧩 **4 skills** em `.claude/skills/` (`onion` — cérebro do sistema; `onion-patterns`; `onion-validation`; `language-standards`)
+- 🧩 **4 skills** em `.agents/skills/` (`onion` — cérebro do sistema; `onion-patterns`; `onion-validation`; `language-standards`)
 - 📚 **Knowledge Bases estruturadas** para consumo por IA
 - 🧅 **Skill + Comando `/onion`** — ponto de entrada inteligente com ativação automática
 - 🔗 **Task Manager Abstraction** plugável (Jira, ClickUp, Asana, Linear)
@@ -34,8 +34,8 @@ Este projeto é o **Sistema Onion** — um framework de comandos `.claude/` para
 - **1 arquivo** em `docs/meta-specs/` (Meta Especificações)
 - Arquivos adicionais em `docs/analysis/`, `docs/plans/`, `docs/business-context/`, `docs/technical-context/`
 
-### Sistema Onion (`.claude/`)
-- **78 comandos invocáveis** Claude Code distribuídos em:
+### Sistema Onion (`.codex/`)
+- **78 comandos invocáveis** Codex distribuídos em:
   - 20 em `product/` (gestão de produto e descoberta)
   - 12 em `git/` (GitFlow e versionamento)
   - 11 em `engineer/` (engenharia e desenvolvimento)
@@ -46,7 +46,7 @@ Este projeto é o **Sistema Onion** — um framework de comandos `.claude/` para
   - 1 em `development/`, 1 em `quick/`
   - 2 no root: `onion.md`, `warm-up.md`
   - **não-invocáveis**: 12 fragmentos em `common/` (5 templates + 7 prompts) e 3 READMEs de categoria
-- **4 skills** em `.claude/skills/` (`onion`, `onion-patterns`, `onion-validation`, `language-standards`)
+- **4 skills** em `.agents/skills/` (`onion`, `onion-patterns`, `onion-validation`, `language-standards`)
 - **49 agentes** IA distribuídos em:
   - 20 em `development/` (frontend, backend, infra, integrações)
   - 8 em `product/` (gestão e narrativa)
@@ -60,7 +60,7 @@ Este projeto é o **Sistema Onion** — um framework de comandos `.claude/` para
 - **66 arquivos** de documentação markdown
 - **78 comandos invocáveis** em 9 categorias + root (+ 12 fragmentos `common/` + 3 READMEs)
 - **49 agentes** especializados em 9 categorias
-- **4 skills** (`.claude/skills/`)
+- **4 skills** (`.agents/skills/`)
 
 ---
 
@@ -145,7 +145,7 @@ docs/
 #### Integrações e Configuração
 - **[Configuração Inicial](onion/getting-started.md)** - Setup completo do sistema
 - **[Guias de Aplicação](applying/README.md)** - Aplicar o Onion em projetos novos, legados ou regulados
-- Integração com Task Manager (Jira/ClickUp/Asana/Linear): use `/meta:setup-integration` — adapters em `.claude/utils/task-manager/adapters/`
+- Integração com Task Manager (Jira/ClickUp/Asana/Linear): use `$meta-setup-integration` — adapters em `.agents/skills/task-manager/references/adapters/`
 
 #### Referências Técnicas
 - **[Exemplos Práticos](onion/practical-examples.md)** - Casos de uso reais com exemplos
@@ -206,7 +206,7 @@ Knowledge Bases estruturadas para consumo por IA e referência técnica:
 - **Microsoft Graph Teams API** - Guia completo de integração
 
 ### Ferramentas (2 arquivos)
-- **Claude Code Commands Best Practices 2025** - Boas práticas de comandos Claude Code
+- **Codex Commands Best Practices 2025** - Boas práticas de comandos Codex
 - **Whisper** - Sistema de transcrição de áudio (OpenAI)
 
 **Localização:** `docs/knowledge-base/`
@@ -267,11 +267,11 @@ Guias de aplicação do Onion em projetos novos, legados ou regulados:
 4. [Sistema de Testes e Validação](onion/testing-validation-system.md)
 
 **Comandos essenciais:**
-- `/engineer/start` - Iniciar desenvolvimento
-- `/engineer/work` - Trabalhar em feature
-- `/engineer/pr` - Criar Pull Request
-- `/test/unit` - Testes unitários
-- `/test/integration` - Testes de integração
+- `$engineer-start` - Iniciar desenvolvimento
+- `$engineer-work` - Trabalhar em feature
+- `$engineer-pr` - Criar Pull Request
+- `$test-unit` - Testes unitários
+- `$test-integration` - Testes de integração
 
 **Agentes especializados:**
 - `@react-developer` - Desenvolvimento React
@@ -289,15 +289,15 @@ Guias de aplicação do Onion em projetos novos, legados ou regulados:
 4. [Knowledge Base - Spec-Driven Development](knowledge-base/concepts/spec-driven-development.md) ✨ NOVO
 
 **Comandos essenciais:**
-- `/product/task` - Criar tasks estruturadas
-- `/product/spec` - Especificações técnicas
-- `/product/estimate` - Estimar story points
-- `/product/extract-meeting` - Extrair insights de reuniões
-- `/product/consolidate-meetings` - Consolidação de múltiplas reuniões
-- `/product/convert-to-tasks` - Converter documentos consolidados em tasks
-- `/product/whisper` - Facilitador para uso do Whisper
-- `/docs/consolidate-documents` - Consolidar múltiplos documentos
-- `/validate/collab/three-amigos` - Sessões colaborativas
+- `$product-task` - Criar tasks estruturadas
+- `$product-spec` - Especificações técnicas
+- `$product-estimate` - Estimar story points
+- `$product-extract-meeting` - Extrair insights de reuniões
+- `$product-consolidate-meetings` - Consolidação de múltiplas reuniões
+- `$product-convert-to-tasks` - Converter documentos consolidados em tasks
+- `$product-whisper` - Facilitador para uso do Whisper
+- `$docs-consolidate-documents` - Consolidar múltiplos documentos
+- `$validate-collab-three-amigos` - Sessões colaborativas
 
 **Agentes especializados:**
 - `@product-agent` - Orquestração de produto
@@ -315,12 +315,12 @@ Guias de aplicação do Onion em projetos novos, legados ou regulados:
 3. [Guia de Comandos](onion/commands-guide.md) - Seção "Comandos de Validação"
 
 **Comandos essenciais:**
-- `/test/unit` - Testes unitários (White-box)
-- `/test/integration` - Testes de integração (Grey-box)
-- `/test/e2e` - Testes end-to-end (Black-box)
-- `/validate/test-strategy/create` - Criar estratégias de teste
-- `/validate/qa-points/estimate` - Estimar QA points
-- `/validate/collab/pair-testing` - Teste em par
+- `$test-unit` - Testes unitários (White-box)
+- `$test-integration` - Testes de integração (Grey-box)
+- `$test-e2e` - Testes end-to-end (Black-box)
+- `$validate-test-strategy-create` - Criar estratégias de teste
+- `$validate-qa-points-estimate` - Estimar QA points
+- `$validate-collab-pair-testing` - Teste em par
 
 **Agentes especializados:**
 - `@test-agent` - Estratégias completas de teste
@@ -336,7 +336,7 @@ Guias de aplicação do Onion em projetos novos, legados ou regulados:
 
 **Recursos:**
 - Agentes de arquitetura: `@c4-architecture-specialist`, `@mermaid-specialist`
-- Comandos de documentação: `/docs/build-tech-docs`, `/docs/reverse-consolidate`
+- Comandos de documentação: `$docs-build-tech-docs`, `$docs-reverse-consolidate`
 - Knowledge Bases: [SDAAL](knowledge-base/concepts/specification-driven-ai-abstraction-layer.md), [Spec-Driven Development](knowledge-base/concepts/spec-driven-development.md) ✨ NOVO
 
 ### 🔧 Para Administradores do Sistema
@@ -347,9 +347,9 @@ Guias de aplicação do Onion em projetos novos, legados ou regulados:
 3. [Referência de Ferramentas](onion/tools-reference.md)
 
 **Comandos essenciais:**
-- `/meta:setup-integration` - Configurar Task Manager (Jira/ClickUp/Asana/Linear) e demais integrações
-- `/meta:all-tools` - Listar todas as ferramentas
-- `/docs:build-index` - Reconstruir índices
+- `$meta-setup-integration` - Configurar Task Manager (Jira/ClickUp/Asana/Linear) e demais integrações
+- `$meta-all-tools` - Listar todas as ferramentas
+- `$docs-build-index` - Reconstruir índices
 
 ### 🛡️ Para Compliance/Security
 
@@ -426,7 +426,7 @@ Guias de aplicação do Onion em projetos novos, legados ou regulados:
 ### Configuração
 - [Configuração Inicial](onion/getting-started.md)
 - [Guias de Aplicação](applying/README.md)
-- [Adapters de Task Manager](../.claude/utils/task-manager/adapters/) (Jira, ClickUp, Asana, Linear)
+- [Adapters de Task Manager](../.agents/skills/task-manager/references/adapters/) (Jira, ClickUp, Asana, Linear)
 
 ---
 
@@ -447,11 +447,11 @@ Guias de aplicação do Onion em projetos novos, legados ou regulados:
   - Guia completo para desenvolvedores, QA e times cross-funcionais
 
 - **Comandos de Produto Expandidos**
-  - `/product/extract-meeting` - Extração inteligente de insights de reuniões
-  - `/product/consolidate-meetings` - Consolidação de múltiplas reuniões
-  - `/product/convert-to-tasks` - Converter documentos consolidados em tasks
-  - `/product/whisper` - Facilitador para uso do Whisper
-  - `/docs/consolidate-documents` - Consolidar múltiplos documentos
+  - `$product-extract-meeting` - Extração inteligente de insights de reuniões
+  - `$product-consolidate-meetings` - Consolidação de múltiplas reuniões
+  - `$product-convert-to-tasks` - Converter documentos consolidados em tasks
+  - `$product-whisper` - Facilitador para uso do Whisper
+  - `$docs-consolidate-documents` - Consolidar múltiplos documentos
   - Agente `@meeting-consolidator` - Consolidação avançada de reuniões
   - Agente `@whisper-specialist` - Especialista em transcrição de áudio
   - Knowledge Base Whisper - Documentação completa do Whisper
@@ -481,7 +481,7 @@ Guias de aplicação do Onion em projetos novos, legados ou regulados:
 
 ## 🔄 Manutenção
 
-Este índice é gerado automaticamente pelo comando `/docs/build-index`.
+Este índice é gerado automaticamente pelo comando `$docs-build-index`.
 
 **Para atualizar:**
 ```bash

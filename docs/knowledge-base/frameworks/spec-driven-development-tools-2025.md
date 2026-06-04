@@ -74,7 +74,7 @@ Esta knowledge base documenta os **projetos mais populares e em evolução** na 
 - **Nível SDD**: Spec-Anchored (com suporte a Spec-as-Source)
 - **Workflow**: Proposal → Spec Delta → Tasks → Implementation → Archive
 - **Estrutura**: Dois-folder model (`openspec/specs/` + `openspec/changes/`)
-- **Integração**: Suporte nativo para Claude Code, CodeBuddy, Claude Code, OpenCode, Qoder, RooCode
+- **Integração**: Suporte nativo para Codex, CodeBuddy, Codex, OpenCode, Qoder, RooCode
 - **CLI**: `openspec init`, `openspec list`, `openspec validate`, `openspec archive`
 
 #### Arquitetura
@@ -137,7 +137,7 @@ openspec/
 - **Nível SDD**: Spec-First (com potencial para Spec-Anchored)
 - **Workflow**: Research → Planning → Design → Implementation
 - **Estrutura**: Memory Bank (`memory/`) + Scripts + Templates
-- **Integração**: GitHub Copilot, Claude Code, Claude Code, múltiplos assistentes
+- **Integração**: GitHub Copilot, Codex, Codex, múltiplos assistentes
 - **CLI**: `spec-kit init`, `spec-kit generate`
 
 #### Arquitetura
@@ -494,10 +494,10 @@ feature-name/
 
 ### Comandos Relacionados
 
-- `/product/spec` - Criar spec inicial
-- `/product/refine` - Refinar spec
-- `/engineer/plan` - Planejar implementação baseada em spec
-- `/engineer/start` - Iniciar desenvolvimento com spec
+- `$product-spec` - Criar spec inicial
+- `$product-refine` - Refinar spec
+- `$engineer-plan` - Planejar implementação baseada em spec
+- `$engineer-start` - Iniciar desenvolvimento com spec
 
 ### Agentes Relacionados
 

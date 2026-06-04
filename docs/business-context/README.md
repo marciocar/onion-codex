@@ -1,6 +1,6 @@
 # Business Context
 
-> Arquitetura de contexto de negócio do projeto — gerada e mantida pelo comando `/docs:build-business-docs`.
+> Arquitetura de contexto de negócio do projeto — gerada e mantida pelo comando `$docs-build-business-docs`.
 
 ---
 
@@ -47,7 +47,7 @@ docs/business-context/
 ## Como gerar / atualizar
 
 ```bash
-/docs:build-business-docs <fontes-de-input>
+$docs-build-business-docs <fontes-de-input>
 ```
 
 O comando faz três fases:
@@ -77,5 +77,5 @@ O comando faz três fases:
 
 ---
 
-**Comando responsável**: `/docs:build-business-docs`
-**Template-base**: `.claude/commands/common/templates/business_context_template.md`
+**Comando responsável**: `$docs-build-business-docs`
+**Template-base**: `docs/onion/shared/business_context_template.md`

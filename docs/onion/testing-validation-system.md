@@ -25,19 +25,19 @@ O Sistema de Testes e Validação é composto por **4 camadas integradas** que t
                         ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  🔧 COMANDOS DE TESTE (3 comandos)                          │
-│  ├─ /test/unit - Testes unitários                          │
-│  ├─ /test/integration - Testes de integração               │
-│  └─ /test/e2e - Testes end-to-end                         │
+│  ├─ $test-unit - Testes unitários                          │
+│  ├─ $test-integration - Testes de integração               │
+│  └─ $test-e2e - Testes end-to-end                         │
 └─────────────────────────────────────────────────────────────┘
                         ↓
 ┌─────────────────────────────────────────────────────────────┐
 │  ✅ COMANDOS DE VALIDAÇÃO (6 comandos)                       │
-│  ├─ /validate/workflow - Validação de workflows           │
-│  ├─ /validate/test-strategy/create - Criar estratégias    │
-│  ├─ /validate/test-strategy/analyze - Analisar estratégias│
-│  ├─ /validate/qa-points/estimate - Estimar QA points     │
-│  ├─ /validate/collab/three-amigos - Sessões colaborativas│
-│  └─ /validate/collab/pair-testing - Teste em par          │
+│  ├─ $validate-workflow - Validação de workflows           │
+│  ├─ $validate-test-strategy-create - Criar estratégias    │
+│  ├─ $validate-test-strategy-analyze - Analisar estratégias│
+│  ├─ $validate-qa-points-estimate - Estimar QA points     │
+│  ├─ $validate-collab-three-amigos - Sessões colaborativas│
+│  └─ $validate-collab-pair-testing - Teste em par          │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -167,7 +167,7 @@ Escala:
 
 ## 🔧 Camada 3: Comandos de Teste
 
-### 1. **`/test/unit`** - Testes Unitários (White-box)
+### 1. **`$test-unit`** - Testes Unitários (White-box)
 
 **Funcionalidades**:
 - Auto-detecção de framework (Jest, Vitest, PyTest, JUnit)
@@ -177,12 +177,12 @@ Escala:
 
 **Parâmetros**:
 ```bash
-/test/unit <file-path> [--generate] [--run] [--coverage] [--watch] [--framework]
+$test-unit <file-path> [--generate] [--run] [--coverage] [--watch] [--framework]
 ```
 
 **Exemplo**:
 ```bash
-/test/unit src/services/UserService.ts --generate --run --coverage
+$test-unit src/services/UserService.ts --generate --run --coverage
 ```
 
 **Integração**:
@@ -190,7 +190,7 @@ Escala:
 - Integra com `@test-engineer` para validação
 - Gera testes seguindo padrão AAA (Arrange, Act, Assert)
 
-### 2. **`/test/integration`** - Testes de Integração (Grey-box)
+### 2. **`$test-integration`** - Testes de Integração (Grey-box)
 
 **Funcionalidades**:
 - Auto-detecção de framework (Supertest, Pact, Postman)
@@ -200,12 +200,12 @@ Escala:
 
 **Parâmetros**:
 ```bash
-/test/integration <api-endpoint> [--generate] [--run] [--contract] [--boundary] [--fuzz] [--framework]
+$test-integration <api-endpoint> [--generate] [--run] [--contract] [--boundary] [--fuzz] [--framework]
 ```
 
 **Exemplo**:
 ```bash
-/test/integration /api/users --generate --run --contract --boundary
+$test-integration /api/users --generate --run --contract --boundary
 ```
 
 **Integração**:
@@ -213,7 +213,7 @@ Escala:
 - Foca em contratos de API e integrações
 - Valida tratamento de erros e limites
 
-### 3. **`/test/e2e`** - Testes End-to-End (Black-box)
+### 3. **`$test-e2e`** - Testes End-to-End (Black-box)
 
 **Funcionalidades**:
 - Auto-detecção de framework (Cypress, Playwright, Selenium)
@@ -223,12 +223,12 @@ Escala:
 
 **Parâmetros**:
 ```bash
-/test/e2e <feature-name> [--generate] [--run] [--headless] [--record] [--framework]
+$test-e2e <feature-name> [--generate] [--run] [--headless] [--record] [--framework]
 ```
 
 **Exemplo**:
 ```bash
-/test/e2e login --generate --run --record
+$test-e2e login --generate --run --record
 ```
 
 **Integração**:
@@ -240,7 +240,7 @@ Escala:
 
 ## ✅ Camada 4: Comandos de Validação
 
-### 1. **`/validate/workflow`** - Validação de Workflows
+### 1. **`$validate-workflow`** - Validação de Workflows
 
 **Funcionalidades**:
 - Validação de sincronização Git (local vs remoto)
@@ -252,12 +252,12 @@ Escala:
 
 **Parâmetros**:
 ```bash
-/validate/workflow [pr-merge|cleanup|development|complete]
+$validate-workflow [pr-merge|cleanup|development|complete]
 ```
 
 **Exemplo**:
 ```bash
-/validate/workflow pr-merge
+$validate-workflow pr-merge
 ```
 
 **Output**:
@@ -265,7 +265,7 @@ Escala:
 - Estatísticas detalhadas
 - Ações recomendadas/obrigatórias
 
-### 2. **`/validate/test-strategy/create`** - Criar Estratégia de Teste
+### 2. **`$validate-test-strategy-create`** - Criar Estratégia de Teste
 
 **Funcionalidades**:
 - Cria estratégias completas baseadas no Framework
@@ -276,12 +276,12 @@ Escala:
 
 **Parâmetros**:
 ```bash
-/validate/test-strategy/create <feature-name> [--risk-level] [--complexity] [--task-manager] [--project-id] [--dry-run]
+$validate-test-strategy-create <feature-name> [--risk-level] [--complexity] [--task-manager] [--project-id] [--dry-run]
 ```
 
 **Exemplo**:
 ```bash
-/validate/test-strategy/create checkout --risk-level alto --complexity complexo
+$validate-test-strategy-create checkout --risk-level alto --complexity complexo
 ```
 
 **Integração**:
@@ -289,7 +289,7 @@ Escala:
 - Usa `@test-agent` para validação de estratégia
 - Cria tasks no task manager com QA points calculados
 
-### 3. **`/validate/test-strategy/analyze`** - Analisar Estratégia
+### 3. **`$validate-test-strategy-analyze`** - Analisar Estratégia
 
 **Funcionalidades**:
 - Análise de estratégias existentes
@@ -299,10 +299,10 @@ Escala:
 
 **Parâmetros**:
 ```bash
-/validate/test-strategy/analyze <feature-name> [--output-format]
+$validate-test-strategy-analyze <feature-name> [--output-format]
 ```
 
-### 4. **`/validate/qa-points/estimate`** - Estimar QA Story Points
+### 4. **`$validate-qa-points-estimate`** - Estimar QA Story Points
 
 **Funcionalidades**:
 - Cálculo preciso usando fórmula do Framework
@@ -313,12 +313,12 @@ Escala:
 
 **Parâmetros**:
 ```bash
-/validate/qa-points/estimate "<task-description>" [--complexity] [--risk] [--type] [--task-id] [--update] [--breakdown] [--suggest-techniques]
+$validate-qa-points-estimate "<task-description>" [--complexity] [--risk] [--type] [--task-id] [--update] [--breakdown] [--suggest-techniques]
 ```
 
 **Exemplo**:
 ```bash
-/validate/qa-points/estimate "Testar fluxo completo de checkout com múltiplos métodos de pagamento" --breakdown --suggest-techniques
+$validate-qa-points-estimate "Testar fluxo completo de checkout com múltiplos métodos de pagamento" --breakdown --suggest-techniques
 ```
 
 **Integração**:
@@ -326,7 +326,7 @@ Escala:
 - Usa análise contextual para auto-detectar complexidade/risco
 - Pode atualizar task manager automaticamente
 
-### 5. **`/validate/collab/three-amigos`** - Sessão Three Amigos
+### 5. **`$validate-collab-three-amigos`** - Sessão Three Amigos
 
 **Funcionalidades**:
 - Facilita sessões PO + Developer + QA
@@ -337,12 +337,12 @@ Escala:
 
 **Parâmetros**:
 ```bash
-/validate/collab/three-amigos <story_id> [--task-manager] [--generate-agenda]
+$validate-collab-three-amigos <story_id> [--task-manager] [--generate-agenda]
 ```
 
 **Exemplo**:
 ```bash
-/validate/collab/three-amigos CU-123 --generate-agenda
+$validate-collab-three-amigos CU-123 --generate-agenda
 ```
 
 **Outputs**:
@@ -353,7 +353,7 @@ Escala:
 - Test strategy definida
 - Definition of Done acordada
 
-### 6. **`/validate/collab/pair-testing`** - Teste em Par
+### 6. **`$validate-collab-pair-testing`** - Teste em Par
 
 **Funcionalidades**:
 - Facilita sessões de teste em par
@@ -363,7 +363,7 @@ Escala:
 
 **Parâmetros**:
 ```bash
-/validate/collab/pair-testing <feature-name> [--pair-type] [--duration]
+$validate-collab-pair-testing <feature-name> [--pair-type] [--duration]
 ```
 
 ---
@@ -373,31 +373,31 @@ Escala:
 ### Fluxo 1: Desenvolvimento Completo com Testes
 
 ```
-1. /product/task "Criar feature de checkout"
+1. $product-task "Criar feature de checkout"
    ↓
-2. /validate/collab/three-amigos CU-123
+2. $validate-collab-three-amigos CU-123
    → Estima Dev points + QA points
    → Define test strategy
    ↓
-3. /engineer/start checkout
+3. $engineer-start checkout
    ↓
-4. /test/unit src/services/CheckoutService.ts --generate --run
+4. $test-unit src/services/CheckoutService.ts --generate --run
    → Testes White-box (desenvolvedor)
    ↓
-5. /test/integration /api/checkout --generate --run --contract
+5. $test-integration /api/checkout --generate --run --contract
    → Testes Grey-box (cross-dev)
    ↓
-6. /test/e2e checkout --generate --run
+6. $test-e2e checkout --generate --run
    → Testes Black-box (QA)
    ↓
-7. /validate/workflow pr-merge
+7. $validate-workflow pr-merge
    → Validação final antes de PR
 ```
 
 ### Fluxo 2: Criação de Estratégia Completa
 
 ```
-1. /validate/test-strategy/create checkout --risk-level alto
+1. $validate-test-strategy-create checkout --risk-level alto
    → Lê framework_testes.md
    → Calcula QA points automaticamente
    → Cria épico no ClickUp com subtasks
@@ -406,14 +406,14 @@ Escala:
    → Revisa conformidade com framework
    → Sugere melhorias
    ↓
-3. /validate/test-strategy/analyze checkout
+3. $validate-test-strategy-analyze checkout
    → Analisa gaps e oportunidades
 ```
 
 ### Fluxo 3: Estimativa Precisa de QA
 
 ```
-1. /validate/qa-points/estimate "Testar sistema de pagamentos" --breakdown
+1. $validate-qa-points-estimate "Testar sistema de pagamentos" --breakdown
    → Lê framework_testes.md
    → Analisa contexto
    → Calcula: Complexidade (8) + Risco (5) + Tipo (4) = 17 pontos
@@ -422,7 +422,7 @@ Escala:
      - Grey-box: 5 pontos (integration)
      - Black-box: 9 pontos (E2E + exploratório)
    ↓
-2. /validate/qa-points/estimate --task-id CU-456 --update
+2. $validate-qa-points-estimate --task-id CU-456 --update
    → Atualiza task no ClickUp com 17 QA points
 ```
 
@@ -475,39 +475,39 @@ Escala:
 ### Para Desenvolvedores
 
 **Durante desenvolvimento**:
-- `/test/unit` - Criar testes unitários
+- `$test-unit` - Criar testes unitários
 - `@test-engineer` - Validar qualidade dos testes
 
 **Antes de PR**:
-- `/test/integration` - Testar integrações
-- `/validate/workflow` - Validar workflow completo
+- `$test-integration` - Testar integrações
+- `$validate-workflow` - Validar workflow completo
 
 ### Para QA
 
 **Planejamento**:
-- `/validate/qa-points/estimate` - Estimar esforço
-- `/validate/test-strategy/create` - Criar estratégia completa
+- `$validate-qa-points-estimate` - Estimar esforço
+- `$validate-test-strategy-create` - Criar estratégia completa
 - `@test-planner` - Analisar cobertura
 
 **Execução**:
-- `/test/e2e` - Testes end-to-end
-- `/validate/collab/pair-testing` - Sessões colaborativas
+- `$test-e2e` - Testes end-to-end
+- `$validate-collab-pair-testing` - Sessões colaborativas
 
 ### Para Product Owners
 
 **Refinement**:
-- `/validate/collab/three-amigos` - Sessões de refinement
-- `/validate/qa-points/estimate` - Entender esforço de teste
+- `$validate-collab-three-amigos` - Sessões de refinement
+- `$validate-qa-points-estimate` - Entender esforço de teste
 
 ### Para Times Cross-funcionais
 
 **Estratégia**:
 - `@test-agent` - Criar estratégias completas
-- `/validate/test-strategy/create` - Estratégias automatizadas
+- `$validate-test-strategy-create` - Estratégias automatizadas
 
 **Colaboração**:
-- `/validate/collab/three-amigos` - Alinhamento de times
-- `/validate/collab/pair-testing` - Transferência de conhecimento
+- `$validate-collab-three-amigos` - Alinhamento de times
+- `$validate-collab-pair-testing` - Transferência de conhecimento
 
 ---
 
@@ -543,11 +543,11 @@ Comandos de teste geram:
 - [`framework_story_points.md`](../knowledge-base/frameworks/framework_story_points.md) - Sistema de estimativas
 
 ### Comandos Relacionados
-- `/product/task` - Criar tasks
-- `/product/estimate` - Estimar story points de desenvolvimento
-- `/engineer/start` - Iniciar desenvolvimento
-- `/engineer/work` - Trabalhar em task
-- `/engineer/pr` - Criar Pull Request
+- `$product-task` - Criar tasks
+- `$product-estimate` - Estimar story points de desenvolvimento
+- `$engineer-start` - Iniciar desenvolvimento
+- `$engineer-work` - Trabalhar em task
+- `$engineer-pr` - Criar Pull Request
 
 ### Agentes Relacionados
 - `@product-agent` - Orquestração de produto
@@ -568,34 +568,34 @@ Comandos de teste geram:
 
 2. **Criar Primeira Estratégia**:
    ```bash
-   /validate/test-strategy/create minha-feature --risk-level médio
+   $validate-test-strategy-create minha-feature --risk-level médio
    ```
 
 3. **Estimar QA Points**:
    ```bash
-   /validate/qa-points/estimate "Testar feature X" --breakdown
+   $validate-qa-points-estimate "Testar feature X" --breakdown
    ```
 
 ### Uso Diário
 
 **Desenvolvedor**:
 ```bash
-/test/unit src/services/MyService.ts --generate --run --coverage
+$test-unit src/services/MyService.ts --generate --run --coverage
 ```
 
 **QA**:
 ```bash
-/test/e2e login --generate --run --record
+$test-e2e login --generate --run --record
 ```
 
 **Time**:
 ```bash
-/validate/collab/three-amigos CU-123 --generate-agenda
+$validate-collab-three-amigos CU-123 --generate-agenda
 ```
 
 ---
 
 **Responsável**: Sistema Onion v3.0  
 **Última Atualização**: 2025-12-02  
-**Mantido por**: Comando `/docs/build-index`
+**Mantido por**: Comando `$docs-build-index`
 

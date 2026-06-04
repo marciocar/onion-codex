@@ -1,6 +1,6 @@
 ---
 title: Meta-spec — Padrões de Código e Idioma do Sistema Onion
-date: 2026-05-18
+date: 2026-06-04
 version: 1.0.0
 level: L0
 status: active
@@ -11,7 +11,7 @@ gate-keeper: "@metaspec-gate-keeper"
 
 ## Propósito
 
-Define padrões de **idioma**, **formatação** e **convenções textuais** aplicáveis a todos os artefatos do Sistema Onion. Esta spec consolida diretrizes que estavam dispersas em CLAUDE.md, READMEs e mensagens informais.
+Define padrões de **idioma**, **formatação** e **convenções textuais** aplicáveis a todos os artefatos do Sistema Onion. Esta spec consolida diretrizes que estavam dispersas em AGENTS.md, READMEs e mensagens informais.
 
 Aplica-se ao **Sistema Onion**, não ao projeto-alvo onde o Onion é instalado.
 
@@ -20,7 +20,7 @@ Referências relacionadas:
 - [agents.md](./agents.md), [commands.md](./commands.md)
 - [architecture.md](./architecture.md), [integrations.md](./integrations.md)
 
-Skill que automatiza aplicação: `.claude/skills/language-standards/` (quando ativa).
+Skill que automatiza aplicação: `.agents/skills/language-standards/` (quando ativa).
 
 ---
 
@@ -36,8 +36,8 @@ Skill que automatiza aplicação: `.claude/skills/language-standards/` (quando a
 | Nomes de arquivos | **inglês** | `task-manager-abstraction.md`, `react-developer.md` |
 | Commits e branches | **inglês** | `feat: add jira adapter retry logic`, `chore/onion-saneamento` |
 | Logs e debugging | **inglês** | `Error: provider not configured` |
-| YAML frontmatter (campos) | **inglês** | `name:`, `description:`, `tools:` |
-| YAML frontmatter (valores narrativos) | pt-BR aceito | `description: "Especialista em..."` |
+| Campos de config (skill YAML / subagente TOML) | **inglês** | `name`, `description`, `developer_instructions` |
+| Valores narrativos (skill YAML / subagente TOML) | pt-BR aceito | `description: "Especialista em..."` |
 
 ### 1.1 Justificativa
 
@@ -49,7 +49,7 @@ Skill que automatiza aplicação: `.claude/skills/language-standards/` (quando a
 
 - Citações diretas de fontes externas podem manter idioma original (geralmente inglês)
 - Termos técnicos sem tradução consolidada (ex: "Pull Request", "feature flag", "commit") podem ser usados em pt-BR
-- Nomes próprios de tecnologias mantêm grafia oficial (Claude Code, GitHub, Jira)
+- Nomes próprios de tecnologias mantêm grafia oficial (OpenAI Codex, GitHub, Jira)
 
 ---
 
@@ -108,15 +108,15 @@ status: <active | historical | draft>
 
 ### 3.1 Filenames
 
-- **kebab-case** para tudo em `.claude/` e `docs/` (`task-manager-abstraction.md`)
+- **kebab-case** para tudo em `.codex/`, `.agents/` e `docs/` (`task-manager-abstraction.md`)
 - Sufixos descritivos quando útil (`-2025`, `-v4`, `-historical`)
 - Não usar espaços, underscores ou PascalCase
-- Extensão `.md` para documentos, `.json` para configs estruturadas, `.yml` apenas em workflows CI
+- Extensão `.md` para documentos, `.toml` para configs do Codex (`config.toml`, subagentes), `.json` para configs estruturadas (hooks), `.yml` apenas em workflows CI
 
 ### 3.2 Slugs em YAML
 
-- `name:` em agentes — kebab-case sem prefixo
-- `description:` — uma frase, sem terminar com ponto final obrigatório
+- `name` em subagentes (TOML) e skills (frontmatter) — kebab-case sem prefixo
+- `description` — uma frase, sem terminar com ponto final obrigatório
 
 ### 3.3 Branches Git
 
@@ -142,7 +142,7 @@ status: <active | historical | draft>
 
 ### 4.2 Emojis
 
-- **Permitido** em READMEs, INDEX, comandos, guias (uso moderado para hierarquia visual: 🧅, 📚, 🎯)
+- **Permitido** em READMEs, INDEX, skills, guias (uso moderado para hierarquia visual: 🧅, 📚, 🎯)
 - **Proibido** em meta-specs e análises críticas (manter tom profissional)
 - **Proibido** em código
 
@@ -176,7 +176,7 @@ Framework de testes documentado em: [docs/knowledge-base/frameworks/framework_te
 - **Nunca** commitar credenciais, tokens, API keys
 - `.env` no `.gitignore` (sempre); `.env.example` versionado como referência
 - Documentar variáveis de ambiente em `.env.example` com comentários explicativos
-- Quando um agente referenciar variável, documentar isso em [integrations.md](./integrations.md)
+- Quando um subagente referenciar variável, documentar isso em [integrations.md](./integrations.md)
 
 ---
 

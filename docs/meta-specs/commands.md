@@ -1,23 +1,23 @@
 ---
-title: Meta-spec — Padrões para Comandos do Sistema Onion
-date: 2026-05-18
+title: Meta-spec — Padrões para Skills do Sistema Onion
+date: 2026-06-04
 version: 1.0.0
 level: L0
 status: active
 gate-keeper: "@metaspec-gate-keeper"
 ---
 
-# Meta-spec — Padrões para Comandos do Sistema Onion
+# Meta-spec — Padrões para Skills do Sistema Onion
 
 ## Propósito
 
-Define os padrões imutáveis (L0) que **todos os comandos** em `.claude/commands/` devem seguir. Inclui o conceito **invariante** de workflows faseados retomáveis, mecanismo que distingue o Onion de coleções de comandos avulsos.
+Define os padrões imutáveis (L0) que **todas as skills** em `.agents/skills/` devem seguir. Inclui o conceito **invariante** de workflows faseados retomáveis, mecanismo que distingue o Onion de coleções de skills avulsas.
 
 Aplica-se ao **Sistema Onion**, não ao projeto-alvo onde o Onion é instalado.
 
 Referências relacionadas:
 
-- [agents.md](./agents.md) — padrões para agentes
+- [agents.md](./agents.md) — padrões para subagentes
 - [architecture.md](./architecture.md) — estrutura de diretórios e dependências
 - [code-standards.md](./code-standards.md) — padrões de código e idioma
 - [integrations.md](./integrations.md) — padrões para integrações
@@ -26,31 +26,30 @@ Referências relacionadas:
 
 ## 1. Estrutura obrigatória
 
-Todo comando em `.claude/commands/<categoria>/<nome>.md` deve conter:
+Toda skill vive em `.agents/skills/<slug>/SKILL.md` e deve conter:
 
-### 1.1 Frontmatter YAML
+### 1.1 Frontmatter (apenas `name` + `description`)
 
 ```yaml
 ---
-description: <descrição em uma linha — aparece na lista de comandos>
-allowed-tools: [<tools permitidas, ou omitir para herdar contexto>]
-argument-hint: <hint opcional sobre argumentos esperados>
+name: <kebab-case-slug — corresponde ao nome da pasta>
+description: <descrição em uma linha — orienta quando a skill deve ativar>
 ---
 ```
 
-- `description` é obrigatório
-- `allowed-tools` opcional, mas recomendado para comandos que executam ações sensíveis
-- `argument-hint` opcional, melhora UX da invocação
+- `name` é obrigatório e deve corresponder ao slug da pasta
+- `description` é obrigatório e deve descrever **quando** a skill ativa (gatilhos)
+- **Nenhum outro campo** é permitido no frontmatter de uma skill (sem `allowed-tools`, `argument-hint`, `model`, etc.)
 
-### 1.2 Corpo do comando
+### 1.2 Corpo da skill (`SKILL.md`)
 
 Após o frontmatter:
 
 ```markdown
-# <Título descritivo do comando>
+# <Título descritivo da skill>
 
 ## Objetivo
-<O que este comando entrega>
+<O que esta skill entrega>
 
 ## Quando usar
 <Gatilhos, casos de uso típicos>
@@ -65,71 +64,58 @@ Após o frontmatter:
 <Invocações reais>
 ```
 
-Comandos curtos (< 50 linhas) podem omitir seções não aplicáveis, mas **devem manter frontmatter + título + propósito**.
+Skills curtas (< 50 linhas) podem omitir seções não aplicáveis, mas **devem manter frontmatter + título + propósito**.
 
-### 1.3 Convenção de `allowed-tools` (escopo mínimo)
+### 1.3 Permissões e tools
 
-Comandos que executam **ações sensíveis** (git, escrita de arquivos, operações
-de Task Manager) devem declarar `allowed-tools` escopado ao mínimo necessário,
-no formato de regras de permissão do Claude Code:
-
-```yaml
-allowed-tools: Bash(git *) Bash(gh *) Read Edit Write Grep Glob
-```
+No Codex, **permissões não vivem no frontmatter da skill**. A política de permissões é centralizada em `.codex/rules/default.rules` (Starlark) e a automação a nível de evento vive em `.codex/hooks.json`.
 
 Diretrizes:
 
-- Escopar pelo **uso real observado** — restritivo demais quebra o comando.
-- Para Bash, prefira prefixos específicos (`Bash(git *)`) a `Bash(*)`.
-- Detecção de provider via `.env`: `Bash(cat .env*)`.
-- Ferramentas MCP do provider ativo são herdadas do agente delegado
-  (`@clickup-specialist`, etc.) — o comando não precisa enumerá-las.
-- Comandos puramente informativos (READMEs, ajuda) podem omitir.
+- A skill não declara `allowed-tools`; o escopo de execução é governado por `.codex/rules/default.rules`.
+- Para acesso sensível (git, escrita de arquivos, Task Manager), a política Starlark deve permitir explicitamente o necessário, escopado ao mínimo.
+- Detecção de provider via `.env` deve ser permitida pela regra de leitura correspondente.
+- MCP servers do provider ativo são herdados do subagente delegado (`@clickup-specialist`, etc.) — a skill não precisa enumerá-los.
 
-Comandos sensíveis canônicos que **devem** declarar `allowed-tools`:
-`engineer/pr`, `engineer/start`, `engineer/work`, `product/task`,
-`git/fast-commit`.
-
-> Automação a nível de evento (hooks) vive em `.claude/settings.json`, não no
+> Automação a nível de evento (hooks) vive em `.codex/hooks.json`, não no
 > frontmatter — ver `architecture.md` e `integrations.md`.
 
 ---
 
 ## 2. Categorias válidas
 
-Comandos devem residir em uma das categorias abaixo. Categorias com asterisco representam **as três dimensões peer do ciclo Onion**.
+As skills são organizadas por **prefixo de domínio** no slug (`<categoria>-<nome>`, invocadas como `$<categoria>-<nome>`). Categorias com asterisco representam **as três dimensões peer do ciclo Onion**.
 
 | Categoria | Função | Volume típico |
 |---|---|---|
-| `product/` (*) | Discovery, especificação, decomposição de tarefas, branding, reuniões | 20+ |
-| `engineer/` (*) | Planejamento e implementação faseada de features | 10+ |
-| `docs/` | Geração e validação de documentação (incluindo `/docs:build-compliance-docs` da dimensão compliance) | 10+ |
-| `git/` | GitFlow, feature/release/hotfix, code review | 10+ |
-| `meta/` | Criação de comandos/agentes/skills/KBs, integração | 8+ |
-| `common/` | Templates e prompts compartilhados | 8+ |
-| `validate/` | Validação de testes, QA, workflows colaborativos | 4+ |
-| `test/` | Estratégias de teste (unit, integration, e2e) | 3 |
-| `development/` | Comandos de desenvolvimento específicos | 1+ |
-| `quick/` | Análises pontuais rápidas | 1+ |
-| `global/` | Comandos transversais | 1+ |
-| (root) | `onion.md` e `warm-up.md` — pontos de entrada | 2 |
+| `product-*` (*) | Discovery, especificação, decomposição de tarefas, branding, reuniões | 20+ |
+| `engineer-*` (*) | Planejamento e implementação faseada de features | 10+ |
+| `docs-*` | Geração e validação de documentação (incluindo `$docs-build-compliance-docs` da dimensão compliance) | 10+ |
+| `git-*` | GitFlow, feature/release/hotfix, code review | 10+ |
+| `meta-*` | Criação de skills/subagentes/KBs, integração | 8+ |
+| _shared_ | Templates e prompts compartilhados (em `docs/onion/shared/`, não são skills invocáveis) | 8+ |
+| `validate-*` | Validação de testes, QA, workflows colaborativos | 4+ |
+| `test-*` | Estratégias de teste (unit, integration, e2e) | 3 |
+| `development-*` | Skills de desenvolvimento específicas | 1+ |
+| `quick-*` | Análises pontuais rápidas | 1+ |
+| (root) | `onion` e `warm-up` — pontos de entrada | 2 |
 
-Categorias podem ter subdiretórios quando agrupam variantes (ex: `git/feature/`, `git/hotfix/`, `git/release/`, `validate/test-strategy/`, `validate/qa-points/`).
+Variantes de um mesmo subdomínio são expressas no slug (ex: `git-feature-start`, `git-hotfix-start`, `git-release-start`, `validate-test-strategy-analyze`, `validate-qa-points-estimate`).
 
 ---
 
 ## 3. Workflows faseados — INVARIANTE DO FRAMEWORK
 
-**Princípio**: o Onion implementa workflows faseados como **mecanismo central**. Múltiplos comandos cobrindo fases distintas de um mesmo fluxo, com estado retomável persistido em `.claude/sessions/`, são **valor de design**, não duplicação.
+**Princípio**: o Onion implementa workflows faseados como **mecanismo central**. Múltiplas skills cobrindo fases distintas de um mesmo fluxo, com estado retomável persistido em `.codex/sessions/`, são **valor de design**, não duplicação.
 
 ### 3.1 Workflows canônicos
 
-Os **dois workflows abaixo são invariantes** do framework. Devem ser preservados intactos. Qualquer proposta de fusão deve ser rejeitada por `@metaspec-gate-keeper`.
+Os **dois workflows abaixo são invariantes** do framework. Devem ser preservados intactos como skills separadas. Qualquer proposta de fusão (consolidar fases numa única skill) deve ser rejeitada por `@metaspec-gate-keeper`.
 
 **Workflow de Engenharia** (6 fases):
 
 ```
-engineer/plan → engineer/start → engineer/work → engineer/pre-pr → engineer/pr → engineer/pr-update
+$engineer-plan → $engineer-start → $engineer-work → $engineer-pre-pr → $engineer-pr → $engineer-pr-update
 ```
 
 - `plan` — analisa requisitos e cria plano estruturado
@@ -142,7 +128,7 @@ engineer/plan → engineer/start → engineer/work → engineer/pre-pr → engin
 **Workflow de Produto** (6 fases):
 
 ```
-product/collect → product/refine → product/spec → product/task → product/estimate → product/feature
+$product-collect → $product-refine → $product-spec → $product-task → $product-estimate → $product-feature
 ```
 
 - `collect` — coleta ideias de features ou bugs
@@ -155,48 +141,48 @@ product/collect → product/refine → product/spec → product/task → product
 ### 3.2 Regras para workflows faseados
 
 1. Cada fase deve ter **input claro** (estado da sessão ou argumentos), **output claro** (próximo estado da sessão) e ser **invocável isoladamente** quando o estado permite
-2. Estado entre fases é persistido em `.claude/sessions/<feature>/`
+2. Estado entre fases é persistido em `.codex/sessions/<feature>/`
 3. Fases nomeadas explicitamente, sem ambiguidade de ordem
 4. Novos workflows similares devem seguir o mesmo padrão (sessões persistentes, fases nomeadas, retomável)
-5. **Proibido fundir fases** de workflow ativo sem justificativa formal aprovada via PR específico para esta meta-spec
+5. **Proibido fundir fases** de workflow ativo numa única skill sem justificativa formal aprovada via PR específico para esta meta-spec
 
 ### 3.3 Padrão para identificar workflow faseado
 
-Características de um comando que faz parte de workflow faseado:
+Características de uma skill que faz parte de workflow faseado:
 
-- Vive em categoria que representa dimensão do ciclo (`product/`, `engineer/`)
-- Lê ou escreve estado em `.claude/sessions/`
+- Pertence a categoria que representa dimensão do ciclo (`product-*`, `engineer-*`)
+- Lê ou escreve estado em `.codex/sessions/`
 - Tem nome que sugere fase explícita (verbo de ação temporal: `start`, `work`, `pre-pr`, `pr-update`)
-- Documenta a posição no ciclo no corpo do comando
+- Documenta a posição no ciclo no corpo do `SKILL.md`
 
 ---
 
 ## 4. Convenção de naming
 
-- **Slug** (nome do arquivo): kebab-case (`pre-pr.md`, `build-tech-docs.md`)
-- **Path completo**: `.claude/commands/<categoria>/<slug>.md` ou `.claude/commands/<categoria>/<subcategoria>/<slug>.md`
-- **Invocação**: usuário invoca com `/<categoria>:<slug>` ou `/<categoria>/<subcategoria>:<slug>`
+- **Slug** (nome da pasta + campo `name`): kebab-case com prefixo de domínio (`engineer-pre-pr`, `docs-build-tech-docs`)
+- **Path completo**: `.agents/skills/<categoria>-<slug>/SKILL.md` (variantes de subdomínio entram no slug: `git-feature-start`)
+- **Invocação**: usuário invoca com `$<categoria>-<slug>` ou `$<categoria>-<subdominio>-<slug>`
 
 ### 4.1 Política de duplicação de nomes entre categorias
 
-Os nomes abaixo aparecem em múltiplas categorias por razões funcionais legítimas. Esta política torna a regra explícita.
+Os nomes abaixo aparecem em múltiplos domínios por razões funcionais legítimas. Como o slug é flat e prefixado, a ambiguidade é resolvida no próprio nome. Esta política torna a regra explícita.
 
-| Nome | Categorias | Categoria canônica | Variantes em outras categorias |
+| Nome curto | Skills | Skill canônica | Variantes |
 |---|---|---|---|
-| `README` | `product/`, `git/`, `common/`, `docs/` | Específico por categoria (não há canônico) | Cada README descreve a categoria que o contém |
-| `warm-up` | `product/`, `engineer/`, root (`warm-up.md`) | root (`/warm-up`) | `product/warm-up`, `engineer/warm-up` são specializations contextuais |
-| `start` | `engineer/`, `git/feature/`, `git/hotfix/`, `git/release/` | `engineer/start` (sessão de desenvolvimento) | `git/feature/start`, `git/hotfix/start`, `git/release/start` são fluxos GitFlow específicos |
-| `finish` | `git/feature/`, `git/hotfix/`, `git/release/` | Específico por subcategoria GitFlow | Sempre invocar com path completo |
-| `help` | `git/`, `docs/` | Específico por categoria | Ajuda contextual da categoria |
-| `estimate` | `product/`, `validate/qa-points/` | `product/estimate` (story points de feature) | `validate/qa-points/estimate` é QA story points |
-| `plan` | `engineer/`, `product/light-arch` (similar) | `engineer/plan` (planejamento de implementação) | `product/light-arch` é design de arquitetura leve |
-| `check` | `product/`, `product/task-check` | `product/check` (verificação contra meta-specs) | `product/task-check` é verificação de task |
+| `README` | docs de domínio | Não há skill canônica — READMEs viram índices em `docs/onion/shared/` | Cada README descreve seu domínio |
+| `warm-up` | `$product-warm-up`, `$engineer-warm-up`, root (`$warm-up`) | root (`$warm-up`) | `$product-warm-up`, `$engineer-warm-up` são especializações contextuais |
+| `start` | `$engineer-start`, `$git-feature-start`, `$git-hotfix-start`, `$git-release-start` | `$engineer-start` (sessão de desenvolvimento) | `$git-feature-start`, `$git-hotfix-start`, `$git-release-start` são fluxos GitFlow específicos |
+| `finish` | `$git-feature-finish`, `$git-hotfix-finish`, `$git-release-finish` | Específico por subdomínio GitFlow | Sempre invocar com slug completo |
+| `help` | `$git-help`, `$docs-help` | Específico por domínio | Ajuda contextual do domínio |
+| `estimate` | `$product-estimate`, `$validate-qa-points-estimate` | `$product-estimate` (story points de feature) | `$validate-qa-points-estimate` é QA story points |
+| `plan` | `$engineer-plan`, `$product-light-arch` (similar) | `$engineer-plan` (planejamento de implementação) | `$product-light-arch` é design de arquitetura leve |
+| `check` | `$product-check`, `$product-task-check` | `$product-check` (verificação contra meta-specs) | `$product-task-check` é verificação de task |
 
 **Regra geral**:
 
-- Quando houver canônico, novos comandos com nome curto devem usar o canônico ou nome explícito
-- Quando não houver canônico, sempre invocar com path completo (`/<categoria>:<slug>`)
-- Renomes para resolver ambiguidade devem usar aliases temporários para não quebrar invocações existentes
+- O prefixo de domínio no slug elimina colisões; cada skill tem `name` único
+- Sempre invocar com slug completo (`$<categoria>-<slug>`)
+- Renomes para resolver ambiguidade devem manter aliases temporários para não quebrar invocações existentes
 
 ---
 
@@ -205,44 +191,41 @@ Os nomes abaixo aparecem em múltiplas categorias por razões funcionais legíti
 | Limite | Linhas | Tratamento |
 |---|---|---|
 | Recomendado | até 500 | OK |
-| Soft warning | 500 – 800 | Considerar modularização |
-| Hard limit | > 800 | Refatoração obrigatória antes de merge |
+| Hard limit | ≥ 500 | Refatoração obrigatória antes de merge — toda skill deve ter menos de 500 linhas |
 
-Comandos que excederem 800 linhas devem extrair partes para:
+Skills que se aproximarem de 500 linhas devem extrair partes para:
 
-- Templates em `.claude/commands/common/templates/`
-- Prompts em `.claude/commands/common/prompts/`
+- Templates em `docs/onion/shared/`
+- Prompts em `docs/onion/shared/`
 - Knowledge bases em `docs/knowledge-base/`
-- Sub-comandos referenciados
+- Skills referenciadas (delegação)
 
-### 5.1 Isenções (não são comandos invocáveis)
+### 5.1 Isenções (não são skills invocáveis)
 
-O limite acima aplica-se a **comandos invocáveis** (`/categoria/nome`). São
+O limite acima aplica-se a **skills invocáveis** (`$categoria-nome`). São
 **isentos** por natureza, seguindo guidance própria:
 
-- **Fragmentos de template** em `.claude/commands/common/templates/` — são
+- **Fragmentos de template** em `docs/onion/shared/` — são
   estruturas de referência (ex.: `business_context_template.md`,
-  `technical_context_template.md`), auto-registrados como skills
-  `common:templates:*` e referenciados por múltiplos agentes/comandos. Tamanho é
-  inerente ao template; **não relocar** sem atualizar o registro de skill e
-  todas as referências.
-- **Fragmentos de prompt** em `.claude/commands/common/prompts/` — skills
-  `common:prompts:*`.
-- **READMEs de categoria** (`<categoria>/README.md`) — são índices; devem ser
-  enxutos (apontar para comandos/KB), mas não contam como comando.
+  `technical_context_template.md`), referenciadas por múltiplos subagentes/skills.
+  Tamanho é inerente ao template; **não relocar** sem atualizar todas as
+  referências.
+- **Fragmentos de prompt** em `docs/onion/shared/` — instruções compartilhadas.
+- **READMEs de domínio** — são índices; devem ser
+  enxutos (apontar para skills/KB), mas não contam como skill.
 
 ---
 
 ## 6. Modularização
 
-Comandos podem reaproveitar:
+Skills podem reaproveitar:
 
-- **Templates** em `.claude/commands/common/templates/` (estruturas reutilizáveis)
-- **Prompts** em `.claude/commands/common/prompts/` (instruções compartilhadas)
-- **Skills** em `.claude/skills/` (cérebro de orquestração)
-- **Agentes** em `.claude/agents/<categoria>/` (delegação especializada)
+- **Templates** em `docs/onion/shared/` (estruturas reutilizáveis)
+- **Prompts** em `docs/onion/shared/` (instruções compartilhadas)
+- **Skill orquestradora** `$onion` (cérebro de orquestração)
+- **Subagentes** em `.codex/agents/<slug>.toml` (delegação especializada)
 
-Comando que duplica >50 linhas de outro comando deve refatorar para template ou prompt compartilhado.
+Skill que duplica >50 linhas de outra skill deve refatorar para template ou prompt compartilhado.
 
 ---
 
@@ -250,44 +233,44 @@ Comando que duplica >50 linhas de outro comando deve refatorar para template ou 
 
 ### Exemplo conforme (workflow faseado)
 
-Arquivo: `.claude/commands/engineer/start.md`
+Arquivo: `.agents/skills/engineer-start/SKILL.md`
 
-- Frontmatter com `description`
-- Vive em `engineer/` (dimensão de engenharia)
+- Frontmatter com `name` + `description`
+- Pertence ao domínio `engineer-*` (dimensão de engenharia)
 - Faz parte do workflow canônico
-- Persiste estado em `.claude/sessions/`
+- Persiste estado em `.codex/sessions/`
 - Nome reflete fase explícita
 
 **Veredito**: `@metaspec-gate-keeper` aprova.
 
-### Exemplo conforme (comando atômico)
+### Exemplo conforme (skill atômica)
 
-Arquivo: `.claude/commands/meta/setup-integration.md`
+Arquivo: `.agents/skills/meta-setup-integration/SKILL.md`
 
-- Frontmatter com `description` e `allowed-tools`
-- Vive em `meta/` (categoria válida)
+- Frontmatter com `name` + `description`
+- Pertence ao domínio `meta-*` (categoria válida)
 - Não faz parte de workflow faseado — função atômica clara
-- Tamanho dentro do limite
+- Tamanho < 500 linhas
 
 **Veredito**: aprovado.
 
 ### Exemplo quase-conforme
 
-Arquivo hipotético: `.claude/commands/validate/test-strategy/analyze.md` (1.134 linhas reais)
+Arquivo hipotético: `.agents/skills/validate-test-strategy-analyze/SKILL.md` (620 linhas reais)
 
 - Frontmatter correto
 - Categoria válida
-- Tamanho acima de soft warning (500), acima de hard limit (800)
+- Tamanho acima do hard limit (≥ 500)
 
 **Veredito**: requer refatoração antes de próximo merge tocando este arquivo.
 
 ### Exemplo não-conforme
 
-Arquivo hipotético: `.claude/commands/misc/MyCommand.md`
+Arquivo hipotético: `.agents/skills/MyCommand/SKILL.md`
 
-- Categoria `misc/` inválida
-- Filename PascalCase em vez de kebab-case
-- Sem frontmatter
+- Slug `MyCommand` em PascalCase em vez de kebab-case com prefixo de domínio
+- Sem prefixo de domínio válido
+- Frontmatter com campos além de `name`/`description` (ou sem frontmatter)
 
 **Veredito**: rejeitado.
 
@@ -295,10 +278,10 @@ Arquivo hipotético: `.claude/commands/misc/MyCommand.md`
 
 ## 8. Proibições explícitas
 
-- **Proibido** fundir comandos de workflow faseado canônico (engineer/* ou product/*) sem PR específico para esta meta-spec
-- **Proibido** criar categoria fora da lista válida
-- **Proibido** criar comando sem frontmatter
-- **Proibido** comando com `name` em formato diferente de kebab-case
+- **Proibido** fundir skills de workflow faseado canônico (`$engineer-*` ou `$product-*`) numa única skill sem PR específico para esta meta-spec
+- **Proibido** criar categoria (prefixo de domínio) fora da lista válida
+- **Proibido** criar skill sem frontmatter ou com campos além de `name`/`description`
+- **Proibido** skill com `name` em formato diferente de kebab-case
 
 ---
 
@@ -308,5 +291,5 @@ Mudanças nesta spec exigem:
 
 1. PR específico para `docs/meta-specs/commands.md`
 2. Atualização do campo `version` no frontmatter
-3. Validação por `@metaspec-gate-keeper` em comandos existentes
+3. Validação por `@metaspec-gate-keeper` em skills existentes
 4. Especificamente para mudança em workflows canônicos (Seção 3.1): aprovação registrada em commit message com link para issue de discussão

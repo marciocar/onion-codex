@@ -12,10 +12,10 @@ status: reference
 date: "2026-06-02"
 maintained_by: Sistema Onion
 related:
-  - .claude/agents/development/system-documentation-orchestrator.md
-  - .claude/agents/development/c4-architecture-specialist.md
-  - .claude/agents/development/mermaid-specialist.md
-  - .claude/commands/docs/build-tech-docs.md
+  - .codex/agents/development/system-documentation-orchestrator.md
+  - .codex/agents/development/c4-architecture-specialist.md
+  - .codex/agents/development/mermaid-specialist.md
+  - .agents/skills/docs/build-tech-docs.md
 ---
 
 # Padrões C4, ADR e Templates de Documentação de Arquitetura
@@ -597,4 +597,4 @@ Template do hub de navegação da documentação:
 - `@c4-architecture-specialist` — geração de diagramas C4 (níveis 1-3)
 - `@mermaid-specialist` — diagramas Mermaid (deployment, sequence, flowchart)
 - `@nx-monorepo-specialist` — estrutura de workspace NX
-- `/docs/build-tech-docs` — geração de contexto técnico complementar
+- `$docs-build-tech-docs` — geração de contexto técnico complementar

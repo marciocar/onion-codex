@@ -1,0 +1,58 @@
+# 🧅 Sistema Onion — OpenAI Codex config
+# Precedência: CLI flags > este arquivo (projeto) > ~/.codex/config.toml > defaults
+
+# Modelo padrão (mapeamento: sonnet → gpt-5.4)
+model = "gpt-5.4"
+model_reasoning_effort = "medium"
+
+# Sandbox e aprovação — skills/subagentes que editam exigem workspace-write
+sandbox_mode = "workspace-write"
+approval_policy = "on-request"
+
+# AGENTS.md do Onion é maior que o default (8 KiB) — ampliar limite de leitura
+project_doc_max_bytes = 32768
+project_doc_fallback_filenames = ["README.md"]
+
+# Abrir citações de arquivo no editor
+file_opener = "vscode"
+
+[features]
+memories = true        # contexto persistente entre threads (~/.codex/memories/)
+multi_agent = true     # habilita subagentes (.codex/agents/*.toml)
+
+# Subagentes — limites de orquestração
+[agents]
+max_threads = 6
+max_depth = 1          # subagentes não spawnam subagentes por padrão
+job_max_runtime_seconds = 1800
+
+# Política de ambiente de shell — filtra segredos por padrão (KEY/SECRET/TOKEN)
+[shell_environment_policy]
+inherit = "core"
+exclude = ["AWS_*", "AZURE_*"]
+
+# ─────────────────────────────────────────────────────────────
+# MCP servers — Task Manager Abstraction (ClickUp/Asana/Jira/Linear)
+# Preencher comandos/credenciais conforme o provider ativo no .env.
+# Os subagentes especialistas referenciam estes ids em mcp_servers.
+# ─────────────────────────────────────────────────────────────
+
+# [mcp_servers.clickup]
+# command = "npx"
+# args = ["-y", "@clickup/mcp-server"]
+# env = { CLICKUP_API_TOKEN = "${CLICKUP_API_TOKEN}" }
+
+# [mcp_servers.asana]
+# command = "npx"
+# args = ["-y", "@asana/mcp-server"]
+# env = { ASANA_ACCESS_TOKEN = "${ASANA_ACCESS_TOKEN}" }
+
+# [mcp_servers.atlassian]
+# command = "npx"
+# args = ["-y", "@atlassian/mcp-server"]
+# env = { JIRA_HOST = "${JIRA_HOST}", JIRA_EMAIL = "${JIRA_EMAIL}", JIRA_API_TOKEN = "${JIRA_API_TOKEN}" }
+
+# [mcp_servers.linear]
+# command = "npx"
+# args = ["-y", "@linear/mcp-server"]
+# env = { LINEAR_API_KEY = "${LINEAR_API_KEY}" }

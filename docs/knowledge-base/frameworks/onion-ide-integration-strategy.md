@@ -1,3 +1,5 @@
+> ⚠️ **Documento histórico** — descreve direções anteriores à migração para OpenAI Codex (2026-06). Mantido como referência. Ver `docs/knowledge-base/platforms/openai-codex.md`.
+
 # Sistema Onion - Estratégia de Integração com IDEs
 
 > **Versão**: 1.0.0 | **Última atualização**: 2025-12-20 | **Categoria**: Frameworks  

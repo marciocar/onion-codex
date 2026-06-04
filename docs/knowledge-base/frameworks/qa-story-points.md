@@ -8,12 +8,12 @@ maintained_by: Sistema Onion
 related:
   - docs/knowledge-base/frameworks/framework_testes.md
   - docs/knowledge-base/frameworks/test-strategy-scoring.md
-  - .claude/commands/validate/qa-points/estimate.md
+  - .agents/skills/validate/qa-points/estimate.md
 ---
 
 # Tabelas de Referência para Estimativa de QA Story Points
 
-Knowledge base de referência com as **tabelas determinísticas de cálculo**, **mapas de detecção de keywords**, **distribuição por perspectiva por tipo de teste** e **técnicas sugeridas por tipo** usadas pelo comando `/validate/qa-points/estimate`.
+Knowledge base de referência com as **tabelas determinísticas de cálculo**, **mapas de detecção de keywords**, **distribuição por perspectiva por tipo de teste** e **técnicas sugeridas por tipo** usadas pelo comando `$validate-qa-points-estimate`.
 
 O **framework canônico** (definição conceitual das 3 dimensões, fórmula, escala de conversão para horas, padrões de colaboração) vive em [`framework_testes.md`](framework_testes.md), seção "QA Story Points - Sistema de Estimativa". A operacionalização para auditoria de estratégias está em [`test-strategy-scoring.md`](test-strategy-scoring.md). Esta KB **não duplica** o conceito — apenas fornece os valores pontuais que o comando usa para cálculo automático e reprodutível.
 

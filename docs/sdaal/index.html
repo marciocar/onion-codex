@@ -1138,13 +1138,13 @@
 </tr>
 <tr>
 <td style="border: 1px solid var(--border); padding: 12px;"><strong>Tags</strong></td>
-<td style="border: 1px solid var(--border); padding: 12px;"><code>ai-patterns</code>, <code>abstraction-layer</code>, <code>spec-as-code</code>, <code>claude-code-development</code></td>
+<td style="border: 1px solid var(--border); padding: 12px;"><code>ai-patterns</code>, <code>abstraction-layer</code>, <code>spec-as-code</code>, <code>codex-development</code></td>
 </tr>
 </tbody>
 </table>
 
 <ul>
-<li>Task Manager Abstraction (<code>.claude/utils/task-manager/</code>)</li>
+<li>Task Manager Abstraction (<code>.agents/skills/task-manager/references/</code>)</li>
 <li><a href="https://refactoring.guru/design-patterns/adapter">Adapter Pattern - GoF</a></li>
 <li><a href="https://refactoring.guru/design-patterns/factory-method">Factory Pattern - GoF</a></li>
 <li>Práticas do Sistema Onion</li>
@@ -1293,7 +1293,7 @@ flowchart TD
 <h4>Estrutura Completa com Adaptadores</h4>
 <p>Estrutura completa incluindo diretório de adapters:</p>
 
-<pre><code class="language-plaintext">.claude/utils/&lt;abstraction&gt;/
+<pre><code class="language-plaintext">.codex/utils/&lt;abstraction&gt;/
 ├── README.md           # Visão geral e uso rápido
 ├── interface.md        # Interface/Contrato principal
 ├── types.md            # Tipos de entrada e saída
@@ -1558,7 +1558,7 @@ PROVIDER_WORKSPACE_ID=xxx</code></pre>
 <li>Sistema opera principalmente via LLM</li>
 <li>Precisa de flexibilidade para trocar provedores</li>
 <li>Deseja documentação e implementação unificadas</li>
-<li>Trabalha com assistentes de código (Claude Code, Copilot)</li>
+<li>Trabalha com assistentes de código (Codex, Copilot)</li>
 </ul>
 
 <p>❌ <strong>Não use quando:</strong></p>
@@ -1586,7 +1586,7 @@ PROVIDER_WORKSPACE_ID=xxx</code></pre>
 
 <pre><code class="language-markdown">## Comando Onion Executa
 
-1. Usuário: `/engineer/start TASK-123`
+1. Usuário: `$engineer-start TASK-123`
 
 2. IA lê factory.md:
    - "Preciso chamar getTaskManager()"
@@ -1658,8 +1658,8 @@ flowchart TD
 
 
 <ul>
-<li><a href="../../../.claude/commands/meta/create-abstraction.md">Comando /meta/create-abstraction</a> - Gerador automático de SDAAL</li>
-<li><a href="../../../.claude/commands/common/templates/abstraction-template.md">Template de Abstração</a> - Template base</li>
+<li><a href="../../../.agents/skills/meta/create-abstraction.md">Comando $meta-create-abstraction</a> - Gerador automático de SDAAL</li>
+<li><a href="../../../docs/onion/shared/abstraction-template.md">Template de Abstração</a> - Template base</li>
 </ul>
 
 <ul>
@@ -2127,19 +2127,19 @@ Você está implementando a feature definida em:
 </tr></thead>
 <tbody>
 <tr>
-<td style="border: 1px solid var(--border); padding: 12px;"><code>/product/task</code></td>
+<td style="border: 1px solid var(--border); padding: 12px;"><code>$product-task</code></td>
 <td style="border: 1px solid var(--border); padding: 12px;">Cria task spec</td>
 </tr>
 <tr>
-<td style="border: 1px solid var(--border); padding: 12px;"><code>/product/spec</code></td>
+<td style="border: 1px solid var(--border); padding: 12px;"><code>$product-spec</code></td>
 <td style="border: 1px solid var(--border); padding: 12px;">Cria feature spec</td>
 </tr>
 <tr>
-<td style="border: 1px solid var(--border); padding: 12px;"><code>/engineer/start</code></td>
+<td style="border: 1px solid var(--border); padding: 12px;"><code>$engineer-start</code></td>
 <td style="border: 1px solid var(--border); padding: 12px;">Lê spec e prepara contexto</td>
 </tr>
 <tr>
-<td style="border: 1px solid var(--border); padding: 12px;"><code>/engineer/work</code></td>
+<td style="border: 1px solid var(--border); padding: 12px;"><code>$engineer-work</code></td>
 <td style="border: 1px solid var(--border); padding: 12px;">Implementa baseado em spec</td>
 </tr>
 <tr>
@@ -2153,12 +2153,12 @@ Você está implementando a feature definida em:
 <p>Sequência de comandos e agentes no processo Spec as Code:</p>
 
 <ol>
-<li><code>/product/create</code> → Cria context.md com spec inicial</li>
-<li><code>/product/refine</code> → Refina spec com detalhes</li>
+<li><code>$product-create</code> → Cria context.md com spec inicial</li>
+<li><code>$product-refine</code> → Refina spec com detalhes</li>
 <li><code>@metaspec-gate-keeper</code> → Valida conformidade com meta-specs</li>
-<li><code>/engineer/start</code> → Prepara ambiente baseado na spec</li>
-<li><code>/engineer/work</code> → Implementa seguindo spec</li>
-<li><code>/engineer/pr</code> → Valida critérios de aceitação</li>
+<li><code>$engineer-start</code> → Prepara ambiente baseado na spec</li>
+<li><code>$engineer-work</code> → Implementa seguindo spec</li>
+<li><code>$engineer-pr</code> → Valida critérios de aceitação</li>
 </ol>
 
 
@@ -2459,8 +2459,8 @@ flowchart TD
 
 <p>Ao invocar este agente, incluir:</p>
 <ol>
-<li>Sessão atual: @.claude/sessions/<feature>/context.md</li>
-<li>Padrões do projeto: @.claude/rules/</li>
+<li>Sessão atual: @.codex/sessions/<feature>/context.md</li>
+<li>Padrões do projeto: @.codex/rules/</li>
 <li>Última atividade: últimos 5 arquivos modificados</code></pre>
 </ol>
 
@@ -2479,7 +2479,7 @@ flowchart TD
 
 <p>include:</p>
 <ul>
-<li>&quot;.claude/sessions/current/*&quot;</li>
+<li>&quot;.codex/sessions/current/*&quot;</li>
 <li>&quot;src/components/<component>/*&quot;</li>
 </ul>
 <p>exclude:</p>
@@ -2655,7 +2655,7 @@ flowchart TD
 </tr>
 <tr>
 <td style="border: 1px solid var(--border); padding: 12px;">Context Injection</td>
-<td style="border: 1px solid var(--border); padding: 12px;">Sessions em <code>.claude/sessions/</code></td>
+<td style="border: 1px solid var(--border); padding: 12px;">Sessions em <code>.codex/sessions/</code></td>
 </tr>
 </tbody>
 </table>
@@ -2663,7 +2663,7 @@ flowchart TD
 <p>name: agent-name</p>
 <p>description: |</p>
 <p>Descrição clara em 1-2 linhas.</p>
-<p>model: sonnet</p>
+<p>model: gpt-5.4</p>
 <p>tools: [read_file, write, codebase_search, grep]</p>
 
 <p>color: purple</p>
@@ -2766,7 +2766,7 @@ flowchart TD
 <p>O <strong>Task Manager Abstraction</strong> é uma camada de abstração que permite ao Sistema Onion funcionar com diferentes gerenciadores de tarefas (ClickUp, Asana, Linear) sem modificar comandos ou agentes.</p>
 
 
-<p>Antes da abstração, comandos como <code>/product/task</code> e <code>/engineer/start</code> tinham chamadas diretas ao ClickUp MCP, criando:</p>
+<p>Antes da abstração, comandos como <code>$product-task</code> e <code>$engineer-start</code> tinham chamadas diretas ao ClickUp MCP, criando:</p>
 <ul>
 <li><strong>Acoplamento forte</strong> a um provedor específico</li>
 <li><strong>Impossibilidade de trocar</strong> de gerenciador sem refatoração</li>
@@ -2788,7 +2788,7 @@ flowchart TD
 
 <div class="mermaid">
 flowchart TD
-    CMDS["Comandos Onion<br/>/product/task<br/>/engineer/start<br/>/engineer/work"]
+    CMDS["Comandos Onion<br/>$product-task<br/>$engineer-start<br/>$engineer-work"]
     CMDS --> AL["Abstraction Layer"]
     
     subgraph AL["Abstraction Layer"]
@@ -3059,10 +3059,10 @@ NOVO_PROVIDER_WORKSPACE=xxx</code></pre>
 
 
 <ul>
-<li>Interface: <code>.claude/utils/task-manager/interface.md</code></li>
-<li>Factory: <code>.claude/utils/task-manager/factory.md</code></li>
-<li>Adapters: <code>.claude/utils/task-manager/adapters/</code></li>
-<li>Comando de setup: <code>/meta/setup-integration</code></li>
+<li>Interface: <code>.agents/skills/task-manager/references/interface.md</code></li>
+<li>Factory: <code>.agents/skills/task-manager/references/factory.md</code></li>
+<li>Adapters: <code>.agents/skills/task-manager/references/adapters/</code></li>
+<li>Comando de setup: <code>$meta-setup-integration</code></li>
 </ul>
 
 
@@ -3071,7 +3071,7 @@ NOVO_PROVIDER_WORKSPACE=xxx</code></pre>
 <li><a href="ai-agent-design-patterns.md">AI Agent Design Patterns</a></li>
 <li><a href="spec-as-code-strategy.md">Spec-as-Code Strategy</a></li>
 <li><a href="configuration-management.md">Configuration Management</a></li>
-<li><a href="../tools/claude-code-commands-best-practices-2025.md">Claude Code Commands Best Practices</a></li>
+<li><a href="../tools/codex-commands-best-practices-2025.md">Codex Commands Best Practices</a></li>
 </ul>
 
 
@@ -3100,9 +3100,9 @@ NOVO_PROVIDER_WORKSPACE=xxx</code></pre>
 <h4>Validações do Comando</h4>
 <p>O comando executa as seguintes validações antes de criar a abstração:</p>
 
-<pre><code class="language-bash">if [ -d ".claude/utils/{{abstraction_name}}" ]; then
+<pre><code class="language-bash">if [ -d ".codex/utils/{{abstraction_name}}" ]; then
   echo "❌ ERRO: Abstração '{{abstraction_name}}' já existe!"
-  ls -la .claude/utils/{{abstraction_name}}/
+  ls -la .codex/utils/{{abstraction_name}}/
   exit 1
 fi
 
@@ -3113,7 +3113,7 @@ fi</code></pre>
 
 <p><strong>Checklist de Validação:</strong></p>
 <ul>
-<li>[ ] Nome único (não existe em <code>.claude/utils/</code>)</li>
+<li>[ ] Nome único (não existe em <code>.codex/utils/</code>)</li>
 <li>[ ] Nome em kebab-case válido</li>
 <li>[ ] Pelo menos 1 provedor definido (ou usar fallback only)</li>
 </ul>
@@ -3168,7 +3168,7 @@ fi</code></pre>
 
 <h5>Exemplo de Uso</h5>
 <pre><code class="language-typescript">// Importar factory
-import { get{{interface_name.slice(1)}} } from '.claude/utils/{{abstraction_name}}/factory';
+import { get{{interface_name.slice(1)}} } from '.codex/utils/{{abstraction_name}}/factory';
 
 // Obter adapter configurado
 const instance = getFactory();
@@ -3500,7 +3500,7 @@ class NoProviderAdapter implements {{interface_name}} {
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 📁 Estrutura:
-.claude/utils/{{abstraction_name}}/
+.codex/utils/{{abstraction_name}}/
 ├── README.md           ✅
 ├── interface.md        ✅
 ├── types.md            ✅
@@ -3527,14 +3527,14 @@ class NoProviderAdapter implements {{interface_name}} {
 
 <p>📚 Documentação:</p>
 <p>∟ Pattern: docs/knowbase/concepts/specification-driven-ai-abstraction-layer.md</p>
-<p>∟ Exemplo: .claude/utils/task-manager/</p>
+<p>∟ Exemplo: .agents/skills/task-manager/references/</p>
 
 <p>━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</code></pre>
 
 
 <ul>
 <li><a href="../../docs/knowbase/concepts/specification-driven-ai-abstraction-layer.md">SDAAL Pattern</a></li>
-<li><a href="../../.claude/utils/task-manager/">Task Manager (Referência)</a></li>
+<li><a href="../../.agents/skills/task-manager/references/">Task Manager (Referência)</a></li>
 <li>Agente: @onion</li>
 </ul>
 
@@ -3754,7 +3754,7 @@ class NoProviderAdapter implements {{interface_name}} {
 
 <ul>
 <li><a href="../../../docs/knowbase/concepts/specification-driven-ai-abstraction-layer.md">SDAAL Pattern</a></li>
-<li><a href="../../../.claude/utils/task-manager/">Task Manager (Exemplo)</a></li>
+<li><a href="../../../.agents/skills/task-manager/references/">Task Manager (Exemplo)</a></li>
 <li><a href="../meta/create-abstraction.md">Comando create-abstraction</a></li>
 </ul>
 

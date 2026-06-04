@@ -334,7 +334,7 @@ docs/
 ### Meta-Specs como Constituição
 
 ```
-.claude/
+.codex/
 ├── docs/
 │   └── meta-specs/         # Regras imutáveis do sistema
 │       ├── index.md        # Índice
@@ -345,7 +345,7 @@ docs/
 ### Sessions como Task Specs
 
 ```
-.claude/sessions/<feature>/
+.codex/sessions/<feature>/
 ├── context.md    # Spec da feature atual
 ├── plan.md       # Decomposição em subtasks
 ├── notes.md      # Decisões e observações
@@ -356,10 +356,10 @@ docs/
 
 | Comando | Interação com Specs |
 |---------|---------------------|
-| `/product/task` | Cria task spec |
-| `/product/spec` | Cria feature spec |
-| `/engineer/start` | Lê spec e prepara contexto |
-| `/engineer/work` | Implementa baseado em spec |
+| `$product-task` | Cria task spec |
+| `$product-spec` | Cria feature spec |
+| `$engineer-start` | Lê spec e prepara contexto |
+| `$engineer-work` | Implementa baseado em spec |
 | `@metaspec-gate-keeper` | Valida conformidade |
 
 ### Fluxo Completo

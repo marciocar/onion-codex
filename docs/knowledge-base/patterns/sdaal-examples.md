@@ -13,7 +13,7 @@
 
 ## 🎯 Visão Geral
 
-Este documento reúne os **templates completos de geração** usados pelo comando `/meta/create-abstraction` ao criar uma nova Abstraction Layer seguindo o padrão **SDAAL** (Specification-Driven AI Abstraction Layer).
+Este documento reúne os **templates completos de geração** usados pelo comando `$meta-create-abstraction` ao criar uma nova Abstraction Layer seguindo o padrão **SDAAL** (Specification-Driven AI Abstraction Layer).
 
 Para a **explicação conceitual** do padrão (fundamentos, arquitetura, design patterns, anti-patterns), consulte:
 - [Specification-Driven AI Abstraction Layer](../concepts/specification-driven-ai-abstraction-layer.md)
@@ -71,7 +71,7 @@ No \`.env\`:
 ### 2. Usar nos Comandos
 
 \`\`\`typescript
-import { get{{interface_name.slice(1)}} } from '.claude/utils/{{abstraction_name}}/factory';
+import { get{{interface_name.slice(1)}} } from '.codex/utils/{{abstraction_name}}/factory';
 
 const manager = get{{interface_name.slice(1)}}();
 await manager.send({ ... });
@@ -603,5 +603,5 @@ class NoProviderAdapter implements {{interface_name}} {
 
 - [SDAAL Pattern (conceitual)](../concepts/specification-driven-ai-abstraction-layer.md)
 - [Task Manager Abstraction (referência real)](../concepts/task-manager-abstraction.md)
-- [Comando /meta/create-abstraction](../../../.claude/commands/meta/create-abstraction.md)
+- [Comando /meta/create-abstraction](../../../.agents/skills/meta/create-abstraction.md)
 - Template base: skill `common:templates:abstraction-template`

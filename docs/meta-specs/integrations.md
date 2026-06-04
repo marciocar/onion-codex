@@ -1,6 +1,6 @@
 ---
 title: Meta-spec — Padrões de Integração do Sistema Onion
-date: 2026-05-18
+date: 2026-06-04
 version: 1.0.0
 level: L0
 status: active
@@ -20,25 +20,27 @@ Referências relacionadas:
 - [agents.md](./agents.md), [commands.md](./commands.md)
 - [architecture.md](./architecture.md), [code-standards.md](./code-standards.md)
 
-Referência técnica: [.claude/utils/task-manager/](../../.claude/utils/task-manager/).
+Referência técnica: [.agents/skills/task-manager/references/](../../.agents/skills/task-manager/references/).
 
 ---
 
 ## 1. Task Manager Abstraction como referência canônica
 
-A Task Manager Abstraction é o padrão **SDAAL** (Specification-Driven AI Abstraction Layer) implementado de referência. Estrutura:
+A Task Manager Abstraction é o padrão **SDAAL** (Specification-Driven AI Abstraction Layer) implementado de referência. Vive na skill `task-manager` (`.agents/skills/task-manager/`), com a abstração em `references/`. Estrutura:
 
 ```
-.claude/utils/task-manager/
-├── factory.md           # Instancia o adapter via TASK_MANAGER_PROVIDER
-├── interface.md         # Contrato ITaskManager
-├── types.md             # Tipos e DTOs
-├── detector.md          # Detecção automática de provider
-└── adapters/
-    ├── jira.md          # Adapter Jira (REST v3, ADF)
-    ├── clickup.md       # Adapter ClickUp (MCP)
-    ├── asana.md         # Adapter Asana (HTML notes)
-    └── linear.md        # Adapter Linear (Markdown)
+.agents/skills/task-manager/
+├── SKILL.md             # Entrada invocável da skill
+└── references/
+    ├── factory.md       # Instancia o adapter via TASK_MANAGER_PROVIDER
+    ├── interface.md     # Contrato ITaskManager
+    ├── types.md         # Tipos e DTOs
+    ├── detector.md      # Detecção automática de provider
+    └── adapters/
+        ├── jira.md      # Adapter Jira (REST v3, ADF)
+        ├── clickup.md   # Adapter ClickUp (MCP)
+        ├── asana.md     # Adapter Asana (HTML notes)
+        └── linear.md    # Adapter Linear (Markdown)
 ```
 
 Toda nova integração (ex: novo Task Manager, novo serviço de comunicação) deve replicar essa estrutura.
@@ -50,7 +52,7 @@ Toda nova integração (ex: novo Task Manager, novo serviço de comunicação) d
 Para cada integração com sistema externo:
 
 ```
-.claude/utils/<dominio>/
+.agents/skills/<dominio>/references/
 ├── factory.md           # Roteamento por variável de ambiente
 ├── interface.md         # Contrato comum (operações independentes de provider)
 ├── types.md             # Tipos compartilhados
@@ -122,14 +124,14 @@ Quando o usuário invoca um comando que requer integração mas a variável obri
 
 1. **Não inventar** valor nem assumir provider alternativo
 2. Reportar em pt-BR qual variável falta
-3. Sugerir comando para configurar: `/meta:setup-integration`
+3. Sugerir skill para configurar: `$meta-setup-integration`
 4. Continuar offline quando possível (ex: `@task-specialist` decompõe localmente sem persistir)
 
 Exemplo de mensagem:
 
 ```
 Não foi possível conectar ao Jira: variável JIRA_API_TOKEN está vazia.
-Para configurar, execute: /meta:setup-integration
+Para configurar, execute: $meta-setup-integration
 Para operar offline, defina TASK_MANAGER_PROVIDER=none no .env.
 ```
 
@@ -143,41 +145,44 @@ Para operar offline, defina TASK_MANAGER_PROVIDER=none no .env.
 
 ## 4. MCPs (Model Context Protocol) suportados
 
-### 4.1 MCPs declarados em agentes
+### 4.1 MCP servers definidos em `config.toml`, declarados em subagentes
 
-Quando um agente depende de MCP, declarar nas `tools`:
+Os MCP servers são definidos centralmente em `.codex/config.toml`:
 
-```yaml
-tools:
-  - read_file
-  - mcp_ClickUp_clickup_create_task
-  - mcp_ClickUp_clickup_update_task
+```toml
+[mcp_servers.clickup]
+command = "npx"
+args = ["-y", "@clickup/mcp-server"]
+env = { CLICKUP_API_TOKEN = "${CLICKUP_API_TOKEN}" }
+```
+
+E o subagente que depende de um MCP o declara no campo `mcp_servers` (TOML):
+
+```toml
+mcp_servers = ["clickup"]
 ```
 
 ### 4.2 MCPs comuns no framework atual
 
-| MCP | Provedor | Usado por |
+| MCP server | Provedor | Usado por |
 |---|---|---|
-| `ClickUp_*` | ClickUp MCP | `@clickup-specialist`, comandos `/product/*` quando provider é ClickUp |
-| `claude_ai_Asana__*` | Anthropic-managed | Provider Asana |
-| `claude_ai_Linear__*` | Anthropic-managed | Provider Linear |
-| `claude_ai_Atlassian__*` | Anthropic-managed | Provider Jira |
-| `claude_ai_Slack__*` | Anthropic-managed | Notificações (opcional) |
-| `claude_ai_Notion__*` | Anthropic-managed | Documentação externa (opcional) |
+| `clickup` | ClickUp MCP | `@clickup-specialist`, skills `$product-*` quando provider é ClickUp |
+| `asana` | Hosted/managed | Provider Asana |
+| `linear` | Hosted/managed | Provider Linear |
+| `atlassian` | Hosted/managed | Provider Jira |
+| `slack` | Hosted/managed | Notificações (opcional) |
+| `notion` | Hosted/managed | Documentação externa (opcional) |
 
 ### 4.3 Configuração
 
-- **MCP servers stdio** (ex.: ClickUp) são declarados em `.mcp.json` na raiz do
-  projeto. O framework versiona um template **`.mcp.json.example`** — o
-  projeto-alvo copia para `.mcp.json` e ajusta ao provider ativo.
-- **NUNCA** colar tokens no `.mcp.json`: usar interpolação `${VAR}` resolvida do
+- **MCP servers** (stdio e hosted) são declarados em `[mcp_servers.*]` no
+  `.codex/config.toml`. O framework versiona um template — o projeto-alvo ajusta
+  ao provider ativo.
+- **NUNCA** colar tokens no `config.toml`: usar interpolação `${VAR}` resolvida do
   `.env`/ambiente.
-- MCPs **Anthropic-managed** (Asana, Linear, Atlassian/Jira) entram como
-  conectores hospedados (claude.ai) e normalmente **não** precisam de entrada
-  stdio no `.mcp.json`.
-- Aprovação/habilitação de MCP servers via `enableAllProjectMcpServers` /
-  `enabledMcpjsonServers` em `.claude/settings.json`.
-- `/meta:setup-integration` guia a configuração de `.env` + `.mcp.json` quando
+- Subagentes habilitam os servers de que precisam via `mcp_servers` no próprio TOML
+  (escopo mínimo).
+- `$meta-setup-integration` guia a configuração de `.env` + `[mcp_servers.*]` quando
   aplicável.
 
 ---
@@ -199,11 +204,11 @@ Cada provider tem formato preferido para descrições, comentários e payloads. 
 Templates de formatação para cada provider devem viver em:
 
 ```
-.claude/utils/<dominio>/adapters/<provider>.md
-.claude/utils/<dominio>/templates/<provider>-<tipo>.md   # quando aplicável
+.agents/skills/<dominio>/references/adapters/<provider>.md
+.agents/skills/<dominio>/references/templates/<provider>-<tipo>.md   # quando aplicável
 ```
 
-Para ClickUp especificamente, existe documento de referência: `.claude/utils/clickup-formatting.md`.
+Para ClickUp especificamente, existe documento de referência: `.agents/skills/task-manager/references/clickup-formatting.md`.
 
 ---
 
@@ -250,7 +255,7 @@ Ao buscar itens, declarar apenas campos necessários para reduzir payload:
 ### 7.2 Não silenciar
 
 - Adapter nunca deve "engolir" erro sem reportar
-- Comandos chamadores devem propagar erro ao usuário com contexto
+- Skills chamadoras devem propagar erro ao usuário com contexto
 
 ---
 
@@ -258,12 +263,12 @@ Ao buscar itens, declarar apenas campos necessários para reduzir payload:
 
 Ao adicionar suporte a novo provider:
 
-1. Criar `.claude/utils/<dominio>/adapters/<provider>.md` seguindo estrutura de Seção 2.1
+1. Criar `.agents/skills/<dominio>/references/adapters/<provider>.md` seguindo estrutura de Seção 2.1
 2. Atualizar `factory.md` para reconhecer o novo provider
 3. Atualizar `detector.md` se houver detecção automática
 4. Documentar variáveis de ambiente em `.env.example`
-5. Atualizar CLAUDE.md com tabela "Provider → Variáveis → Agente → Adapter"
-6. Criar especialista em `.claude/agents/development/<provider>-specialist.md` (opcional, mas recomendado)
+5. Atualizar AGENTS.md com tabela "Provider → Variáveis → Subagente → Adapter"
+6. Criar especialista em `.codex/agents/<provider>-specialist.toml` (opcional, mas recomendado)
 7. Adicionar a esta meta-spec (Seções 4.2 e 5)
 8. Validar com `@metaspec-gate-keeper`
 
@@ -272,7 +277,7 @@ Ao adicionar suporte a novo provider:
 ## 9. Proibições explícitas
 
 - **Proibido** integração que requer credencial fora de `.env`
-- **Proibido** invocar API externa diretamente em comando sem passar pelo adapter
+- **Proibido** invocar API externa diretamente em skill sem passar pelo adapter
 - **Proibido** adapter que vaza tipos específicos do provider para o nível de interface
 - **Proibido** assumir provider sem ler `.env` primeiro
 

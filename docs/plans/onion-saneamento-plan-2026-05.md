@@ -19,6 +19,9 @@ referencias-vv:
   - docs/analysis/t32-pilot-retrospectiva-2026-06.md
 ---
 
+> ⚠️ **Documento histórico** — registro datado anterior à migração para OpenAI Codex (2026-06). Referências a Claude Code / `.claude/` refletem o estado da época. Ver `docs/knowledge-base/platforms/openai-codex.md`.
+
+
 # Plano de Execução — Saneamento do Sistema Onion 2026-05
 
 ## Contexto

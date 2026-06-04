@@ -33,8 +33,8 @@ docs/meta-specs/
 ├── index.md              # Este arquivo
 ├── architecture.md       # Padrões arquiteturais
 ├── code-standards.md     # Padrões de código
-├── agents.md             # Padrões para agentes
-├── commands.md           # Padrões para comandos
+├── agents.md             # Padrões para subagentes
+├── commands.md           # Padrões para skills
 └── integrations.md       # Padrões para integrações
 ```
 
@@ -47,7 +47,7 @@ docs/meta-specs/
 Meta Specs definem:
 - **Princípios arquiteturais** que o sistema deve seguir
 - **Padrões de código** para consistência
-- **Convenções de nomenclatura** para agentes e comandos
+- **Convenções de nomenclatura** para subagentes e skills
 - **Regras de integração** com sistemas externos
 - **Critérios de qualidade** para validação
 
@@ -55,8 +55,8 @@ Meta Specs definem:
 
 | Situação | Uso |
 |----------|-----|
-| Criar novo agente | Consultar `agents.md` |
-| Criar novo comando | Consultar `commands.md` |
+| Criar novo subagente | Consultar `agents.md` |
+| Criar nova skill | Consultar `commands.md` |
 | Tomar decisão arquitetural | Consultar `architecture.md` |
 | Revisar código | Consultar `code-standards.md` |
 | Integrar sistema externo | Consultar `integrations.md` |
@@ -64,7 +64,7 @@ Meta Specs definem:
 ### Quem mantém Meta Specs?
 
 - **@metaspec-gate-keeper**: Valida conformidade (a constituição de validação)
-- **`/meta/metaspec-validate`**: comando que **aplica** a constituição executando as leituras e produzindo o veredito com evidência (ponto de entrada confiável)
+- **`$meta-metaspec-validate`**: skill que **aplica** a constituição executando as leituras e produzindo o veredito com evidência (ponto de entrada confiável)
 - **@branch-metaspec-checker**: aplica o mesmo padrão ao diff do branch no pré-PR
 - **@onion**: Orquestra aplicação
 - **Administradores do projeto**: Atualizam specs
@@ -73,7 +73,7 @@ Meta Specs definem:
 
 O gate-keeper opera em **dois modos**, escolhendo a régua conforme o artefato:
 
-- **Modo Framework (L0)** — no `onion-claude`, valida artefatos `.claude/**`
+- **Modo Framework (L0)** — no `onion-codex`, valida artefatos `.codex/**` e `.agents/**`
   contra as **5 meta-specs L0** (agents/commands/architecture/code-standards/integrations).
 - **Modo Projeto-alvo (L1+)** — quando o Onion está instalado num projeto, valida
   artefatos de **domínio/feature/ADR** contra as metaspecs **daquele projeto**.
@@ -88,28 +88,28 @@ sem nomes cravados), para o mesmo gate-keeper funcionar em qualquer projeto-alvo
 > Todas as 5 meta-specs foram criadas em 2026-05-18 como parte da execução do [Plano de Saneamento Onion 2026-05](../plans/onion-saneamento-plan-2026-05.md), tarefas T2.1 a T2.5.
 
 ### 🤖 [agents.md](./agents.md) — ATIVA (v1.0.0, 2026-05-18)
-Padrões para agentes:
-- Estrutura YAML obrigatória (`name`, `description`, `tools`)
-- 9 categorias válidas
+Padrões para subagentes:
+- Estrutura TOML obrigatória (`name`, `description`, `developer_instructions`)
+- 9 agrupamentos de domínio (arquivos flat em `.codex/agents/`)
 - Convenções de nomenclatura kebab-case
-- Limites de tamanho (1.200 recomendado, 1.500 hard)
+- Limites de tamanho (subagente < 300 linhas de `developer_instructions`)
 - Padrões de delegação e integração com MCPs
 
 ### 🔧 [commands.md](./commands.md) — ATIVA (v1.0.0, 2026-05-18)
-Padrões para comandos:
-- Estrutura obrigatória (frontmatter, corpo)
+Padrões para skills:
+- Estrutura obrigatória (frontmatter `name`+`description`, corpo `SKILL.md`)
 - Categorias válidas
-- **Workflows faseados como invariantes** (`engineer/plan→pr-update` e `product/collect→feature`)
+- **Workflows faseados como invariantes** (`$engineer-plan→pr-update` e `$product-collect→feature`)
 - Política de duplicação de nomes
-- Limites de tamanho (500 recomendado, 800 hard)
+- Limites de tamanho (skill < 500 linhas)
 
 ### 🏗️ [architecture.md](./architecture.md) — ATIVA (v1.0.0, 2026-05-18)
 Padrões arquiteturais:
-- Estrutura obrigatória de `.claude/` e `docs/`
+- Estrutura obrigatória de `.codex/`, `.agents/` e `docs/`
 - Separação operacional vs documentação
 - Princípio de framework instalável
 - Dependências permitidas entre categorias (com diagrama)
-- Plataforma única: Claude Code
+- Plataforma única: OpenAI Codex
 
 ### 📝 [code-standards.md](./code-standards.md) — ATIVA (v1.0.0, 2026-05-18)
 Padrões de código e idioma:
@@ -150,9 +150,9 @@ Padrões para integrações:
 
 - **Knowledge Bases**: `docs/knowledge-base/`
 - **Documentação Onion**: `docs/onion/`
-- **Agentes**: `.claude/agents/`
-- **Comandos**: `.claude/commands/`
-- **Regras**: `.claude/rules/`
+- **Subagentes**: `.codex/agents/`
+- **Skills**: `.agents/skills/`
+- **Regras**: `.codex/rules/`
 
 ---
 
@@ -165,5 +165,5 @@ Padrões para integrações:
 ---
 
 **Responsável**: Sistema Onion v3.0
-**Última Atualização**: 2025-11-24
+**Última Atualização**: 2026-06-04
 

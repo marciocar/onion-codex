@@ -1,6 +1,6 @@
 # Compliance Context
 
-> Arquitetura de contexto de compliance e governança do projeto — gerada e mantida pelo comando `/docs:build-compliance-docs`.
+> Arquitetura de contexto de compliance e governança do projeto — gerada e mantida pelo comando `$docs-build-compliance-docs`.
 
 ---
 
@@ -10,7 +10,7 @@ Esta pasta organiza o **contexto de compliance e governança** estruturado para 
 
 Use quando o projeto-alvo precisa demonstrar conformidade com frameworks regulatórios (ISO 27001, ISO 22301, SOC2, PMBOK) ou estabelecer governança corporativa formal.
 
-**Esta pasta deve permanecer vazia neste repositório-mãe.** Será populada quando o comando `/docs:build-compliance-docs` for executado em um projeto de desenvolvimento que tenha instalado o Onion e exija compliance.
+**Esta pasta deve permanecer vazia neste repositório-mãe.** Será populada quando o comando `$docs-build-compliance-docs` for executado em um projeto de desenvolvimento que tenha instalado o Onion e exija compliance.
 
 ---
 
@@ -59,14 +59,14 @@ docs/compliance-context/
         └── <YYYY-MM>-<framework>.md
 ```
 
-> Cada camada é ativada conforme aplicabilidade ao projeto. Projetos pequenos podem ter só `01-security/`. Projetos regulados em saúde geralmente combinam ISO 27001 + SOC2. Projetos financeiros podem precisar de ISO 27001 + ISO 22301. Decisão guiada por `/docs:build-compliance-docs` durante a fase de discovery.
+> Cada camada é ativada conforme aplicabilidade ao projeto. Projetos pequenos podem ter só `01-security/`. Projetos regulados em saúde geralmente combinam ISO 27001 + SOC2. Projetos financeiros podem precisar de ISO 27001 + ISO 22301. Decisão guiada por `$docs-build-compliance-docs` durante a fase de discovery.
 
 ---
 
 ## Como gerar / atualizar
 
 ```bash
-/docs:build-compliance-docs <fontes-de-input>
+$docs-build-compliance-docs <fontes-de-input>
 ```
 
 O comando faz três fases:
@@ -102,7 +102,7 @@ O comando faz três fases:
 | Governo / setor público | PMBOK + ISO 22301 | ISO 27001 |
 | Startup early-stage | Compliance corporativo básico | ISO 27001 quando crescer |
 
-Decisão final guiada por `@security-information-master` durante `/docs:build-compliance-docs`.
+Decisão final guiada por `@security-information-master` durante `$docs-build-compliance-docs`.
 
 ---
 
@@ -122,12 +122,12 @@ Decisão final guiada por `@security-information-master` durante `/docs:build-co
 
 | Agente | Função | Framework |
 |---|---|---|
-| [@security-information-master](../../.claude/agents/compliance/security-information-master.md) | Orquestrador — detecta framework aplicável e delega | Todos |
-| [@iso-27001-specialist](../../.claude/agents/compliance/iso-27001-specialist.md) | SGSI ISO 27001:2022 | ISO 27001 |
-| [@iso-22301-specialist](../../.claude/agents/compliance/iso-22301-specialist.md) | BCMS ISO 22301:2019 | ISO 22301 |
-| [@soc2-specialist](../../.claude/agents/compliance/soc2-specialist.md) | Trust Services Criteria | SOC2 Type II |
-| [@pmbok-specialist](../../.claude/agents/compliance/pmbok-specialist.md) | PMBOK Guide 7th Edition | PMBOK |
-| [@corporate-compliance-specialist](../../.claude/agents/compliance/corporate-compliance-specialist.md) | Anticorrupção, PLD/KYC, ética | Corporate |
+| [@security-information-master](../../.codex/agents/compliance/security-information-master.md) | Orquestrador — detecta framework aplicável e delega | Todos |
+| [@iso-27001-specialist](../../.codex/agents/compliance/iso-27001-specialist.md) | SGSI ISO 27001:2022 | ISO 27001 |
+| [@iso-22301-specialist](../../.codex/agents/compliance/iso-22301-specialist.md) | BCMS ISO 22301:2019 | ISO 22301 |
+| [@soc2-specialist](../../.codex/agents/compliance/soc2-specialist.md) | Trust Services Criteria | SOC2 Type II |
+| [@pmbok-specialist](../../.codex/agents/compliance/pmbok-specialist.md) | PMBOK Guide 7th Edition | PMBOK |
+| [@corporate-compliance-specialist](../../.codex/agents/compliance/corporate-compliance-specialist.md) | Anticorrupção, PLD/KYC, ética | Corporate |
 
 ---
 
@@ -138,5 +138,5 @@ Decisão final guiada por `@security-information-master` durante `/docs:build-co
 
 ---
 
-**Comando responsável**: `/docs:build-compliance-docs`
+**Comando responsável**: `$docs-build-compliance-docs`
 **Orquestrador**: `@security-information-master`

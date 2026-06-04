@@ -1,8 +1,12 @@
-# 🤖 Referência de Agentes
+# 🤖 Referência de Subagentes
 
-> **Versão**: 4.1.0-beta.1 | **Última atualização**: 2026-05-15 | **Total**: 49 agentes em 9 categorias
+> **Versão**: 4.1.0-beta.1 | **Última atualização**: 2026-05-15 | **Total**: 49 subagentes em 9 categorias
 
-Este guia documenta todos os agentes especializados disponíveis no sistema `.claude/`, suas capacidades e quando utilizá-los.
+Este guia documenta todos os subagentes especializados disponíveis no sistema `.codex/`, suas capacidades e quando utilizá-los.
+
+> 📁 **Onde vivem**: cada subagente é um arquivo TOML *flat* em `.codex/agents/<nome>.toml` (ex.: `.codex/agents/python-developer.toml`). Não há subpastas por categoria no sistema de arquivos — a categorização abaixo é apenas organizacional.
+>
+> 🔧 **Campos do TOML**: `name`, `description`, `developer_instructions` (o prompt/persona do subagente) e os ajustes de runtime `model`, `model_reasoning_effort`, `sandbox_mode` e `mcp_servers`. O campo **Modelo** documentado abaixo mapeia para `model`; a **Prioridade** é uma convenção Onion que orienta `model_reasoning_effort`.
 
 ## 📊 Resumo v3.0
 
@@ -36,7 +40,7 @@ Este guia documenta todos os agentes especializados disponíveis no sistema `.cl
 ## 🔵 Agentes de Desenvolvimento
 
 ### **python-developer**
-**Modelo**: Sonnet | **Prioridade**: Alta | **Cor**: Blue
+**Modelo**: gpt-5.4 | **Prioridade**: Alta | **Cor**: Blue
 
 **Especialidades**: Python idiomático, AI/ML, backend, performance, type hints
 
@@ -71,7 +75,7 @@ Este guia documenta todos os agentes especializados disponíveis no sistema `.cl
 - 📦 Gerenciamento com `uv` (package manager moderno)
 
 ### **react-developer**
-**Modelo**: Sonnet | **Prioridade**: Alta | **Cor**: Blue
+**Modelo**: gpt-5.4 | **Prioridade**: Alta | **Cor**: Blue
 
 **Especialidades**: React moderno, shadcn/ui, TypeScript, acessibilidade, performance
 
@@ -90,7 +94,7 @@ Este guia documenta todos os agentes especializados disponíveis no sistema `.cl
 - 🧪 Testing com React Testing Library
 
 ### **clickup-specialist**
-**Modelo**: Sonnet | **Prioridade**: Alta | **Cor**: Orange
+**Modelo**: gpt-5.4 | **Prioridade**: Alta | **Cor**: Orange
 
 **Especialidades**: ClickUp MCP técnico, automações avançadas, performance, workflows
 
@@ -132,7 +136,7 @@ Este guia documenta todos os agentes especializados disponíveis no sistema `.cl
 ## 🔷 Agentes de Testes
 
 ### **test-engineer**
-**Modelo**: Sonnet | **Prioridade**: Média | **Cor**: Cyan
+**Modelo**: gpt-5.4 | **Prioridade**: Média | **Cor**: Cyan
 
 **Especialidades**: Unit testing com Jest/Vitest, behavior verification, qualidade
 
@@ -158,7 +162,7 @@ Este guia documenta todos os agentes especializados disponíveis no sistema `.cl
 - 💡 Sugestões para melhorar testabilidade
 
 ### **test-planner**
-**Modelo**: Sonnet | **Prioridade**: Média | **Cor**: Cyan
+**Modelo**: gpt-5.4 | **Prioridade**: Média | **Cor**: Cyan
 
 **Especialidades**: Planejamento de testes, análise de cobertura, estratégia de testes
 
@@ -173,7 +177,7 @@ Este guia documenta todos os agentes especializados disponíveis no sistema `.cl
 ## 🟢 Agentes de Review
 
 ### **code-reviewer**
-**Modelo**: Opus | **Prioridade**: Alta | **Cor**: Green
+**Modelo**: gpt-5.5 | **Prioridade**: Alta | **Cor**: Green
 
 **Especialidades**: Code review, melhores práticas, detecção de bugs, manutenibilidade
 
@@ -203,7 +207,7 @@ Este guia documenta todos os agentes especializados disponíveis no sistema `.cl
 ## 🟣 Agentes de Pesquisa
 
 ### **research-agent**
-**Modelo**: Sonnet | **Prioridade**: Alta | **Cor**: Purple
+**Modelo**: gpt-5.4 | **Prioridade**: Alta | **Cor**: Purple
 
 **Especialidades**: Pesquisa multi-fonte, web search, Context7, análise semântica
 
@@ -233,7 +237,7 @@ Este guia documenta todos os agentes especializados disponíveis no sistema `.cl
 ## 🔴 Agentes de Arquitetura
 
 ### **metaspec-gate-keeper**
-**Modelo**: Opus | **Prioridade**: Alta | **Cor**: Red
+**Modelo**: gpt-5.5 | **Prioridade**: Alta | **Cor**: Red
 
 **Especialidades**: Integridade arquitetural, metaspecs, design principles, validação
 
@@ -263,7 +267,7 @@ Este guia documenta todos os agentes especializados disponíveis no sistema `.cl
 ## 🟠 Agentes de Documentação
 
 ### **documentation-writer**
-**Modelo**: Sonnet | **Prioridade**: Média | **Cor**: Orange
+**Modelo**: gpt-5.4 | **Prioridade**: Média | **Cor**: Orange
 
 **Especialidades**: Documentação técnica, análise de mudanças, sincronização docs-código
 
@@ -286,7 +290,7 @@ Este guia documenta todos os agentes especializados disponíveis no sistema `.cl
 ## 🛡️ Agentes de Compliance 🆕
 
 ### **security-information-master**
-**Modelo**: Sonnet | **Prioridade**: Alta | **Cor**: Blue
+**Modelo**: gpt-5.4 | **Prioridade**: Alta | **Cor**: Blue
 
 **Especialidades**: Orquestração de compliance, detecção de frameworks, due diligence, ISO 27001, ISO 22301, PMBOK, SOC2
 
@@ -329,7 +333,7 @@ Este guia documenta todos os agentes especializados disponíveis no sistema `.cl
 ---
 
 ### **iso-27001-specialist**
-**Modelo**: Sonnet | **Prioridade**: Alta | **Cor**: Red
+**Modelo**: gpt-5.4 | **Prioridade**: Alta | **Cor**: Red
 
 **Especialidades**: ISO/IEC 27001:2022 (ISMS), risk assessment, asset management, access control, incident response
 
@@ -371,7 +375,7 @@ Este guia documenta todos os agentes especializados disponíveis no sistema `.cl
 ---
 
 ### **iso-22301-specialist**
-**Modelo**: Sonnet | **Prioridade**: Alta | **Cor**: Green
+**Modelo**: gpt-5.4 | **Prioridade**: Alta | **Cor**: Green
 
 **Especialidades**: ISO 22301:2019 (BCMS), business continuity, disaster recovery, RTOs/RPOs, crisis management
 
@@ -413,7 +417,7 @@ Este guia documenta todos os agentes especializados disponíveis no sistema `.cl
 ---
 
 ### **pmbok-specialist**
-**Modelo**: Sonnet | **Prioridade**: Média | **Cor**: Yellow
+**Modelo**: gpt-5.4 | **Prioridade**: Média | **Cor**: Yellow
 
 **Especialidades**: PMBOK Guide 7th Edition, project governance, change management, quality management
 
@@ -455,7 +459,7 @@ Este guia documenta todos os agentes especializados disponíveis no sistema `.cl
 ---
 
 ### **soc2-specialist**
-**Modelo**: Sonnet | **Prioridade**: Alta | **Cor**: Purple
+**Modelo**: gpt-5.4 | **Prioridade**: Alta | **Cor**: Purple
 
 **Especialidades**: SOC2 Type II (AICPA), Trust Services Criteria, evidence collection, continuous monitoring
 
@@ -515,7 +519,7 @@ Este guia documenta todos os agentes especializados disponíveis no sistema `.cl
 ## 🟡 Agentes de Produto
 
 ### **product-agent**
-**Modelo**: Opus | **Prioridade**: Alta | **Cor**: Yellow
+**Modelo**: gpt-5.5 | **Prioridade**: Alta | **Cor**: Yellow
 
 **Especialidades**: Gestão de produto, ClickUp integration, estratégia, coordenação
 
@@ -534,7 +538,7 @@ Este guia documenta todos os agentes especializados disponíveis no sistema `.cl
 -  Gerencia tags e prioridades
 
 ### **clickup-specialist**
-**Modelo**: Sonnet | **Prioridade**: Alta | **Cor**: Orange
+**Modelo**: gpt-5.4 | **Prioridade**: Alta | **Cor**: Orange
 
 **Especialidades**: ClickUp MCP técnico, automações avançadas, performance, workflows
 
@@ -567,17 +571,17 @@ Este guia documenta todos os agentes especializados disponíveis no sistema `.cl
 - 📊 **15+ ferramentas ClickUp MCP**: Cobertura completa da API ClickUp
 - 🎯 **7 especialidades técnicas**: workflow-automation, performance-optimization, webhooks
 
-### **claude-code-specialist**
-**Modelo**: Sonnet | **Prioridade**: Alta | **Cor**: Light Blue
+### **codex-specialist**
+**Modelo**: gpt-5.4 | **Prioridade**: Alta | **Cor**: Light Blue
 
-**Especialidades**: Otimização Claude Code, configuração workspace, troubleshooting, produtividade
+**Especialidades**: Otimização Codex, configuração workspace, troubleshooting, produtividade
 
 **Quando usar**:
--  Resolver problemas de performance do Claude Code
+-  Resolver problemas de performance do Codex
 -  Configurar ambiente para novos projetos
 -  Otimizar settings para workflows específicos
 -  Troubleshoot extension conflicts ou API connectivity
--  Criar `CLAUDE.md` e `.claudeignore` templates
+-  Criar `AGENTS.md` e `.gitignore` templates
 -  Setup automation para comandos `/engineer/*`
 
 **Ferramentas disponíveis**: `read_file`, `write`, `MultiEdit`, `run_terminal_cmd`, `codebase_search`, `list_dir`, `glob_file_search`, `web_search`, `read_lints`, `todo_write`
@@ -585,24 +589,24 @@ Este guia documenta todos os agentes especializados disponíveis no sistema `.cl
 **Exemplo de uso**:
 ```bash
 # Configuração de projeto novo
-@claude-code-specialist "Setup otimizado para projeto React TypeScript com foco em AI development"
+@codex-specialist "Setup otimizado para projeto React TypeScript com foco em AI development"
 
 # Troubleshooting
-@claude-code-specialist "Resolver erro 'HTTP/2 blocked by proxy' e otimizar connectivity"
+@codex-specialist "Resolver erro 'HTTP/2 blocked by proxy' e otimizar connectivity"
 
 # Performance Issues
-@claude-code-specialist "Claude Code está lento, analisar memory usage e otimizar configurations"
+@codex-specialist "Codex está lento, analisar memory usage e otimizar configurations"
 ```
 
 **Características únicas**:
 - 🎯 **7 especialidades técnicas**: configuration, workspace, extensions, API, performance, productivity, troubleshooting
 - 🚀 **Integração automática**: Chamado automaticamente por outros agentes quando há problemas de IDE
-- 🔧 **Criação de artefatos**: `CLAUDE.md`, `.claudeignore`, workspace settings otimizados
+- 🔧 **Criação de artefatos**: `AGENTS.md`, `.gitignore`, workspace settings otimizados
 - ⚡ **Performance focus**: Memory optimization, startup time, context caching
 - 🔗 **Delegation automática**: Integração com comandos `/engineer/*` para setup de ambiente
 
 ### **gitflow-specialist**
-**Modelo**: Sonnet | **Prioridade**: Alta | **Cor**: Light Green
+**Modelo**: gpt-5.4 | **Prioridade**: Alta | **Cor**: Light Green
 
 **Especialidades**: GitFlow workflows, branch management, release processes, team collaboration, semantic versioning
 
@@ -643,7 +647,7 @@ Este guia documenta todos os agentes especializados disponíveis no sistema `.cl
 - 🔗 **Complementaridade**: Integração perfeita com @mermaid-specialist (workflows vs diagramas)
 
 ### **nodejs-specialist**
-**Modelo**: Sonnet | **Prioridade**: Alta | **Cor**: Teal
+**Modelo**: gpt-5.4 | **Prioridade**: Alta | **Cor**: Teal
 
 **Especialidades**: Backend JavaScript/TypeScript, Node.js runtime, PNPM ecosystem, performance optimization
 
@@ -680,7 +684,7 @@ Este guia documenta todos os agentes especializados disponíveis no sistema `.cl
 - 🏗️ **Architecture patterns**: Layered design, dependency injection, microservices
 
 ### **gitflow-specialist**
-**Modelo**: Sonnet | **Prioridade**: Alta | **Cor**: Light Green
+**Modelo**: gpt-5.4 | **Prioridade**: Alta | **Cor**: Light Green
 
 **Especialidades**: GitFlow workflows, branch management, release processes, team collaboration, semantic versioning
 
@@ -735,7 +739,7 @@ Este guia documenta todos os agentes especializados disponíveis no sistema `.cl
 @react-developer "criar componente de dashboard"
 
 # Full-stack (coordenação automática)
-/engineer/work "sistema completo de notificações"
+$engineer-work "sistema completo de notificações"
 ```
 
 #### **🧪 Testes**
@@ -788,19 +792,19 @@ Este guia documenta todos os agentes especializados disponíveis no sistema `.cl
 
 #### **🔴 Tarefa Complexa** (múltiplos agentes paralelos)
 ```bash
-/engineer/work "sistema completo de e-commerce"
+$engineer-work "sistema completo de e-commerce"
 # → Coordenação automática de múltiplos agentes
 ```
 
 ### **Por Prioridade do Modelo**
 
-#### **🚀 Sonnet (Eficiência)**
+#### **🚀 gpt-5.4 (Eficiência)**
 - `python-developer`, `react-developer`, `test-engineer`, `research-agent`
 -  Tarefas de implementação diretas
 -  Testes e validações
 -  Pesquisa e documentação
 
-#### **🎯 Opus (Análise Complexa)**
+#### **🎯 gpt-5.5 (Análise Complexa)**
 - `code-reviewer`, `metaspec-gate-keeper`, `product-agent`
 -  Decisões arquiteturais críticas
 -  Reviews complexos

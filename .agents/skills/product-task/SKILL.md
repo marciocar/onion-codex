@@ -1,0 +1,272 @@
+---
+name: product-task
+description: |
+  Criação de tasks com decomposição hierárquica inteligente.
+  Use para criar tasks estruturadas com subtasks e action items.
+  Suporta: ClickUp, Asana, Linear (via TASK_MANAGER_PROVIDER).
+---
+
+# 🚀 Criação de Task com Decomposição
+
+Criar tasks estruturadas no gerenciador de tarefas configurado, com decomposição
+hierárquica **Task → Subtask → Action Item** e story points automáticos.
+
+## 🎯 Objetivo
+
+Estabelecer base sólida para desenvolvimento, registrando intenção no Task Manager
+antes de qualquer execução, com plano confirmado pelo usuário.
+
+## 🚨 PASSO 0 (OBRIGATÓRIO): Detectar Provedor
+
+**⚠️ CRÍTICO — EXECUTAR ANTES DE QUALQUER OUTRA AÇÃO. NUNCA assumir o provedor.**
+
+1. **Ler `.env`** (`read_file .env`) e extrair `TASK_MANAGER_PROVIDER`
+   (valores: `clickup` | `asana` | `linear` | `none`).
+2. **Validar a variável obrigatória do provedor ativo:**
+
+   | Provedor | Variável obrigatória | Ferramentas MCP |
+   |----------|----------------------|-----------------|
+   | `clickup` | `CLICKUP_API_TOKEN` | `mcp_ClickUp_*` |
+   | `asana` | `ASANA_ACCESS_TOKEN` | `mcp_asana_*` |
+   | `linear` | `LINEAR_API_KEY` | `mcp_Linear_*` |
+   | `none` / ausente | — | modo offline (estrutura local) |
+
+3. **Fallback gracioso:** se a variável obrigatória faltar, avisar em pt-BR qual
+   variável está ausente, sugerir `$meta-setup-integration` e seguir em **modo offline**
+   (tasks não sincronizadas). Não inventar valores nem assumir outro provedor.
+
+> Detalhes de detecção e parsing do `.env`: `.agents/skills/task-manager/references/detector.md`.
+
+## ⚡ Fluxo de Execução
+
+### Passo 1: Resolver Projeto/Lista
+
+```markdown
+SE project_name fornecido:
+  - Buscar no provedor pelo nome (ClickUp get_list / Asana get_projects / Linear teams)
+  - Se não encontrado: perguntar ao usuário
+SE project_name NÃO fornecido:
+  - Usar default do .env (CLICKUP_DEFAULT_LIST_ID / ASANA_DEFAULT_PROJECT_ID / LINEAR_TEAM_ID)
+  - Se não configurado: listar opções e perguntar
+```
+
+> Mapeamento de IDs por provedor: `.agents/skills/task-manager/references/adapters/{provedor}.md`.
+
+### Passo 2: Análise de Contexto e Compreensão
+
+**SEMPRE siga esta sequência antes de decompor:**
+
+1. **Revisar documentação do projeto** (`README.md`, arquivos em `docs/`) para
+   identificar padrões, tecnologias e estrutura existentes.
+2. **Ler cuidadosamente** a descrição: `{{description}}`.
+3. **Formular perguntas internas** para resolver ambiguidades e entender como a
+   tarefa se encaixa na estrutura existente.
+4. **Classificar complexidade** (define a granularidade da decomposição):
+
+   | Tipo | Duração | Subtasks | Action Items/Subtask |
+   |------|---------|----------|---------------------|
+   | Simples | 1-3d | 2-3 | 2-3 |
+   | Média | 4-7d | 3-4 | 3-4 |
+   | Complexa | 1-2sem | 4-6 | 3-5 |
+   | Épico | >2sem | Quebrar em múltiplas tasks | — |
+
+### Passo 3: Decompor Hierarquicamente
+
+Consultar `@task-specialist` para a estrutura. Cada action item deve caber em **1-4h**:
+
+```
+📋 TASK (Objetivo de Alto Nível)
+├── 🔧 Subtask 1 (Componente Funcional)
+│   ├── ✅ Action Item 1.1 (1-4h)
+│   ├── ✅ Action Item 1.2 (1-4h)
+│   └── ✅ Action Item 1.3 (1-4h)
+└── 🔧 Subtask 2 (Componente Funcional)
+    ├── ✅ Action Item 2.1 (1-4h)
+    └── ✅ Action Item 2.2 (1-4h)
+```
+
+### Passo 4: Estimar Story Points (Automático)
+
+Após decompor, **SEMPRE** estimar via `@story-points-framework-specialist`:
+
+1. **Task principal** — passar descrição, lista de subtasks e complexidade inicial.
+   Obter: story points, análise de complexidade/risco/incerteza e recomendações.
+2. **Cada subtask** — passar nome, descrição e action items. Obter story points e
+   armazenar o total (soma das subtasks).
+3. **Validar consistência:**
+   - Se `soma(subtasks) > task_principal` → ajustar task principal para a soma.
+   - Se `task_principal > 13 pontos` → alertar **ÉPICO** e propor quebra em tasks menores.
+
+> Framework: `docs/knowledge-base/frameworks/framework_story_points.md`.
+
+### Passo 5: Apresentar Plano e Obter Confirmação (OBRIGATÓRIO ANTES DE CRIAR)
+
+**⚠️ CRÍTICO: NUNCA criar task sem apresentar plano e obter confirmação explícita.**
+
+```markdown
+## 🎯 PLANO DE TASK PROPOSTO
+
+### 📋 Task Principal
+**Nome**: [NOME] | **Tipo**: [Feature/Bug/Improvement/Research]
+**Complexidade**: [Simples/Média/Alta] | **Estimativa**: [TEMPO] | **Story Points**: [X]
+
+### 📝 Descrição Funcional
+[OBJETIVO CLARO]
+
+### 🏗️ Arquitetura Técnica
+[DETALHAMENTO TÉCNICO E IMPLEMENTAÇÃO]
+
+### 📚 Bibliotecas/Dependências Sugeridas
+[LISTA, PRIORIZANDO CONHECIDAS DO PROJETO]
+
+### 🔧 Componentes Afetados
+[COMPONENTES MODIFICADOS]
+
+### 🔧 Decomposição
+├── Subtask 1: [nome] — [X] pts
+└── Subtask 2: [nome] — [Y] pts
+
+### ✅ Critérios de Aceitação
+- [ ] [CRITÉRIO_1]
+- [ ] [CRITÉRIO_2]
+
+### 🧪 Pontos de Atenção para Teste
+[ESTRATÉGIA DE TESTES]
+
+❓ **Este plano está correto? Posso criar a task no Task Manager?** [Y/n]
+```
+
+- **AGUARDAR confirmação explícita** — não criar nada até receber.
+- Se o usuário pedir ajustes, revisar e reapresentar o plano.
+
+### Passo 6: Criar no Gerenciador (APÓS CONFIRMAÇÃO)
+
+**🚨 ORDEM CRÍTICA — sempre nesta sequência:**
+1. **PRIMEIRO** criar a task no Task Manager (registrar o que VAI ser feito).
+2. **DEPOIS** executar o trabalho, se a task envolver ação imediata (Passo 7).
+3. **POR ÚLTIMO** atualizar a task com o resultado (Passo 8).
+
+**❌ NUNCA** executar trabalho antes de criar a task, nem criar a task após o trabalho já estar feito.
+
+#### 6.1. Preparar dados normalizados
+
+Seguir a interface `ITaskManager` (entrada/saída padronizadas, priority
+`urgent|high|normal|low`). Mesmo usando MCP diretamente, normalizar os dados.
+
+```markdown
+Task Principal:
+- name: "{{description}}"
+- markdownDescription: [objetivo + critérios + story points]
+- priority: 'high' | tags: ['feature'] | projectId: [resolvido no Passo 1]
+
+Cada Subtask:
+- name / markdownDescription (+ story points) / priority (herdar ou 'normal') / tags
+```
+
+> Formato completo de entrada/saída: `.agents/skills/task-manager/references/interface.md`.
+
+#### 6.2. Criar task principal, subtasks e comentário (Executar MCP)
+
+Usar as ferramentas MCP do provedor ativo. **Os mapeamentos exatos de campos,
+nomes de ferramentas, conversão de markdown e construção de URL estão nos adapters
+— NÃO duplicar aqui:**
+
+- ClickUp → `.agents/skills/task-manager/references/adapters/clickup.md`
+- Asana → `.agents/skills/task-manager/references/adapters/asana.md`
+- Linear → `.agents/skills/task-manager/references/adapters/linear.md`
+
+Sequência (idêntica em todos os provedores, variando só o adapter):
+1. **Criar task principal** → extrair `id`/`gid` e `url`.
+2. **Criar cada subtask** com `parent` = id da task principal.
+3. **Adicionar comentário inicial** com o resumo de estimativas (template abaixo).
+
+**Comentário inicial (formatação visual):**
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+🚀 TASK CRIADA VIA $product-task
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📊 COMPLEXIDADE: ${complexity}
+🎲 STORY POINTS:
+∟ Task Principal: ${mainTaskStoryPoints} pontos
+∟ Subtasks: ${subtasksPoints} pontos (${subtasks.length} subtasks)
+∟ Total: ${totalPoints} pontos
+⚡ FATORES: ${factorsSummary}
+💡 RECOMENDAÇÕES: ${recommendations}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+> Convenções de formatação de comentários ClickUp (Unicode, timestamp, status):
+> skill `common:prompts:clickup-patterns` / `docs/onion/shared/clickup-patterns.md`.
+
+**Modo offline (`none`):** gerar `id` local (`local-{timestamp}`), criar documento em
+`.codex/sessions/tasks/{id}.md` (subtasks em `.../{parent-id}/subtasks/`), anexar o
+comentário ao documento e avisar que não será sincronizado.
+
+#### 6.3. Normalizar saída
+
+Após criar, montar `TaskOutput` padronizado: `id`, `provider`, `name`, `url`,
+`status: 'todo'`, `createdAt` (ISO), `projectId`, `storyPoints`, `subtasks[]`.
+
+### Passo 7: Executar Trabalho (Se Aplicável)
+
+**APENAS** se a descrição indica ação imediata (ex.: "Remover arquivos X", "Criar
+estrutura Y"): **após** criar a task, executar o trabalho e documentar o que foi feito.
+Se a task é só planejamento/futuro, pular este passo (fica como "To Do").
+
+### Passo 8: Atualizar Task com Resultado
+
+Se houve execução no Passo 7:
+1. Adicionar comentário com o que foi feito, arquivos modificados/criados/deletados,
+   resultado e próximos passos.
+2. Atualizar status: completo → "Done"; parcial → "In Progress"; só planejamento → "To Do".
+
+### Passo 9: Apresentar Resultado
+
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅ TASK CRIADA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+📋 Task: {{description}}
+🔗 URL: [url do provedor]
+📊 Provedor: [clickup/asana/linear/local]
+
+🎲 STORY POINTS:
+∟ Task Principal: [X] pontos
+∟ Subtasks: [Y] pontos ([N] subtasks)
+∟ Total: [Z] pontos
+
+📊 ANÁLISE: Complexidade [alta/média/baixa] | Risco [alto/médio/baixo] | Incerteza [alta/média/baixa]
+
+🔧 ESTRUTURA:
+├── Subtask 1: [nome] - [X] pontos
+│   ├── ✅ Item 1.1
+│   └── ✅ Item 1.2
+└── Subtask 2: [nome] - [Y] pontos
+    └── ✅ Item 2.1
+
+💡 RECOMENDAÇÕES: ${recommendations}
+
+🚀 Próximo: $engineer-start [feature-slug]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+## 🔗 Referências
+
+- **Detecção de provedor:** `.agents/skills/task-manager/references/detector.md`
+- **Interface (entrada/saída normalizada):** `.agents/skills/task-manager/references/interface.md`
+- **Tipos compartilhados:** `.agents/skills/task-manager/references/types.md`
+- **Adapters (mapeamento MCP por provedor):** `.agents/skills/task-manager/references/adapters/{clickup,asana,linear}.md`
+- **Decomposição:** `@task-specialist`
+- **Estimativas:** `@story-points-framework-specialist`, `$product-estimate`,
+  `docs/knowledge-base/frameworks/framework_story_points.md`
+- **Formatação ClickUp:** skill `common:prompts:clickup-patterns`
+
+## ⚠️ Notas
+
+- **OBRIGATÓRIO:** detectar provedor (`.env`) antes de tudo; nunca assumir.
+- **OBRIGATÓRIO:** apresentar plano e pedir confirmação antes de criar.
+- **OBRIGATÓRIO:** criar task PRIMEIRO, depois executar trabalho (se aplicável).
+- Action items: máximo 4h cada. Épico (>13 pts): alertar e propor quebra.
+- Estimativas automáticas para task principal e todas as subtasks.
+- Se `soma(subtasks) > task principal`, ajustar a task principal.
+- Sem provedor configurado: opera em modo local (sem sincronização).
