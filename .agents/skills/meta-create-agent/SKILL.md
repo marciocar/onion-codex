@@ -54,7 +54,7 @@ Use para [caso de uso principal].
 model = "gpt-5.4"
 model_reasoning_effort = "medium"
 sandbox_mode = "workspace-write"
-# mcp_servers = []   # apenas se o agente precisar de MCPs específicos
+# MCPs específicos devem ser configurados como blocos [mcp_servers.<id>] no config/subagente.
 
 developer_instructions = """
 # Você é o [Nome do Agente]
@@ -82,7 +82,7 @@ developer_instructions = """
 """
 ```
 
-> **Campos do subagent Codex**: `name`, `description`, `developer_instructions` (obrigatórios) + `model`, `model_reasoning_effort`, `sandbox_mode`, `mcp_servers` (opcionais).
+> **Campos do subagent Codex**: `name`, `description`, `developer_instructions` (obrigatórios) + `model`, `model_reasoning_effort`, `sandbox_mode` e blocos `[mcp_servers.<id>]` (opcionais).
 
 ### Passo 4: Validações Obrigatórias
 

@@ -41,7 +41,7 @@ description: >
 - `model` (`gpt-5.5`|`gpt-5.4`|`gpt-5.4-mini`)
 - `model_reasoning_effort` (`high`|`medium`|`low`|`xhigh`)
 - `sandbox_mode` (`workspace-write` se edita arquivos)
-- `mcp_servers` (lista — ex.: `["clickup"]`)
+- blocos `[mcp_servers.<id>]` quando o subagente definir MCP próprio
 
 ### Checklist de qualidade
 - [ ] `name` único, não colide com built-ins

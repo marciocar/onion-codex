@@ -2,8 +2,8 @@
 
 > **Para o agente Codex que abrir este repositório.** Este arquivo lista o que ainda
 > precisa ser feito após o cut-over de Claude Code → OpenAI Codex. A migração de
-> arquivos está **completa**; o que falta é **validação em runtime** e **configuração de credenciais**,
-> que exigem o `codex` CLI instalado/autenticado e os tokens dos serviços.
+> arquivos está **completa**; o runtime local do `codex` CLI no Windows foi validado.
+> O que ainda depende de ação externa é a **configuração de credenciais** dos serviços.
 >
 > Base de referência da migração: [docs/knowledge-base/platforms/openai-codex.md](docs/knowledge-base/platforms/openai-codex.md).
 > Histórico do que foi migrado: ver o commit `feat(codex): migra Sistema Onion ...`.
@@ -18,6 +18,14 @@
 - Task Manager Abstraction em `.agents/skills/task-manager/references/`
 - Meta-specs, README, CONTRIBUTING e guias `docs/onion/` reescritos para Codex
 - `.claude/`, `CLAUDE.md`, `.claudeignore` removidos
+- Validação estrutural local pós-migração executada em 2026-06-04:
+  - `.codex/config.toml` parseia como TOML válido
+  - `.codex/hooks.json` parseia como JSON válido
+  - 82 skills sem colisão de `name` e sem frontmatter legado
+  - 49 subagentes sem colisão de `name`, sem campos legados e com `developer_instructions < 300` linhas
+  - 31 playbooks detalhados preservados em `docs/knowledge-base/agents/`
+  - `meta-all-tools` reescrito para o toolset real do Codex
+  - inventário criado em `docs/tools/`
 
 ---
 
@@ -27,12 +35,13 @@
 ```bash
 codex --version                                   # confirmar instalação
 # Abrir o repo e confirmar no 1º turno que AGENTS.md foi carregado
-codex execpolicy check "git status"               # esperado: allow
-codex execpolicy check "git push --force"         # esperado: forbidden
+codex execpolicy check --rules .codex/rules/default.rules git status
+codex execpolicy check --rules .codex/rules/default.rules git push --force
 ```
 - [ ] `AGENTS.md` carrega no início da sessão
-- [ ] `config.toml` parseia sem erro (`codex --config` não reclama)
-- [ ] Rules respondem allow/forbidden conforme esperado
+- [x] `config.toml` parseia sem erro (`codex doctor --summary`)
+- [x] Rules respondem allow/forbidden conforme esperado
+- [x] `codex --version` responde `codex-cli 0.137.0`
 
 ### 2. Configurar os MCP servers (Task Manager)
 Em [.codex/config.toml](.codex/config.toml) os blocos `[mcp_servers.*]` estão **comentados como template**.
@@ -40,8 +49,8 @@ Descomentar e preencher conforme o provider ativo no `.env` (`TASK_MANAGER_PROVI
 
 - [ ] Definir `TASK_MANAGER_PROVIDER` em `.env` (`clickup` | `jira` | `asana` | `linear` | `none`)
 - [ ] Descomentar o `[mcp_servers.<provider>]` correspondente e injetar os tokens via `${VAR}`
-- [ ] Confirmar que o **nome** do server (`clickup`/`atlassian`/`asana`/`linear`) bate com o `mcp_servers = [...]`
-      declarado no subagente especialista em `.codex/agents/<provider>-specialist.toml`
+- [ ] Confirmar que o **nome** do server (`clickup`/`atlassian`/`asana`/`linear`) bate com o bloco `[mcp_servers.<id>]`
+      configurado em `.codex/config.toml`; não usar `mcp_servers = [...]` top-level nos subagentes
 - [ ] Validar uma operação read (ex.: buscar uma task) via `@clickup-specialist` ou `@jira-specialist`
 
 ### 3. Validar skills e subagentes
@@ -71,7 +80,8 @@ Referências **esperadas/intencionais** (não corrigir):
 
 ## ⚠️ Pontos de atenção conhecidos
 
-- **`meta-all-tools`**: contém marcador `> **TODO Codex:** reescrever inventário de ferramentas para o toolset do Codex` — completar a reescrita do inventário de ferramentas.
+- **Runtime Codex CLI local**: liberado em 2026-06-04 via instalação npm em `C:\Users\Carva\AppData\Roaming\npm` e shims em `C:\Program Files\nodejs\codex.cmd` / `codex.ps1`, evitando o binário bloqueado em `WindowsApps`.
+- **MCP/Task Manager**: segue pendente até criar `.env`, definir `TASK_MANAGER_PROVIDER` e descomentar o MCP correspondente em `.codex/config.toml`.
 - **Skills de meta-criação** (`$meta-create-agent`, `$meta-create-command`, `$meta-create-skill`):
   já reapontadas para gerar artefatos Codex (TOML/SKILL.md). Validar gerando 1 agente e 1 skill de teste.
 - **`project_doc_max_bytes = 32768`** em `config.toml`: ampliado porque o `AGENTS.md` do Onion é grande.
@@ -88,4 +98,4 @@ Referências **esperadas/intencionais** (não corrigir):
 
 ---
 
-**Gerado em:** 2026-06-04 · **Status:** migração de arquivos concluída, validação runtime pendente
+**Gerado em:** 2026-06-04 · **Status:** migração de arquivos concluída, runtime local validado; credenciais/MCP pendentes

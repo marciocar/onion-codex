@@ -2,7 +2,7 @@
 
 > **Última atualização**: 2026-06-04 | **Gerado por**: `$docs-build-index knowbase`
 
-Bem-vindo ao índice das **Knowledge Bases** do Sistema Onion. Este documento organiza todos os 24 arquivos de conhecimento estruturado para consumo por IA e referência técnica.
+Bem-vindo ao índice das **Knowledge Bases** do Sistema Onion. Este documento organiza o conhecimento estruturado para consumo por IA e referência técnica.
 
 ---
 
@@ -18,7 +18,8 @@ As **Knowledge Bases** são documentos estruturados que servem como fonte de ver
 
 ## 📊 Estatísticas
 
-- **32 arquivos** de knowledge bases
+- **63 arquivos** de knowledge bases
+- **31 playbooks de subagentes**
 - **14 conceitos** fundamentais
 - **11 frameworks** e metodologias
 - **3 ferramentas** documentadas
@@ -36,6 +37,7 @@ As **Knowledge Bases** são documentos estruturados que servem como fonte de ver
 
 ```
 docs/knowledge-base/
+├── agents/            # 31 arquivos - Playbooks detalhados de subagentes
 ├── concepts/          # 14 arquivos - Conceitos fundamentais
 ├── frameworks/        # 11 arquivos - Frameworks e metodologias
 ├── tools/             # 3 arquivos - Ferramentas e recursos
@@ -47,7 +49,17 @@ docs/knowledge-base/
 
 ---
 
-## 🧠 Conceitos Fundamentais (13 arquivos)
+## 🤖 Playbooks de Subagentes (31 arquivos)
+
+Playbooks detalhados extraídos dos manifestos `.codex/agents/*.toml` para manter os subagentes compatíveis com o limite operacional do Codex sem perder especialização.
+
+**Localização:** `docs/knowledge-base/agents/`
+
+Os manifestos TOML permanecem leves e apontam para estes documentos quando uma tarefa exigir o procedimento completo, templates ou regras específicas do especialista.
+
+---
+
+## 🧠 Conceitos Fundamentais (14 arquivos)
 
 Conceitos essenciais que fundamentam o Sistema Onion e desenvolvimento com IA:
 
@@ -129,7 +141,7 @@ Conceitos essenciais que fundamentam o Sistema Onion e desenvolvimento com IA:
 
 ---
 
-## 🏗️ Frameworks e Metodologias (7 arquivos)
+## 🏗️ Frameworks e Metodologias (11 arquivos)
 
 Frameworks completos e metodologias aplicáveis:
 
@@ -176,7 +188,7 @@ Frameworks completos e metodologias aplicáveis:
 
 ---
 
-## 🛠️ Ferramentas (2 arquivos)
+## 🛠️ Ferramentas (3 arquivos)
 
 Documentação completa de ferramentas utilizadas:
 
@@ -212,15 +224,11 @@ Documentação de plataformas integradas:
 
 ---
 
-## 🔌 Provedores de Serviços (1 arquivo)
+## 🔌 Provedores de Serviços
 
 Documentação de provedores de serviços integrados:
 
-1. **[Microsoft Graph Teams API](providers/microsoft-graph-teams-api-guia-completo.md)** - Guia completo de integração
-   - Autenticação e autorização
-   - Endpoints principais
-   - Casos de uso
-   - Exemplos práticos
+- **Microsoft Graph Teams API** - referência histórica removida do inventário atual; recriar via `$meta-create-knowledge-base` se voltar a ser necessária.
 
 ---
 
@@ -257,7 +265,6 @@ Documentação de provedores de serviços integrados:
 
 - [Whisper](tools/whisper.md)
 - [Codex Commands Best Practices](tools/claude-code-commands-best-practices-2025.md)
-- [Microsoft Graph Teams API](providers/microsoft-graph-teams-api-guia-completo.md)
 - [Runflow](platforms/runflow.md)
 - [OpenAI Codex](platforms/openai-codex.md)
 
@@ -320,7 +327,7 @@ Documentação de provedores de serviços integrados:
 ## 🔗 Links Rápidos
 
 ### Documentação Relacionada
-- [Índice Central](../../INDEX.md) - Hub de navegação completo
+- [Índice Central](../INDEX.md) - Hub de navegação completo
 - [Sistema Onion](../onion/index.md) - Documentação do Sistema Onion
 - [Meta Especificações](../meta-specs/index.md) - Especificações de alto nível
 
@@ -339,7 +346,8 @@ Documentação de provedores de serviços integrados:
 
 | Data | Mudança |
 |------|---------|
-| 2026-06-04 | Adicionado OpenAI Codex (platforms) — 32 arquivos total |
+| 2026-06-04 | Adicionados 31 playbooks de subagentes em `agents/` para compatibilidade Codex |
+| 2026-06-04 | Adicionado OpenAI Codex (platforms) ao contexto de migração |
 | 2025-12-20 | Índice reconstruído com 31 arquivos |
 | 2025-12-02 | Adicionado Spec-Driven Development |
 | 2025-12-02 | Adicionado Whisper knowledge base |
@@ -367,10 +375,8 @@ Documentação de provedores de serviços integrados:
   - Instalação multi-plataforma
   - Integração com Sistema Onion
 
-- **[Microsoft Graph Teams API](providers/microsoft-graph-teams-api-guia-completo.md)**
-  - Guia completo de integração
-  - Autenticação e endpoints
-  - Casos de uso práticos
+- **Microsoft Graph Teams API**
+  - Referência histórica removida do inventário atual
 
 ---
 

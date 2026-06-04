@@ -105,7 +105,7 @@ developer_instructions = """
 model = "gpt-5.4"               # opus→gpt-5.5, sonnet→gpt-5.4, haiku→gpt-5.4-mini
 model_reasoning_effort = "medium"  # alta→high, média→medium, baixa→low
 sandbox_mode = "workspace-write"   # só se o agente edita arquivos
-# mcp_servers = ["clickup"]        # se usa task manager via MCP
+# [mcp_servers.clickup]            # se o subagente definir MCP próprio
 ```
 > Campos não suportados (`color`, `priority`, `category`, `expertise`, `related_*`,
 > `tools`) saem do frontmatter — preservar `related_*` como texto no corpo se útil.

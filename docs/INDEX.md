@@ -8,11 +8,11 @@ Bem-vindo ao índice central de documentação do projeto. Este documento serve 
 
 ## 🎯 Visão Geral
 
-Este projeto é o **Sistema Onion** — um framework de comandos `.codex/` para uso interno com:
+Este projeto é o **Sistema Onion** — um framework `.codex/` + `.agents/` para uso interno com:
 
-- 🤖 **78 comandos invocáveis** Codex em 9 categorias (+ 12 fragmentos compartilhados em `common/` e 3 READMEs)
+- 🤖 **82 skills invocáveis** Codex em 9 categorias
 - 🎯 **49 agentes de IA especializados** em 9 categorias
-- 🧩 **4 skills** em `.agents/skills/` (`onion` — cérebro do sistema; `onion-patterns`; `onion-validation`; `language-standards`)
+- 🧩 **4 skills-base** em `.agents/skills/` (`onion` — cérebro do sistema; `onion-patterns`; `onion-validation`; `language-standards`)
 - 📚 **Knowledge Bases estruturadas** para consumo por IA
 - 🧅 **Skill + Comando `/onion`** — ponto de entrada inteligente com ativação automática
 - 🔗 **Task Manager Abstraction** plugável (Jira, ClickUp, Asana, Linear)
@@ -23,19 +23,21 @@ Este projeto é o **Sistema Onion** — um framework de comandos `.codex/` para 
 ## 📊 Estatísticas da Documentação
 
 ### Documentação Principal
-- **66 arquivos markdown** em `docs/`
+- **117 arquivos markdown** em `docs/`
 - **11 arquivos** em `docs/onion/` (Sistema Onion)
-- **25 arquivos** em `docs/knowledge-base/` (Knowledge Bases)
-  - 13 arquivos em `concepts/` (Conceitos fundamentais)
-  - 7 arquivos em `frameworks/` (Frameworks e metodologias)
+- **65 arquivos** em `docs/knowledge-base/` (Knowledge Bases, incluindo `index.md`)
+  - 31 arquivos em `agents/` (playbooks detalhados de subagentes)
+  - 14 arquivos em `concepts/` (Conceitos fundamentais)
+  - 11 arquivos em `frameworks/` (Frameworks e metodologias)
   - 3 arquivos em `tools/` (Ferramentas, incl. Agent Skills)
-  - 1 arquivo em `platforms/` (Plataformas)
-  - 1 `index.md`
+  - 2 arquivos em `platforms/` (Plataformas)
+  - 1 arquivo em `patterns/`, 1 em `architectures/`, 1 em `meta/`
+- **7 arquivos** em `docs/tools/` (inventário do toolset Codex)
 - **1 arquivo** em `docs/meta-specs/` (Meta Especificações)
 - Arquivos adicionais em `docs/analysis/`, `docs/plans/`, `docs/business-context/`, `docs/technical-context/`
 
 ### Sistema Onion (`.codex/`)
-- **78 comandos invocáveis** Codex distribuídos em:
+- **82 skills invocáveis** Codex distribuídas em:
   - 20 em `product/` (gestão de produto e descoberta)
   - 12 em `git/` (GitFlow e versionamento)
   - 11 em `engineer/` (engenharia e desenvolvimento)
@@ -46,7 +48,7 @@ Este projeto é o **Sistema Onion** — um framework de comandos `.codex/` para 
   - 1 em `development/`, 1 em `quick/`
   - 2 no root: `onion.md`, `warm-up.md`
   - **não-invocáveis**: 12 fragmentos em `common/` (5 templates + 7 prompts) e 3 READMEs de categoria
-- **4 skills** em `.agents/skills/` (`onion`, `onion-patterns`, `onion-validation`, `language-standards`)
+- **4 skills-base** em `.agents/skills/` (`onion`, `onion-patterns`, `onion-validation`, `language-standards`)
 - **49 agentes** IA distribuídos em:
   - 20 em `development/` (frontend, backend, infra, integrações)
   - 8 em `product/` (gestão e narrativa)
@@ -57,10 +59,10 @@ Este projeto é o **Sistema Onion** — um framework de comandos `.codex/` para 
   - 1 em `research/`, 1 em `deployment/`
 
 ### Total
-- **66 arquivos** de documentação markdown
-- **78 comandos invocáveis** em 9 categorias + root (+ 12 fragmentos `common/` + 3 READMEs)
+- **117 arquivos** de documentação markdown
+- **82 skills invocáveis** em 9 categorias
 - **49 agentes** especializados em 9 categorias
-- **4 skills** (`.agents/skills/`)
+- **4 skills-base** (`onion`, `onion-patterns`, `onion-validation`, `language-standards`)
 
 ---
 
@@ -79,12 +81,13 @@ docs/
 │   ├── getting-started.md      # Configuração inicial
 │   ├── testing-validation-system.md  # Sistema de testes e validação
 │   ├── tools-reference.md      # Referência de ferramentas
-│   ├── claude-code-commands-architecture.md  # Arquitetura de comandos
+│   ├── codex-skills-architecture.md  # Arquitetura de skills Codex
 │   ├── end-to-end-validation-tests.md  # Testes de validação E2E
 │   └── sistema-engenharia-reversa-guia-uso.md  # Engenharia reversa
 │
-├── knowledge-base/             # Knowledge Bases (25 arquivos)
-│   ├── concepts/               # Conceitos fundamentais (13 arquivos)
+├── knowledge-base/             # Knowledge Bases (65 arquivos, incluindo index)
+│   ├── agents/                 # Playbooks detalhados de subagentes (31 arquivos)
+│   ├── concepts/               # Conceitos fundamentais (14 arquivos)
 │   │   ├── abstraction-patterns-catalog.md
 │   │   ├── ai-agent-design-patterns.md
 │   │   ├── branding-posicionamento-marca.md
@@ -98,7 +101,7 @@ docs/
 │   │   ├── spec-driven-development.md  # ✨ NOVO
 │   │   ├── specification-driven-ai-abstraction-layer.md
 │   │   └── task-manager-abstraction.md
-│   ├── frameworks/             # Frameworks e metodologias (7 arquivos)
+│   ├── frameworks/             # Frameworks e metodologias (11 arquivos)
 │   │   ├── framework_story_points.md
 │   │   ├── framework_testes.md
 │   │   ├── onion-complete-cycle-understanding.md
@@ -106,11 +109,11 @@ docs/
 │   │   ├── onion-multi-context-orchestrator-vision.md
 │   │   ├── onion-system-critical-analysis-2025.md
 │   │   └── spec-driven-development-tools-2025.md
-│   ├── platforms/              # Plataformas e tecnologias (1 arquivo)
+│   ├── platforms/              # Plataformas e tecnologias (2 arquivos)
 │   │   └── runflow.md
 │   ├── providers/              # Provedores de serviços (1 arquivo)
 │   │   └── microsoft-graph-teams-api-guia-completo.md
-│   └── tools/                  # Ferramentas e recursos (2 arquivos)
+│   └── tools/                  # Ferramentas e recursos (3 arquivos)
 │       ├── claude-code-commands-best-practices-2025.md
 │       └── whisper.md          # Knowledge base do Whisper
 │
@@ -126,8 +129,14 @@ docs/
 ├── sdaal/                      # Specification-Driven AI Abstraction Layer
 │   └── [documentação SDAAL]
 │
-└── tools/                      # Ferramentas e recursos
-    └── [documentação de ferramentas]
+└── tools/                      # Inventário do toolset Codex (7 arquivos)
+    ├── README.md
+    ├── codex-config.md
+    ├── skills.md
+    ├── subagents.md
+    ├── mcp-servers.md
+    ├── rules-hooks.md
+    └── task-manager.md
 ```
 
 ---
@@ -150,7 +159,7 @@ docs/
 #### Referências Técnicas
 - **[Exemplos Práticos](onion/practical-examples.md)** - Casos de uso reais com exemplos
 - **[Referência de Ferramentas](onion/tools-reference.md)** - Todas as ferramentas disponíveis
-- **[Arquitetura de Comandos](onion/claude-code-commands-architecture.md)** - Estrutura interna dos comandos
+- **[Arquitetura de Skills Codex](onion/codex-skills-architecture.md)** - Estrutura interna das skills
 
 #### Documentação Avançada
 - **[Testes de Validação E2E](onion/end-to-end-validation-tests.md)** - Testes end-to-end do sistema
@@ -175,7 +184,7 @@ docs/
 
 Knowledge Bases estruturadas para consumo por IA e referência técnica:
 
-### Conceitos Fundamentais (13 arquivos)
+### Conceitos Fundamentais (14 arquivos)
 - **Task Manager Abstraction** - Abstração de gerenciadores de tarefas
 - **Framework de Story Points** - Sistema de estimativas ágeis
 - **Framework de Testes** - Metodologias de teste completas
@@ -190,7 +199,7 @@ Knowledge Bases estruturadas para consumo por IA e referência técnica:
 - **Meeting Transcription to Knowledge Base** - Processamento de reuniões
 - **Specification-Driven AI Abstraction Layer** - Camada de abstração orientada a especificações
 
-### Frameworks e Metodologias (7 arquivos)
+### Frameworks e Metodologias (11 arquivos)
 - **Framework de Story Points** - Estimativas ágeis
 - **Framework de Testes** - White-box, Grey-box, Black-box
 - **Onion Complete Cycle Understanding** - Sistema completo de 5 camadas
@@ -205,7 +214,7 @@ Knowledge Bases estruturadas para consumo por IA e referência técnica:
 ### Provedores de Serviços (1 arquivo)
 - **Microsoft Graph Teams API** - Guia completo de integração
 
-### Ferramentas (2 arquivos)
+### Ferramentas (3 arquivos)
 - **Codex Commands Best Practices 2025** - Boas práticas de comandos Codex
 - **Whisper** - Sistema de transcrição de áudio (OpenAI)
 
@@ -330,7 +339,7 @@ Guias de aplicação do Onion em projetos novos, legados ou regulados:
 ### 🏗️ Para Arquitetos
 
 **Comece com:**
-1. [Arquitetura de Comandos](onion/claude-code-commands-architecture.md)
+1. [Arquitetura de Skills Codex](onion/codex-skills-architecture.md)
 2. [Meta Especificações](meta-specs/index.md)
 3. [Revisão Analítica do Sistema Onion — Maio/2026](analysis/onion-review-2026-05.md)
 

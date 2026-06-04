@@ -59,7 +59,7 @@ developer_instructions = """
 # model = "gpt-5.4"               # gpt-5.5 | gpt-5.4 | gpt-5.4-mini
 # model_reasoning_effort = "medium"
 # sandbox_mode = "workspace-write"
-# mcp_servers = []
+# MCPs específicos devem ser configurados como blocos [mcp_servers.<id>].
 ```
 IMPORTANTE: a extensão do arquivo deve ser `.toml`, não `.yaml` nem `.md`.
 

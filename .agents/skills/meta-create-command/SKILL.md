@@ -22,7 +22,7 @@ Criar skills que se integram ao ecossistema existente.
 ls .agents/skills/*/SKILL.md | wc -l
 
 # Verificar duplicação
-grep -l "name: {{command_name}}" .agents/skills/*/SKILL.md
+grep -l "^name: {{category}}-{{command_name}}$" .agents/skills/*/SKILL.md
 ```
 
 ### Passo 2: Determinar Categoria
@@ -88,8 +88,8 @@ description: |
 
 ```bash
 # 1. DUPLICAÇÃO - Verificar nome único
-if grep -r "^name: {{command_name}}$" .agents/skills/ 2>/dev/null; then
-  echo "❌ ERRO: Skill '{{command_name}}' já existe!"
+if grep -r "^name: {{category}}-{{command_name}}$" .agents/skills/ 2>/dev/null; then
+  echo "❌ ERRO: Skill '{{category}}-{{command_name}}' já existe!"
   exit 1
 fi
 
@@ -100,7 +100,7 @@ if [[ ! "{{command_name}}" =~ ^[a-z][a-z0-9]*(-[a-z0-9]+)*$ ]]; then
 fi
 
 # 3. CATEGORIA - Verificar categoria válida
-VALID_CATEGORIES="engineer product git docs meta validate quick general"
+VALID_CATEGORIES="engineer product git docs meta validate test development quick"
 if [[ ! " $VALID_CATEGORIES " =~ " {{category}} " ]]; then
   echo "❌ ERRO: Categoria '{{category}}' inválida!"
   echo "Válidas: $VALID_CATEGORIES"
@@ -111,7 +111,7 @@ fi
 **Checklist de Validação:**
 - [ ] Nome único (não existe em `.agents/skills/`)
 - [ ] Nome em kebab-case válido
-- [ ] Categoria válida (engineer|product|git|docs|meta|validate|quick|general)
+- [ ] Categoria válida (engineer|product|git|docs|meta|validate|test|development|quick)
 - [ ] Frontmatter apenas com `name` + `description`
 - [ ] < 400 linhas
 - [ ] Seções obrigatórias (Objetivo, Fluxo, Output)
@@ -136,7 +136,7 @@ write .agents/skills/{{category}}-{{command_name}}/SKILL.md
 ∟ Categoria: {{category}}
 ∟ Linhas: ~150
 
-🚀 Para usar: $-{{category}}-{{command_name}}
+🚀 Para usar: ${{category}}-{{command_name}}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 

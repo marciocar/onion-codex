@@ -4,7 +4,7 @@
       "hooks": [
         {
           "type": "command",
-          "command": "test -f .env && p=$(grep -E \"^TASK_MANAGER_PROVIDER=\" .env | head -1 | cut -d= -f2 | tr -d \"[:space:]\") && printf 'Onion: TASK_MANAGER_PROVIDER ativo = %s\\n' \"${p:-none}\" || true",
+          "command": "python .codex/hooks/session-start-provider.py",
           "timeout": 5,
           "statusMessage": "Detectando Task Manager provider (Onion)"
         }

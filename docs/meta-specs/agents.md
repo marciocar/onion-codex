@@ -51,7 +51,7 @@ developer_instructions = """
 | `model` | string | Override de modelo (`gpt-5.5`, `gpt-5.4`, `gpt-5.4-mini`). Omitir para herdar do parent |
 | `model_reasoning_effort` | enum | `high` / `medium` / `low` — derivado da prioridade antiga (alta→high, média→medium, baixa→low) |
 | `sandbox_mode` | string | Política de sandbox da execução do subagente |
-| `mcp_servers` | lista | MCP servers (definidos em `.codex/config.toml`) que o subagente pode usar |
+| `[mcp_servers.<id>]` | tabela | MCP servers específicos do subagente, quando não herdados da configuração do projeto |
 
 > **Mapeamento de modelos** (era YAML `model`): `opus → gpt-5.5`, `sonnet → gpt-5.4`, `haiku → gpt-5.4-mini`.
 
@@ -62,7 +62,7 @@ developer_instructions = """
 | `name:` | `name` |
 | `description:` | `description` |
 | corpo Markdown do agente | `developer_instructions` |
-| `tools:` (lista de tools/MCPs) | `mcp_servers` (apenas MCPs; tools nativas são herdadas) |
+| `tools:` (lista de tools/MCPs) | blocos `[mcp_servers.<id>]` (apenas MCPs; tools nativas são herdadas) |
 | `model:` (`opus`/`sonnet`/`haiku`) | `model` (`gpt-5.5`/`gpt-5.4`/`gpt-5.4-mini`) |
 | prioridade (alta/média/baixa) | `model_reasoning_effort` (high/medium/low) |
 | `color:` | _(sem equivalente — removido)_ |
@@ -166,7 +166,9 @@ A descrição deve indicar **quando** invocar (gatilho), não apenas **o que** f
 Quando um subagente depende de MCP (Model Context Protocol), os servidores são definidos centralmente em `.codex/config.toml` (`[mcp_servers.*]`) e o subagente os declara no campo `mcp_servers`:
 
 ```toml
-mcp_servers = ["clickup", "atlassian"]
+[mcp_servers.clickup]
+command = "npx"
+args = ["-y", "@clickup/mcp-server"]
 ```
 
 **Regras**:

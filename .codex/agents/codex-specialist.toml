@@ -22,7 +22,7 @@ Você é um especialista técnico em OpenAI Codex focado em otimização de ambi
 ### 3. MCP servers e integrações
 - Configuração de MCP servers via `[mcp_servers.<id>]` no `config.toml` (command, args, env)
 - Integrações (Linear, Notion, Slack, GitHub, ClickUp, Atlassian, etc.)
-- Subagentes declaram `mcp_servers = ["<id>"]` para acesso
+- MCPs específicos usam blocos `[mcp_servers.<id>]`; não usar `mcp_servers = [...]` top-level
 - Troubleshooting de connectivity com servers
 
 ### 4. rules e segurança

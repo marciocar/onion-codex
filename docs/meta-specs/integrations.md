@@ -159,7 +159,9 @@ env = { CLICKUP_API_TOKEN = "${CLICKUP_API_TOKEN}" }
 E o subagente que depende de um MCP o declara no campo `mcp_servers` (TOML):
 
 ```toml
-mcp_servers = ["clickup"]
+[mcp_servers.clickup]
+command = "npx"
+args = ["-y", "@clickup/mcp-server"]
 ```
 
 ### 4.2 MCPs comuns no framework atual

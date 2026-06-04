@@ -1,47 +1,59 @@
 ---
 name: meta-all-tools
-description: Documentação de todas as ferramentas disponíveis no Codex.
+description: Documenta o toolset disponível no Codex. Use quando precisar inventariar ferramentas locais, skills, subagentes, MCPs, regras, hooks ou recursos do workspace.
 ---
 
-# Listagem de Todas as Ferramentas
+# Inventário de Ferramentas Codex
 
-> **TODO Codex:** reescrever inventário de ferramentas para o toolset do Codex (este documento ainda descreve o toolset legado e precisa ser atualizado para refletir as ferramentas reais disponíveis no Codex).
+## Objetivo
 
-## 🎯 Objetivo
-Documentar todas as ferramentas disponíveis no contexto do Codex organizadas por categoria.
+Gerar ou atualizar documentação do toolset real disponível no Codex para este workspace, sem assumir ferramentas legadas de outros agentes.
 
-## 📋 Instruções
+## Fontes de Verdade
 
-### 1. Estrutura de Arquivos
-Crie arquivos separados por categoria em `.codex/docs/tools/`:
-- `mcps.md` - Ferramentas MCP (ClickUp, Postman, etc)
-- `agents.md` - Agentes especializados (@product-agent, @clickup-specialist, etc)
-- `commands.md` - Skills `.agents/skills/` disponíveis
-- `rules.md` - Regras e configurações do workspace
-- `[categoria].md` - Outras categorias relevantes
+Use estas fontes, nesta ordem:
 
-### 2. Formato de Cada Item
-```typescript
-// Assinatura TypeScript
-function nome_ferramenta(parametros): ReturnType
-// Propósito: Descrição clara e concisa da ferramenta
-```
+1. `AGENTS.md` para regras operacionais do projeto.
+2. `.codex/config.toml` para features, subagentes, MCPs comentados ou ativos e limites.
+3. `.codex/hooks.json` para automações de ciclo de vida.
+4. `.codex/rules/default.rules` para permissões de execução.
+5. `.codex/agents/*.toml` para subagentes Codex.
+6. `.agents/skills/*/SKILL.md` para skills Agent Skills.
+7. `.agents/skills/task-manager/references/` para adapters de Task Manager.
+8. `docs/knowledge-base/platforms/openai-codex.md` para conceitos de plataforma.
 
-### 3. Estrutura de Cada Arquivo
-- **Índice** no início (links internos)
-- **Hierarquia** quando aplicável (sub-categorias, grupos)
-- **Lista de marcadores** para cada ferramenta
-- **Exemplos práticos** quando relevante
+## Categorias
 
-### 4. README Principal
-Crie `docs/tools/README.md` com:
-- Visão geral da documentação de ferramentas
-- Índice de todos os arquivos de categoria
-- Guia rápido de uso
+Documente o inventário em `docs/tools/`:
 
-## ⚙️ Execução
-1. Se `docs/tools/README.md` existir, pergunte: **Substituir** ou **Atualizar**?
-2. Analise todas as ferramentas disponíveis no contexto
-3. Organize por categoria
-4. Gere os arquivos markdown
-5. Confirme a criação/atualização
+- `README.md` - visão geral, data da auditoria e links para categorias.
+- `codex-config.md` - `config.toml`, features, sandbox, approvals, project docs e agents config.
+- `skills.md` - skills em `.agents/skills/`, com nome, descrição e caminho.
+- `subagents.md` - subagentes em `.codex/agents/`, com modelo, sandbox, MCPs e referência detalhada quando existir.
+- `mcp-servers.md` - MCPs ativos ou templates comentados, variáveis necessárias e provider relacionado.
+- `rules-hooks.md` - regras de execução e hooks locais.
+- `task-manager.md` - provider detection, adapters e formatação por provider.
+
+## Formato de Saída
+
+Cada arquivo deve conter:
+
+- escopo da categoria;
+- tabela objetiva de itens;
+- caminhos locais clicáveis em Markdown quando possível;
+- observações de compatibilidade Codex;
+- pendências runtime separadas de problemas estruturais.
+
+## Procedimento
+
+1. Verifique se `docs/tools/` existe.
+2. Atualize arquivos existentes sem apagar conteúdo útil.
+3. Se a pasta não existir, crie a estrutura mínima acima.
+4. Não invente MCP ativo: se `.env` estiver ausente ou o bloco estiver comentado em `.codex/config.toml`, marque como "template/inativo".
+5. Ao final, informe contagens reais de skills, subagentes, hooks, rules e MCPs.
+
+## Critério de Conclusão
+
+- Nenhum texto deve depender de `.claude/` como estrutura viva.
+- O inventário deve refletir apenas Codex: `.codex/`, `.agents/skills/`, `AGENTS.md`, hooks, rules, MCPs e recursos do ambiente atual.
+- Pendências que exigem `codex` CLI autenticado ou credenciais externas devem ficar marcadas como runtime, não como falha local.

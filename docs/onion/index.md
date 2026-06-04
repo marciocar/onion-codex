@@ -166,7 +166,7 @@ O **Sistema Onion** é um **framework template em `.codex/`** — instalável em
 
 | Data | Mudança |
 |------|---------|
-| 2026-06-03 | Limpeza: removidos 14 docs obsoletos do v4.0/CLI abandonado; índice realinhado à identidade atual (78 comandos / 49 agentes / 4 skills) |
+| 2026-06-04 | Validação Codex: índice realinhado à identidade atual (82 skills / 49 agentes / 4 skills-base) |
 | 2026-05-15 | Auditoria manual: agente @onion corrigido (agentes fantasmas removidos, 18 novos adicionados) |
 | 2025-12-20 | Índice reconstruído |
 | 2025-12-02 | Adicionado Spec-Driven Development |

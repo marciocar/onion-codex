@@ -107,7 +107,9 @@ description = "[Descrição clara em uma linha]"
 model = "gpt-5.4"                          # ou gpt-5.5 / gpt-5.4-mini
 model_reasoning_effort = "high"            # high | medium | low
 sandbox_mode = "workspace-write"           # SÓ se editar arquivos / rodar comandos
-mcp_servers = ["clickup"]                  # opcional, só se necessário
+[mcp_servers.clickup]                      # opcional, só se necessário
+command = "npx"
+args = ["-y", "@clickup/mcp-server"]
 developer_instructions = """
 # 🎯 [Nome do Agente]
 
@@ -245,7 +247,9 @@ description = "Especialista em [serviço] que [ação principal]. Use para [work
 model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
-mcp_servers = ["[servico]"]
+[mcp_servers.[servico]]
+command = "[comando]"
+args = ["[args]"]
 developer_instructions = """
 [corpo do prompt]
 """

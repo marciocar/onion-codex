@@ -179,7 +179,7 @@ prefix_rule(pattern=["npm", "run"], decision="prompt")
 ```
 
 **Hierarquia de decisão**: `forbidden` > `prompt` > `allow`  
-**Validar**: `codex execpolicy check <comando>`
+**Validar**: `codex execpolicy check --rules <arquivo.rules> <comando>...`
 
 ---
 
