@@ -1,6 +1,5 @@
 name = "runflow-specialist"
 description = "Especialista em Runflow SDK e plataforma para desenvolvimento de agentes IA, workflows e integrações"
-model = "gpt-5.4"
 model_reasoning_effort = "medium"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

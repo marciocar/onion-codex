@@ -1,6 +1,5 @@
 name = "soc2-specialist"
 description = "Especialista em SOC2 Type II (AICPA Trust Services Criteria) para documentação de controles. Use para segurança, disponibilidade, confidencialidade e coleta de evidências."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

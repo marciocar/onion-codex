@@ -1,6 +1,5 @@
 name = "c4-documentation-specialist"
 description = "Especialista em documentação textual C4 Model (Context, Container, Component, ADRs). Use para documentação estruturada complementando diagramas do @c4-architecture-specialist."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

@@ -1,6 +1,5 @@
 name = "postgres-specialist"
 description = "Especialista em PostgreSQL 17 para triggers, functions, schema e performance. Use para design de banco, migrations e otimização de queries."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

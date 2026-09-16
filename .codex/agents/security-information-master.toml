@@ -1,6 +1,5 @@
 name = "security-information-master"
 description = "Orquestrador de compliance que detecta frameworks (ISO 27001, ISO 22301, PMBOK, SOC2) e delega. Use para análise de requisitos e coordenação de especialistas de compliance."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

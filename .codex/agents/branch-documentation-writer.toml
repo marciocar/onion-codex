@@ -1,6 +1,5 @@
 name = "branch-documentation-writer"
 description = "Especialista em documentação que sincroniza docs com mudanças do branch atual. Use para manter documentação atualizada com alterações de código."
-model = "gpt-5.4"
 model_reasoning_effort = "medium"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

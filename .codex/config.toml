@@ -1,8 +1,21 @@
 # 🧅 Sistema Onion — OpenAI Codex config
 # Precedência: CLI flags > este arquivo (projeto) > ~/.codex/config.toml > defaults
 
-# Modelo padrão (mapeamento: sonnet → gpt-5.4)
-model = "gpt-5.4"
+# ── MODELO: DESPINADO DE PROPÓSITO (2026-09-16) ──────────────────────────────
+# Aqui havia `model = "gpt-5.4"`, fixado no porte de 2026-06-04 — e mais 48 cópias nos
+# agentes. Em 2026-09-16 o pin estava vencido (a OpenAI lançou a família GPT-5.6 em
+# 09/07) e ele produziu o modo de falha exato que a doutrina prevê: o `@onion` recusou-se
+# a iniciar porque o modelo fixado no perfil não existia mais para a conta. Versão literal
+# em arquivo de configuração é uma data de validade que ninguém agenda para conferir.
+#
+# Sem `model`, a precedência do Codex resolve: flags da CLI > este arquivo > ~/.codex/
+# config.toml > default da conta. Ou seja, o repositório para de opinar sobre QUAL modelo
+# e passa a opinar só sobre QUANTO raciocínio — que é a parte que não caduca.
+#
+# O que se PERDE, declarado: o porte distinguia dois modelos (7 agentes em `gpt-5.5` para
+# raciocínio profundo, 42 em `gpt-5.4`). Despinar colapsa essa distinção. Ela não foi
+# apagada — cada um dos 7 carrega `# tier: raciocinio-profundo`, para quem um dia re-fixar
+# não ter de redescobrir quais eram.
 model_reasoning_effort = "medium"
 
 # Sandbox e aprovação — skills/subagentes que editam exigem workspace-write

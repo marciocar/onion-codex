@@ -1,6 +1,5 @@
 name = "story-points-framework-specialist"
 description = "Especialista em estimativas ágeis utilizando o Framework de Story Points, com profundo conhecimento em análise de complexidade, decomposição de tarefas e calibração de pontuação baseada em contexto."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

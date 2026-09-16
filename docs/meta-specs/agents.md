@@ -48,12 +48,16 @@ developer_instructions = """
 
 | Campo | Tipo | Uso |
 |---|---|---|
-| `model` | string | Override de modelo (`gpt-5.5`, `gpt-5.4`, `gpt-5.4-mini`). Omitir para herdar do parent |
+| `model` | string | **NÃO USAR.** Versão literal aqui caduca sem aviso (medido 2026-09-16). O modelo vem da precedência do Codex; o agente declara só esforço |
 | `model_reasoning_effort` | enum | `high` / `medium` / `low` — derivado da prioridade antiga (alta→high, média→medium, baixa→low) |
 | `sandbox_mode` | string | Política de sandbox da execução do subagente |
 | `[mcp_servers.<id>]` | tabela | MCP servers específicos do subagente, quando não herdados da configuração do projeto |
 
-> **Mapeamento de modelos** (era YAML `model`): `opus → gpt-5.5`, `sonnet → gpt-5.4`, `haiku → gpt-5.4-mini`.
+> **Mapeamento de TIER** (era YAML `model`): o tier do Claude vira **esforço**, não versão —
+> `opus → model_reasoning_effort = "high"` · `sonnet → "medium"` · `haiku → "low"`.
+> Antes o mapeamento apontava versões literais da OpenAI, e o porte traduziu os apelidos de tier do Claude (`opus`/`sonnet`/`haiku`, que nunca caducam) em VERSÕES LITERAIS da OpenAI — e foi isso que venceu e quebrou a partida do `@onion` em 2026-09-16. Tier é propriedade da
+> TAREFA (quanto raciocínio ela exige) e não envelhece; versão é propriedade do catálogo do
+> fornecedor e envelhece a cada trimestre.
 
 ### Mapeamento da convenção antiga (YAML) → TOML
 
@@ -63,7 +67,7 @@ developer_instructions = """
 | `description:` | `description` |
 | corpo Markdown do agente | `developer_instructions` |
 | `tools:` (lista de tools/MCPs) | blocos `[mcp_servers.<id>]` (apenas MCPs; tools nativas são herdadas) |
-| `model:` (`opus`/`sonnet`/`haiku`) | `model` (`gpt-5.5`/`gpt-5.4`/`gpt-5.4-mini`) |
+| `model:` (`opus`/`sonnet`/`haiku`) | `model_reasoning_effort` (`high`/`medium`/`low`) — tier, nunca versão |
 | prioridade (alta/média/baixa) | `model_reasoning_effort` (high/medium/low) |
 | `color:` | _(sem equivalente — removido)_ |
 
@@ -74,7 +78,6 @@ developer_instructions = """
 ```toml
 name = "product-agent"
 description = "Especialista em gestão de projetos e produtos AI que coordena iniciativas e especifica funcionalidades. Use para gerenciamento estratégico de produto e coordenação de equipes. Relacionado: @task-specialist, @clickup-specialist."
-model = "gpt-5.4"
 model_reasoning_effort = "medium"
 developer_instructions = """
 # Product Agent

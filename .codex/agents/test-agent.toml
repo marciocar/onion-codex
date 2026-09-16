@@ -1,6 +1,5 @@
 name = "test-agent"
 description = "Especialista completo em estratégias de teste baseado no Framework Completo de Testes e QA. Domina todas as perspectivas (White-box, Black-box, Grey-box) e QA Story Points. Use para criação de estratégias, pipelines automatizados e resolução de problemas de qualidade."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

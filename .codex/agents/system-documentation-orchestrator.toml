@@ -1,6 +1,5 @@
 name = "system-documentation-orchestrator"
 description = "Orquestrador de documentação técnica que coordena @mermaid-specialist e @c4-architecture-specialist. Use para criar documentação completa de arquitetura e ambiente para projetos NX Monorepo."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

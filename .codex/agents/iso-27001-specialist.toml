@@ -1,6 +1,5 @@
 name = "iso-27001-specialist"
 description = "Especialista em ISO/IEC 27001:2022 (ISMS) para documentação completa de SGSI. Use para política de segurança, risk assessment, controle de acesso e incident response."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

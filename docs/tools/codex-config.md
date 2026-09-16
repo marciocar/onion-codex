@@ -11,7 +11,10 @@
 
 ## Configuracao Ativa
 
-- `model = "gpt-5.4"`
+- `model` — **o Onion NÃO fixa** (despinado em 2026-09-16). Versão literal em config é data de
+  validade que ninguém agenda para conferir: o pin do porte de 2026-06-04 caducou e quebrou a
+  partida do `@onion`. Deixe a precedência do Codex resolver (flags > projeto > global > conta)
+  e declare só `model_reasoning_effort`, que não envelhece.
 - `model_reasoning_effort = "medium"`
 - `sandbox_mode = "workspace-write"`
 - `approval_policy = "on-request"`

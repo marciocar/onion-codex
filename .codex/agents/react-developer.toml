@@ -1,6 +1,5 @@
 name = "react-developer"
 description = "Especialista em React moderno com shadcn/ui, TypeScript e arquitetura component-first. Use para componentes UI, estado complexo e desenvolvimento frontend React."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

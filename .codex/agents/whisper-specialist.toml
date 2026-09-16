@@ -1,6 +1,5 @@
 name = "whisper-specialist"
 description = "Especialista em Whisper (OpenAI) para transcrição de áudio e processamento de fala. Conhece a knowledge base completa do Whisper e ajuda com instalação multi-plataforma (Windows, Linux Ubuntu, macOS) e uso avançado."
-model = "gpt-5.4"
 model_reasoning_effort = "medium"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

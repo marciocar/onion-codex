@@ -14,7 +14,7 @@ name: nome-em-kebab-case
 description: |
   Descrição clara em 1-2 linhas do propósito do agente.
   Use para [caso de uso principal]. Relacionado: @agente1, @agente2.
-model: sonnet                    # sonnet | opus | gpt-4
+model_reasoning_effort: medium   # tier da TAREFA: high | medium | low (NUNCA versão de modelo)
 tools:                           # Ferramentas GENÉRICAS (agnóstico)
   - read_file
   - write
@@ -70,7 +70,7 @@ updated: "2025-11-24"
 |-------|------|-----------|---------|
 | `name` | string | Identificador único kebab-case | `code-reviewer` |
 | `description` | string | Descrição em 1-2 linhas | `Especialista em revisão...` |
-| `model` | enum | Modelo de IA | `sonnet`, `opus`, `gpt-4` |
+| `model_reasoning_effort` | enum | Tier de raciocínio da tarefa | `high`, `medium`, `low` |
 | `tools` | array | Ferramentas disponíveis | `[read_file, write, ...]` |
 | `version` | semver | Versão do agente | `"1.0.0"` |
 | `updated` | date | Data da última atualização | `"2025-11-24"` |
@@ -217,7 +217,7 @@ Consulte `docs/knowledge-base/concepts/configuration-management.md` para setup.
 ### Header YAML
 - [ ] `name` único e em kebab-case
 - [ ] `description` clara em 1-2 linhas
-- [ ] `model` definido (sonnet/opus/gpt-4)
+- [ ] `model_reasoning_effort` definido (high/medium/low) e **nenhuma versão de modelo fixada**
 - [ ] `tools` apenas genéricas (exceto especializados)
 - [ ] `version` em formato semver
 - [ ] `updated` com data atual

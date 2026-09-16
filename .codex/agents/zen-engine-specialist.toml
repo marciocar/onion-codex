@@ -1,6 +1,5 @@
 name = "zen-engine-specialist"
 description = "Especialista em ZEN Engine e JDM (JSON Decision Model) para criação, validação e otimização de regras de negócios. Use para: criar JDM para elementos de gamificação, validar regras complexas, otimizar Decision Tables, implementar integração ZEN Engine no MetaGamify, resolver problemas de performance em avaliação de regras. Conhece profundamente: @zen-engine.md (KB), ADR-004, integração técnica do MetaGamify."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

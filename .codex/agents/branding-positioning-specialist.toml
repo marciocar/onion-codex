@@ -1,6 +1,7 @@
 name = "branding-positioning-specialist"
 description = "Especialista em Branding e Posicionamento de Marca que aplica métodos, estratégias e frameworks modernos de 2025 para desenvolver identidade de marca, posicionamento estratégico e experiência consistente."
-model = "gpt-5.5"
+# tier: raciocinio-profundo (o porte fixava o modelo superior aqui; o marcador
+# sobrevive ao despin para que re-fixar nao exija redescobrir quem era)
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

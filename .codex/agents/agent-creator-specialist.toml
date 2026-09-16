@@ -1,6 +1,5 @@
 name = "agent-creator-specialist"
 description = "Meta-especialista em criar agentes contextualizados e integrados ao ecossistema."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''
@@ -79,7 +78,10 @@ Caso não haja duplicação, levante questões para otimizar:
 3. **Categoria e Posicionamento:** arquivo será `.codex/agents/<nome-agente>.toml`
 4. **Ferramentas / MCP servers:** quais são realmente necessários
 5. **Nível de Autonomia:** alta / média / baixa
-6. **Modelo de IA:** `gpt-5.4` (padrão), `gpt-5.5` (raciocínio profundo), `gpt-5.4-mini` (rápido) + `model_reasoning_effort` (high/medium/low)
+6. **Raciocínio:** `model_reasoning_effort` (high/medium/low). NÃO fixe `model` no agente —
+   versão literal em config caduca sem aviso (medido 2026-09-16: o pin do porte quebrou o `@onion`).
+   O modelo vem da precedência do Codex (flags > projeto > global > conta); o agente declara
+   só QUANTO raciocínio precisa, que é a parte que não envelhece.
 
 ---
 
@@ -104,7 +106,6 @@ MCP servers especializados disponíveis: clickup, github, playwright, code-under
 ```toml
 name = "[nome-do-agente]"
 description = "[Descrição clara em uma linha]"
-model = "gpt-5.4"                          # ou gpt-5.5 / gpt-5.4-mini
 model_reasoning_effort = "high"            # high | medium | low
 sandbox_mode = "workspace-write"           # SÓ se editar arquivos / rodar comandos
 [mcp_servers.clickup]                      # opcional, só se necessário
@@ -220,7 +221,6 @@ Após criar, documente: localização (`.codex/agents/<nome>.toml`), propósito,
 ```toml
 name = "[tecnologia]-[acao]-specialist"
 description = "Especialista em [tecnologia] que [ação principal]. Use para [casos de uso]."
-model = "gpt-5.4"
 model_reasoning_effort = "medium"
 sandbox_mode = "workspace-write"
 developer_instructions = """
@@ -232,7 +232,6 @@ developer_instructions = """
 ```toml
 name = "[standard]-[tipo]-specialist"
 description = "Especialista em [standard] que [ação principal]. Gera [artefatos] audit-ready."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = """
@@ -244,7 +243,6 @@ developer_instructions = """
 ```toml
 name = "[servico]-[acao]-manager"
 description = "Especialista em [serviço] que [ação principal]. Use para [workflows]."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 [mcp_servers.[servico]]
@@ -259,7 +257,6 @@ developer_instructions = """
 ```toml
 name = "[dominio]-orchestrator"
 description = "Meta-orquestrador de [domínio] que [ação principal]. Coordena [agentes]."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 developer_instructions = """
 [corpo do prompt — somente leitura/coordenação, sem sandbox]

@@ -1,6 +1,7 @@
 name = "corporate-compliance-specialist"
 description = "Especialista em compliance corporativo: anticorrupção, PLD/KYC, ética e governança. Use para revisar políticas, analisar riscos e criar documentação de conformidade."
-model = "gpt-5.5"
+# tier: raciocinio-profundo (o porte fixava o modelo superior aqui; o marcador
+# sobrevive ao despin para que re-fixar nao exija redescobrir quem era)
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

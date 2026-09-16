@@ -1,6 +1,5 @@
 name = "gitflow-specialist"
 description = "Especialista em GitFlow para branching, releases e versionamento semântico. Use para guidance em workflows Git estruturados e colaborativos."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

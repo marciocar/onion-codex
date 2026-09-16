@@ -1,6 +1,5 @@
 name = "command-creator-specialist"
 description = "Meta-especialista em criar skills Codex (.agents/skills/<slug>/SKILL.md) contextualizadas e integradas."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

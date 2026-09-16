@@ -50,8 +50,8 @@ description = """
 [Descrição em 2 linhas]
 Use para [caso de uso principal].
 """
-# Mapeamento de modelo: opus→gpt-5.5, sonnet→gpt-5.4, haiku→gpt-5.4-mini
-model = "gpt-5.4"
+# Tier vira ESFORÇO, nunca versão: opus→high, sonnet→medium, haiku→low.
+# NÃO escreva `model = "..."` aqui — versão literal caduca e quebra a partida.
 model_reasoning_effort = "medium"
 sandbox_mode = "workspace-write"
 # MCPs específicos devem ser configurados como blocos [mcp_servers.<id>] no config/subagente.
@@ -153,5 +153,5 @@ write .codex/agents/{{agent_name}}.toml
 ## ⚠️ Notas
 
 - Sempre validar duplicação antes de criar
-- Usar modelo `gpt-5.4` como padrão
+- **Não fixar `model`** — declarar só `model_reasoning_effort` (o tier da tarefa)
 - Não adicionar MCPs em agentes genéricos

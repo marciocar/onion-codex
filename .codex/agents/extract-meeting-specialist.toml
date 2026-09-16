@@ -1,6 +1,5 @@
 name = "extract-meeting-specialist"
 description = "Especialista em aplicar o framework EXTRACT para transformar transcrições de reuniões em conhecimento estruturado."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''
