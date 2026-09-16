@@ -22,6 +22,24 @@ REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 HARD=0
 violation() { printf 'VIOLATION: %s: %s\n' "$1" "$2"; HARD=$((HARD+1)); }
 
+# Lista os links relativos quebrados no formato `arquivo|alvo`, uma linha por ocorrência.
+# Uma função só, consumida pela guarda E pelo emissor do baseline — duas cópias divergiriam, e
+# baseline que não fala o mesmo idioma da guarda é pior que baseline nenhum.
+_links_quebrados() {
+  local _f _d _l _alvo
+  while IFS= read -r _f; do
+    case "${_f}" in */.git/*) continue ;; esac
+    _d="$(dirname "${_f}")"
+    while IFS= read -r _l; do
+      _alvo="${_l#*](}"; _alvo="${_alvo%)}"; _alvo="${_alvo%%#*}"
+      [ -z "${_alvo}" ] && continue
+      [ -e "${_d}/${_alvo}" ] || printf '%s|%s\n' "${_f#"${REPO}/"}" "${_alvo}"
+    done < <(grep -oE '\]\([^)h][^)]*\.md\)' "${_f}" || true)
+  done < <(find "${REPO}" -name '*.md')
+}
+
+if [ "${1:-}" = "--emit-link-baseline" ]; then _links_quebrados | sort -u; exit 0; fi
+
 echo "=== Onion Lint (Codex) — validando ${REPO} ==="
 
 # ── R-MODELO ──────────────────────────────────────────────────────────────────────────────────
@@ -69,6 +87,48 @@ if [ -n "${_env}" ]; then
 else
   violation ".codex/validation/inventory.sh" "R-CONTAGEM não pode julgar: a SSOT não respondeu. Guarda que não sabe o esperado não valida — falha FECHADA."
 fi
+
+
+# ── R-LINK ────────────────────────────────────────────────────────────────────────────────────
+# Link relativo que não resolve. Medido 2026-09-16, antes da guarda: 110 quebrados de 496 — e o
+# padrão era UM só: prosa apontando `.claude/...`, que este porte removeu de propósito. É a mesma
+# classe que o core fechou no mesmo dia (doutrina vendorizada que linka caminho do papel que ela
+# não recebe). A cura, lá e aqui, é citar pelo NOME INVOCÁVEL, nunca pelo caminho no disco.
+#
+# CATRACA, não muro: 110 quebrados não se curam num commit, e uma guarda que reprova o repo
+# inteiro no dia 1 é uma guarda que alguém desliga. O passivo entra no baseline e SÓ PODE
+# ENCOLHER; link novo fora do baseline é HARD. A métrica de saúde é o baseline diminuindo.
+_bl="${REPO}/.codex/validation/link-baseline.txt"
+if [ ! -f "${_bl}" ]; then
+  violation ".codex/validation/link-baseline.txt" "R-LINK não pode julgar: baseline AUSENTE. Sem ele não há como distinguir passivo de regressão — falha FECHADA. Gere com: bash .codex/validation/lint-artifacts.sh --emit-link-baseline > .codex/validation/link-baseline.txt"
+else
+  _novos=0
+  while IFS= read -r _q; do
+    [ -z "${_q}" ] && continue
+    if grep -qxF "${_q}" "${_bl}"; then continue; fi
+    violation "${_q%%|*}" "R-LINK: link relativo NOVO que não resolve → '${_q#*|}'. Cite pelo nome invocável (\$slug), não pelo caminho no disco."
+    _novos=$((_novos+1))
+  done < <(_links_quebrados)
+  _pass="$(_links_quebrados | wc -l)"
+  [ "${_novos}" -eq 0 ] && [ "${_pass}" -gt 0 ] && \
+    echo "AVISO: [link/PASSIVO] ${_pass} link(s) quebrado(s) tolerados pelo baseline — a métrica de saúde é este número DIMINUINDO"
+fi
+
+# ── R-FORMA ───────────────────────────────────────────────────────────────────────────────────
+# 82 skills e 49 agentes viviam sem NENHUMA verificação de forma. Um SKILL.md sem `name` não é
+# invocável; um .toml que não parseia não carrega agente nenhum — e as duas falhas são silenciosas
+# no Codex (o artefato simplesmente não aparece), que é o pior modo: ausência parece escolha.
+for _sk in "${REPO}"/.agents/skills/*/SKILL.md; do
+  [ -e "${_sk}" ] || continue
+  grep -qE '^name:' "${_sk}"        || violation "${_sk#"${REPO}/"}" "R-FORMA: SKILL.md sem 'name:' — a skill não é invocável, e a ausência é SILENCIOSA no Codex"
+  grep -qE '^description:' "${_sk}" || violation "${_sk#"${REPO}/"}" "R-FORMA: SKILL.md sem 'description:' — sem ela o modelo não sabe QUANDO ativar a skill"
+done
+for _ag in "${REPO}"/.codex/agents/*.toml; do
+  [ -e "${_ag}" ] || continue
+  python3 -c 'import tomllib,sys; tomllib.load(open(sys.argv[1],"rb"))' "${_ag}" 2>/dev/null \
+    || violation "${_ag#"${REPO}/"}" "R-FORMA: TOML INVÁLIDO — o agente não carrega, e o Codex falha em silêncio"
+  grep -qE '^name = ' "${_ag}" || violation "${_ag#"${REPO}/"}" "R-FORMA: agente sem 'name' — não há como invocá-lo"
+done
 
 echo "=== Sumário ==="
 echo "  Violações HARD : ${HARD}"

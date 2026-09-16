@@ -1,0 +1,44 @@
+# Gate determinístico do porte Codex.
+#
+# ══ POR QUE ESTE ARQUIVO É O MAIS IMPORTANTE DA LEVA ═══════════════════════════════════════════
+# Guarda que não roda no CI é guarda que não existe. Até 2026-09-16 este repo não tinha script de
+# guarda nenhum; ganhou quatro no mesmo dia — e sem este workflow elas dependeriam de alguém
+# LEMBRAR de rodá-las, que é a forma mais confiável de uma guarda morrer em silêncio.
+#
+# Sem segredo, sem rede, sem modelo: é shell determinístico. Roda em qualquer CI, e é por isso que
+# o fosso do método está nesta metade — a que REPROVA, não a que aconselha.
+name: Onion Validate (Codex)
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: guardas determinísticas
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # A BANCADA VEM ANTES DO LINT, e a ordem é deliberada: ela prova que as guardas REAGEM.
+      # Um lint verde com bancada quebrada é verde que não vale nada — pode estar passando por
+      # estar cega. Primeiro se prova que a régua mede; depois se mede com ela.
+      - name: Bancada — as guardas reagem ao defeito que alegam pegar?
+        run: bash .codex/validation/lint-selftest.sh
+
+      - name: Lint — os artefatos deste repo passam?
+        run: bash .codex/validation/lint-artifacts.sh
+
+      - name: SSOT — o inventário gerado bate com o commitado?
+        run: |
+          bash .codex/validation/inventory.sh --markdown > /tmp/inv.md
+          if ! diff -q /tmp/inv.md docs/onion/inventory.md >/dev/null; then
+            echo "::error::docs/onion/inventory.md está defasado — rode: bash .codex/validation/inventory.sh --markdown > docs/onion/inventory.md"
+            diff -u docs/onion/inventory.md /tmp/inv.md || true
+            exit 1
+          fi
+          echo "SSOT em sincronia."
