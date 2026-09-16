@@ -1,6 +1,5 @@
 name = "clickup-specialist"
 description = "Especialista técnico em ClickUp MCP para automações avançadas e otimizações de performance. Use para operações técnicas ClickUp, bulk operations e workflows. Relacionado: @product-agent, @task-specialist."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

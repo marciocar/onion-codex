@@ -1,6 +1,5 @@
 name = "gamma-api-specialist"
 description = "Especialista em Gamma.App API para criação automatizada de apresentações e conteúdo com IA. Use para integrações técnicas e automações com Gamma. Relacionado: @presentation-orchestrator."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

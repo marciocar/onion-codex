@@ -118,7 +118,7 @@ CLI flags / --config
 ```toml
 # ~/.codex/config.toml
 
-model = "gpt-5.4"                    # Modelo padrão
+# (sem `model` — o Onion não fixa versão; ver a nota de despin abaixo)
 model_reasoning_effort = "high"      # low | medium | high | xhigh
 approval_policy = "untrusted"        # on-request | untrusted | never | granular
 sandbox_mode = "workspace-write"     # workspace-write | danger-full-access
@@ -206,10 +206,18 @@ prefix_rule(pattern=["npm", "run"], decision="prompt")
 
 | Nível | Quando usar | Modelo sugerido |
 |-------|------------|-----------------|
-| `low` | Tarefas rápidas, simples | `gpt-5.4-mini` |
-| `medium` | Trabalho balanceado (padrão) | `gpt-5.4` |
-| `high` | Raciocínio lógico complexo | `gpt-5.4` |
-| `xhigh` | Projetos agentic pesados | `gpt-5.5` |
+| `low` | Tarefas rápidas, simples |
+| `medium` | Trabalho balanceado (padrão) |
+| `high` | Raciocínio lógico complexo |
+| `xhigh` | Projetos agentic pesados |
+
+> **A coluna "modelo sugerido" foi REMOVIDA em 2026-09-16, e a remoção é a lição.** Ela mapeava
+> cada esforço a uma versão literal (`gpt-5.4`, `gpt-5.5`, `gpt-5.4-mini`) — números do catálogo
+> de 2026-06-04 que envelheceram em silêncio até quebrarem a partida do `@onion`. O esforço é
+> propriedade da TAREFA e sobrevive a qualquer lineup; a versão é propriedade do fornecedor e
+> muda a cada trimestre (a família GPT-5.6 saiu em 09/07/2026, um mês depois deste porte).
+> Se você precisar da tabela de modelos vigente, leia-a na fonte do fornecedor — não a
+> congele aqui.
 
 ---
 
@@ -278,7 +286,7 @@ Agentes especializados spawned para execução paralela:
 name = "explorer"
 description = "Read-heavy codebase exploration, no writes"
 developer_instructions = "Explore and summarize. Never modify files."
-model = "gpt-5.4-mini"
+# (sem `model`)
 model_reasoning_effort = "medium"
 sandbox_mode = "workspace-write"
 ```

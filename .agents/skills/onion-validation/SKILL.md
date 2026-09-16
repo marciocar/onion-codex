@@ -38,7 +38,7 @@ description: >
 | `developer_instructions` | corpo de comportamento (multi-line `"""..."""`) |
 
 ### Campos opcionais
-- `model` (`gpt-5.5`|`gpt-5.4`|`gpt-5.4-mini`)
+- `model_reasoning_effort` (`high`|`medium`|`low`) — e **ausência** de `model` (versão fixada reprova)
 - `model_reasoning_effort` (`high`|`medium`|`low`|`xhigh`)
 - `sandbox_mode` (`workspace-write` se edita arquivos)
 - blocos `[mcp_servers.<id>]` quando o subagente definir MCP próprio
@@ -47,7 +47,7 @@ description: >
 - [ ] `name` único, não colide com built-ins
 - [ ] `description` da especialização clara
 - [ ] `developer_instructions` presente e < 300 linhas
-- [ ] `model` mapeado corretamente (opus→gpt-5.5, sonnet→gpt-5.4, haiku→gpt-5.4-mini)
+- [ ] tier mapeado como ESFORÇO (opus→high, sonnet→medium, haiku→low) e **nenhum `model = "..."`** fixado
 - [ ] `sandbox_mode`/`mcp_servers` coerentes com o que o agente faz
 - [ ] Sem campos Claude-legados (`tools`, `color`, `priority`, `category`, `expertise`)
 

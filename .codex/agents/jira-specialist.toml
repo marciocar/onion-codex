@@ -1,6 +1,5 @@
 name = "jira-specialist"
 description = "Especialista técnico em Jira (Cloud e Server/DC) via REST API v3/v2 para automações avançadas, JQL otimizado, workflows com transitions, bulk operations e ADF. Use para operações técnicas Jira, queries JQL complexas e integrações. Relacionado: @product-agent, @task-specialist."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

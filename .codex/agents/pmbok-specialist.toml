@@ -1,6 +1,5 @@
 name = "pmbok-specialist"
 description = "Especialista em PMBOK Guide 7th Edition para documentação de governança de projetos. Use para change management, quality management, stakeholder e risk management."
-model = "gpt-5.4"
 model_reasoning_effort = "medium"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

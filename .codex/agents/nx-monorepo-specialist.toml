@@ -1,6 +1,5 @@
 name = "nx-monorepo-specialist"
 description = "Especialista em NX Monorepo para criação de libs/apps e estrutura enterprise. Use para arquitetura tier/scope/type e manutenção de monorepos NX."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

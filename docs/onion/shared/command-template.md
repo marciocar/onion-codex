@@ -14,7 +14,7 @@ name: nome-do-comando
 description: |
   Descrição clara em 1-2 linhas do propósito do comando.
   Use para [caso de uso principal].
-model: sonnet                    # sonnet | opus | gpt-4
+model_reasoning_effort: medium   # tier da TAREFA: high | medium | low (NUNCA versão de modelo)
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # PARÂMETROS (opcional)

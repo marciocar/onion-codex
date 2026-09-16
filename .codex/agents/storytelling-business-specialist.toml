@@ -1,6 +1,5 @@
 name = "storytelling-business-specialist"
 description = "Especialista em storytelling empresarial que transforma dados em narrativas impactantes."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

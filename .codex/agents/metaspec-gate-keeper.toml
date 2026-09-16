@@ -1,6 +1,7 @@
 name = "metaspec-gate-keeper"
 description = "Guardião do DNA arquitetural que valida alinhamento com metaspecs e princípios de design."
-model = "gpt-5.5"
+# tier: raciocinio-profundo (o porte fixava o modelo superior aqui; o marcador
+# sobrevive ao despin para que re-fixar nao exija redescobrir quem era)
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

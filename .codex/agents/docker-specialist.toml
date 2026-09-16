@@ -1,6 +1,5 @@
 name = "docker-specialist"
 description = "Especialista em Docker, containerização de apps Node.js/Next.js, Docker Compose e integração com PostgreSQL."
-model = "gpt-5.4"
 model_reasoning_effort = "medium"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

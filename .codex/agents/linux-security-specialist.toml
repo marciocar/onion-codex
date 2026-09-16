@@ -1,6 +1,5 @@
 name = "linux-security-specialist"
 description = "Especialista em segurança Linux para hardening, auditoria e resposta a incidentes. Use para firewall, SELinux/AppArmor, análise forense e conformidade de sistemas."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

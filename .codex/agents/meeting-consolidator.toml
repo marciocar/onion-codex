@@ -1,6 +1,5 @@
 name = "meeting-consolidator"
 description = "Especialista em consolidar, classificar, divergir e convergir múltiplas reuniões. Identifica principais pontos de atenção, insights estratégicos e pontos não ditos ou não compreendidos."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

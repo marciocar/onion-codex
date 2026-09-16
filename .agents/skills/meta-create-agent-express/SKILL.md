@@ -56,14 +56,15 @@ developer_instructions = """
 [Prompt do sistema detalhado com instruções claras]
 """
 # Opcionais:
-# model = "gpt-5.4"               # gpt-5.5 | gpt-5.4 | gpt-5.4-mini
+# (sem `model` — deliberado: a versão vem da conta/CLI, o agente só declara esforço)
 # model_reasoning_effort = "medium"
 # sandbox_mode = "workspace-write"
 # MCPs específicos devem ser configurados como blocos [mcp_servers.<id>].
 ```
 IMPORTANTE: a extensão do arquivo deve ser `.toml`, não `.yaml` nem `.md`.
 
-> **Mapeamento de modelo**: opus → `gpt-5.5`, sonnet → `gpt-5.4`, haiku → `gpt-5.4-mini`.
+> **Mapeamento de TIER**: opus → `model_reasoning_effort = "high"`, sonnet → `"medium"`, haiku → `"low"`.
+> (Antes isto apontava versões literais; o porte traduziu os apelidos de tier do Claude (`opus`/`sonnet`/`haiku`, que nunca caducam) em VERSÕES LITERAIS da OpenAI — e foi isso que venceu e quebrou a partida do `@onion` em 2026-09-16.)
 
 ### 6. Implementação
 - Crie o arquivo em `.codex/agents/[name-agent].toml`

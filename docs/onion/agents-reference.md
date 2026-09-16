@@ -8,6 +8,14 @@ Este guia documenta todos os subagentes especializados disponíveis no sistema `
 >
 > 🔧 **Campos do TOML**: `name`, `description`, `developer_instructions` (o prompt/persona do subagente) e os ajustes de runtime `model`, `model_reasoning_effort`, `sandbox_mode` e `mcp_servers`. O campo **Modelo** documentado abaixo mapeia para `model`; a **Prioridade** é uma convenção Onion que orienta `model_reasoning_effort`.
 
+> ⚠️ **Esta referência não publica mais o modelo de cada agente, e isso é desenho.**
+> Até 2026-09-16 cada entrada trazia `**Modelo**: gpt-5.4` — uma versão literal, copiada do
+> `.codex/agents/*.toml`, que caducou sem ninguém perceber e quebrou o `@onion` quando o modelo
+> saiu de circulação para a conta. Os agentes foram **despinados**: eles declaram
+> `model_reasoning_effort` (quanto raciocínio), e QUAL modelo é resolvido pela precedência do
+> Codex (flags > projeto > global > conta). Os que exigiam o tier superior carregam
+> **Tier: raciocínio profundo** — a informação sobreviveu ao despin, só a validade morreu.
+
 ## 📊 Resumo v3.0
 
 | Categoria | Agentes | Descrição |
@@ -40,7 +48,7 @@ Este guia documenta todos os subagentes especializados disponíveis no sistema `
 ## 🔵 Agentes de Desenvolvimento
 
 ### **python-developer**
-**Modelo**: gpt-5.4 | **Prioridade**: Alta | **Cor**: Blue
+**Prioridade**: Alta | **Cor**: Blue
 
 **Especialidades**: Python idiomático, AI/ML, backend, performance, type hints
 
@@ -75,7 +83,7 @@ Este guia documenta todos os subagentes especializados disponíveis no sistema `
 - 📦 Gerenciamento com `uv` (package manager moderno)
 
 ### **react-developer**
-**Modelo**: gpt-5.4 | **Prioridade**: Alta | **Cor**: Blue
+**Prioridade**: Alta | **Cor**: Blue
 
 **Especialidades**: React moderno, shadcn/ui, TypeScript, acessibilidade, performance
 
@@ -94,7 +102,7 @@ Este guia documenta todos os subagentes especializados disponíveis no sistema `
 - 🧪 Testing com React Testing Library
 
 ### **clickup-specialist**
-**Modelo**: gpt-5.4 | **Prioridade**: Alta | **Cor**: Orange
+**Prioridade**: Alta | **Cor**: Orange
 
 **Especialidades**: ClickUp MCP técnico, automações avançadas, performance, workflows
 
@@ -136,7 +144,7 @@ Este guia documenta todos os subagentes especializados disponíveis no sistema `
 ## 🔷 Agentes de Testes
 
 ### **test-engineer**
-**Modelo**: gpt-5.4 | **Prioridade**: Média | **Cor**: Cyan
+**Prioridade**: Média | **Cor**: Cyan
 
 **Especialidades**: Unit testing com Jest/Vitest, behavior verification, qualidade
 
@@ -162,7 +170,7 @@ Este guia documenta todos os subagentes especializados disponíveis no sistema `
 - 💡 Sugestões para melhorar testabilidade
 
 ### **test-planner**
-**Modelo**: gpt-5.4 | **Prioridade**: Média | **Cor**: Cyan
+**Prioridade**: Média | **Cor**: Cyan
 
 **Especialidades**: Planejamento de testes, análise de cobertura, estratégia de testes
 
@@ -177,7 +185,7 @@ Este guia documenta todos os subagentes especializados disponíveis no sistema `
 ## 🟢 Agentes de Review
 
 ### **code-reviewer**
-**Modelo**: gpt-5.5 | **Prioridade**: Alta | **Cor**: Green
+**Tier**: raciocínio profundo | **Prioridade**: Alta | **Cor**: Green
 
 **Especialidades**: Code review, melhores práticas, detecção de bugs, manutenibilidade
 
@@ -207,7 +215,7 @@ Este guia documenta todos os subagentes especializados disponíveis no sistema `
 ## 🟣 Agentes de Pesquisa
 
 ### **research-agent**
-**Modelo**: gpt-5.4 | **Prioridade**: Alta | **Cor**: Purple
+**Prioridade**: Alta | **Cor**: Purple
 
 **Especialidades**: Pesquisa multi-fonte, web search, Context7, análise semântica
 
@@ -237,7 +245,7 @@ Este guia documenta todos os subagentes especializados disponíveis no sistema `
 ## 🔴 Agentes de Arquitetura
 
 ### **metaspec-gate-keeper**
-**Modelo**: gpt-5.5 | **Prioridade**: Alta | **Cor**: Red
+**Tier**: raciocínio profundo | **Prioridade**: Alta | **Cor**: Red
 
 **Especialidades**: Integridade arquitetural, metaspecs, design principles, validação
 
@@ -267,7 +275,7 @@ Este guia documenta todos os subagentes especializados disponíveis no sistema `
 ## 🟠 Agentes de Documentação
 
 ### **documentation-writer**
-**Modelo**: gpt-5.4 | **Prioridade**: Média | **Cor**: Orange
+**Prioridade**: Média | **Cor**: Orange
 
 **Especialidades**: Documentação técnica, análise de mudanças, sincronização docs-código
 
@@ -290,7 +298,7 @@ Este guia documenta todos os subagentes especializados disponíveis no sistema `
 ## 🛡️ Agentes de Compliance 🆕
 
 ### **security-information-master**
-**Modelo**: gpt-5.4 | **Prioridade**: Alta | **Cor**: Blue
+**Prioridade**: Alta | **Cor**: Blue
 
 **Especialidades**: Orquestração de compliance, detecção de frameworks, due diligence, ISO 27001, ISO 22301, PMBOK, SOC2
 
@@ -333,7 +341,7 @@ Este guia documenta todos os subagentes especializados disponíveis no sistema `
 ---
 
 ### **iso-27001-specialist**
-**Modelo**: gpt-5.4 | **Prioridade**: Alta | **Cor**: Red
+**Prioridade**: Alta | **Cor**: Red
 
 **Especialidades**: ISO/IEC 27001:2022 (ISMS), risk assessment, asset management, access control, incident response
 
@@ -375,7 +383,7 @@ Este guia documenta todos os subagentes especializados disponíveis no sistema `
 ---
 
 ### **iso-22301-specialist**
-**Modelo**: gpt-5.4 | **Prioridade**: Alta | **Cor**: Green
+**Prioridade**: Alta | **Cor**: Green
 
 **Especialidades**: ISO 22301:2019 (BCMS), business continuity, disaster recovery, RTOs/RPOs, crisis management
 
@@ -417,7 +425,7 @@ Este guia documenta todos os subagentes especializados disponíveis no sistema `
 ---
 
 ### **pmbok-specialist**
-**Modelo**: gpt-5.4 | **Prioridade**: Média | **Cor**: Yellow
+**Prioridade**: Média | **Cor**: Yellow
 
 **Especialidades**: PMBOK Guide 7th Edition, project governance, change management, quality management
 
@@ -459,7 +467,7 @@ Este guia documenta todos os subagentes especializados disponíveis no sistema `
 ---
 
 ### **soc2-specialist**
-**Modelo**: gpt-5.4 | **Prioridade**: Alta | **Cor**: Purple
+**Prioridade**: Alta | **Cor**: Purple
 
 **Especialidades**: SOC2 Type II (AICPA), Trust Services Criteria, evidence collection, continuous monitoring
 
@@ -519,7 +527,7 @@ Este guia documenta todos os subagentes especializados disponíveis no sistema `
 ## 🟡 Agentes de Produto
 
 ### **product-agent**
-**Modelo**: gpt-5.5 | **Prioridade**: Alta | **Cor**: Yellow
+**Tier**: raciocínio profundo | **Prioridade**: Alta | **Cor**: Yellow
 
 **Especialidades**: Gestão de produto, ClickUp integration, estratégia, coordenação
 
@@ -538,7 +546,7 @@ Este guia documenta todos os subagentes especializados disponíveis no sistema `
 -  Gerencia tags e prioridades
 
 ### **clickup-specialist**
-**Modelo**: gpt-5.4 | **Prioridade**: Alta | **Cor**: Orange
+**Prioridade**: Alta | **Cor**: Orange
 
 **Especialidades**: ClickUp MCP técnico, automações avançadas, performance, workflows
 
@@ -572,7 +580,7 @@ Este guia documenta todos os subagentes especializados disponíveis no sistema `
 - 🎯 **7 especialidades técnicas**: workflow-automation, performance-optimization, webhooks
 
 ### **codex-specialist**
-**Modelo**: gpt-5.4 | **Prioridade**: Alta | **Cor**: Light Blue
+**Prioridade**: Alta | **Cor**: Light Blue
 
 **Especialidades**: Otimização Codex, configuração workspace, troubleshooting, produtividade
 
@@ -606,7 +614,7 @@ Este guia documenta todos os subagentes especializados disponíveis no sistema `
 - 🔗 **Delegation automática**: Integração com comandos `/engineer/*` para setup de ambiente
 
 ### **gitflow-specialist**
-**Modelo**: gpt-5.4 | **Prioridade**: Alta | **Cor**: Light Green
+**Prioridade**: Alta | **Cor**: Light Green
 
 **Especialidades**: GitFlow workflows, branch management, release processes, team collaboration, semantic versioning
 
@@ -647,7 +655,7 @@ Este guia documenta todos os subagentes especializados disponíveis no sistema `
 - 🔗 **Complementaridade**: Integração perfeita com @mermaid-specialist (workflows vs diagramas)
 
 ### **nodejs-specialist**
-**Modelo**: gpt-5.4 | **Prioridade**: Alta | **Cor**: Teal
+**Prioridade**: Alta | **Cor**: Teal
 
 **Especialidades**: Backend JavaScript/TypeScript, Node.js runtime, PNPM ecosystem, performance optimization
 
@@ -684,7 +692,7 @@ Este guia documenta todos os subagentes especializados disponíveis no sistema `
 - 🏗️ **Architecture patterns**: Layered design, dependency injection, microservices
 
 ### **gitflow-specialist**
-**Modelo**: gpt-5.4 | **Prioridade**: Alta | **Cor**: Light Green
+**Prioridade**: Alta | **Cor**: Light Green
 
 **Especialidades**: GitFlow workflows, branch management, release processes, team collaboration, semantic versioning
 
@@ -796,15 +804,15 @@ $engineer-work "sistema completo de e-commerce"
 # → Coordenação automática de múltiplos agentes
 ```
 
-### **Por Prioridade do Modelo**
+### **Por Tier de Raciocínio**
 
-#### **🚀 gpt-5.4 (Eficiência)**
+#### **🚀 esforço `medium` (Eficiência)**
 - `python-developer`, `react-developer`, `test-engineer`, `research-agent`
 -  Tarefas de implementação diretas
 -  Testes e validações
 -  Pesquisa e documentação
 
-#### **🎯 gpt-5.5 (Análise Complexa)**
+#### **🎯 esforço `high` (Análise Complexa)**
 - `code-reviewer`, `metaspec-gate-keeper`, `product-agent`
 -  Decisões arquiteturais críticas
 -  Reviews complexos

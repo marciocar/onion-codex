@@ -1,6 +1,5 @@
 name = "docs-reverse-engineer"
 description = "Especialista em engenharia reversa de projetos para análise estrutural e documentação. Use para detecção de stack e geração de docs consolidada de qualquer projeto."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

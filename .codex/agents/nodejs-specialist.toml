@@ -1,6 +1,5 @@
 name = "nodejs-specialist"
 description = "Especialista em backend Node.js/TypeScript com PNPM e performance optimization. Use para APIs complexas, configurações backend e otimizações Node.js."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

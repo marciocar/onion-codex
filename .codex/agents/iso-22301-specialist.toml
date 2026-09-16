@@ -1,6 +1,5 @@
 name = "iso-22301-specialist"
 description = "Especialista em ISO 22301:2019 (BCMS) para documentação de continuidade de negócios. Use para disaster recovery, crisis management, BCP/DRP e RTOs/RPOs."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

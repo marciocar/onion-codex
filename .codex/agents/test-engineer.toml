@@ -1,6 +1,5 @@
 name = "test-engineer"
 description = "Especialista em testes unitários práticos que verifica comportamento real. Use para implementação de testes e verificação de qualidade de código."
-model = "gpt-5.4"
 model_reasoning_effort = "medium"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

@@ -1,6 +1,5 @@
 name = "agent-skills-specialist"
 description = "Especialista em Agent Skills — formato aberto para estender capacidades de agentes IA. Use para criar, validar, otimizar e avaliar skills em .agents/skills/ (Codex / cross-client)."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''

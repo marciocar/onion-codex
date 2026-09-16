@@ -155,6 +155,6 @@ write docs/analysis/[slug]-analysis.md
 
 ## ⚠️ Notas
 
-- Use model `gpt-5.5` para análises complexas
+- Use `model_reasoning_effort = "high"` para análises complexas (tier, não versão)
 - Tempo médio: 10-30 minutos
 - Sempre validar decisões com stakeholders

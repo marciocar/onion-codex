@@ -1,6 +1,5 @@
 name = "branch-metaspec-checker"
 description = "Especialista em validação de conformidade com metaspecs para o branch atual. Use para garantir alinhamento arquitetural antes do merge."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 developer_instructions = '''
 # Pré-PR

@@ -1,6 +1,5 @@
 name = "c4-architecture-specialist"
 description = "Especialista em arquitetura C4 Model (Context, Containers, Components) com Mermaid. Use para análise e diagramas de arquitetura de projetos TypeScript/JavaScript."
-model = "gpt-5.4"
 model_reasoning_effort = "high"
 sandbox_mode = "workspace-write"
 developer_instructions = '''
