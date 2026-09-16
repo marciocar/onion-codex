@@ -9,7 +9,7 @@ Bem-vindo ao índice da documentação do **Sistema Onion**. Este documento orga
 ## 🎯 Visão Geral
 
 O **Sistema Onion** é um **framework template em `.codex/`** — instalável em qualquer projeto (novo, legado ou regulado), plataforma única Codex, sem produto npm e sem CLI standalone. Inclui:
-- 🤖 **78 skills invocáveis** Codex (`$slug`) em 9 categorias
+- 🤖 **82 skills invocáveis** Codex (`$slug`) em 9 categorias
 - 🎯 **49 subagentes de IA especializados** em 9 categorias
 - 🧩 **4 skills núcleo** em `.agents/skills/` (`onion`, `onion-patterns`, `onion-validation`, `language-standards`)
 - 🧅 **Skill `$onion`** — ponto de entrada inteligente
@@ -21,7 +21,7 @@ O **Sistema Onion** é um **framework template em `.codex/`** — instalável em
 ## 📊 Estatísticas
 
 - **11 documentos** em `docs/onion/`
-- **78 skills invocáveis** Codex em `.agents/skills/`
+- **82 skills invocáveis** Codex em `.agents/skills/`
 - **49 subagentes** IA em `.codex/agents/`
 - **4 skills núcleo** em `.agents/skills/`
 
@@ -34,7 +34,7 @@ O **Sistema Onion** é um **framework template em `.codex/`** — instalável em
 **Comece aqui se você é novo no Sistema Onion:**
 
 1. **[Guia de Skills](commands-guide.md)** - Documentação das skills disponíveis
-   - 78 skills invocáveis em 9 categorias
+   - 82 skills invocáveis em 9 categorias
    - Exemplos de uso e workflows
    - Integrações com Task Managers
 
