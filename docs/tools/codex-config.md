@@ -6,7 +6,7 @@
 |---|---|---|
 | `.codex/config.toml` | Configuracao de modelo, sandbox, approvals, features e MCP templates | TOML valido |
 | `AGENTS.md` | Constituicao operacional do projeto para Codex | 10.949 bytes, dentro de `project_doc_max_bytes = 32768` |
-| `.codex/hooks.json` | Hooks de ciclo de vida | JSON valido |
+| `.codex/hooks.json` | Hooks de ciclo de vida | Objeto com `hooks` no topo (guarda R-HOOKS) |
 | `.codex/rules/default.rules` | Regras Starlark de permissao de shell | 6 regras declaradas |
 
 ## Configuracao Ativa

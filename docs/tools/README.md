@@ -12,7 +12,7 @@ Este diretorio documenta o toolset real do Sistema Onion no Codex. Ele separa re
 | Skills | 82 skills em `.agents/skills/*/SKILL.md` |
 | Subagentes | 49 subagentes em `.codex/agents/*.toml` |
 | Playbooks | 31 playbooks detalhados em `docs/knowledge-base/agents/` |
-| Hooks | `.codex/hooks.json` parseia como JSON valido |
+| Hooks | `.codex/hooks.json` na forma `{"hooks": {...}}` (guarda R-HOOKS em `.codex/validation/`) |
 | Rules | 6 `prefix_rule()` em `.codex/rules/default.rules` |
 | MCPs | Templates comentados; ativacao depende de `.env` e credenciais |
 
