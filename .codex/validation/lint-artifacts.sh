@@ -130,6 +130,42 @@ for _ag in "${REPO}"/.codex/agents/*.toml; do
   grep -qE '^name = ' "${_ag}" || violation "${_ag#"${REPO}/"}" "R-FORMA: agente sem 'name' — não há como invocá-lo"
 done
 
+# ── R-HOOKS ───────────────────────────────────────────────────────────────────────────────────
+# `.codex/hooks.json` tem de ser um OBJETO com a chave `hooks` no topo, e o topo só aceita
+# `hooks` e `description` (doc oficial, learn.chatgpt.com/docs/hooks, lida em 2026-10-26:
+# "`description` is optional top-level metadata for a `hooks.json` file"; os eventos vivem
+# DENTRO de `hooks`). Nasceu de defeito medido: até 2026-10-26 o arquivo começava direto em
+# "SessionStart". Era JSON VÁLIDO — e a checagem da migração ("parseia como JSON válido") dava
+# verde —, mas o Codex 0.164.0 o recusava (`unknown field 'SessionStart', expected
+# 'description' or 'hooks'`), saía 0 e seguia SEM hook: o SessionStart do porte nunca rodou.
+# Parsear não é ser aceito; a guarda julga a FORMA que o consumidor exige.
+# Fora do escopo (declarado): o NOME dos eventos sob `hooks` não é julgado — a lista do Codex
+# cresce, e guarda por lista falha pelo vocabulário.
+_hj="${REPO}/.codex/hooks.json"
+if [ -f "${_hj}" ]; then
+  _hmsg="$(python3 - "${_hj}" <<'PY' 2>&1
+import json, sys
+FORMA = 'a forma certa é {"hooks": {"SessionStart": [...], ...}} (topo aceita só "hooks" e "description" opcional)'
+try:
+    d = json.load(open(sys.argv[1], encoding="utf-8"))
+except Exception as e:
+    print(f"JSON INVÁLIDO ({e}) — {FORMA}"); sys.exit(1)
+if not isinstance(d, dict):
+    print(f"o topo não é objeto — {FORMA}"); sys.exit(1)
+extra = sorted(set(d) - {"hooks", "description"})
+if extra:
+    print(f"chave(s) de topo não aceitas pelo Codex: {', '.join(extra)} — {FORMA}"); sys.exit(1)
+if not isinstance(d.get("hooks"), dict):
+    print(f"falta o objeto 'hooks' no topo — {FORMA}"); sys.exit(1)
+bad = [k for k, v in d["hooks"].items() if not isinstance(v, list)]
+if bad:
+    print(f"evento(s) cujo valor não é lista: {', '.join(bad)} — {FORMA}"); sys.exit(1)
+PY
+)"
+  _hrc=$?
+  [ "${_hrc}" -ne 0 ] && violation ".codex/hooks.json" "R-HOOKS: ${_hmsg:-python3 não respondeu — falha FECHADA}. Fora da forma o Codex recusa o arquivo, sai 0 e roda SEM hook."
+fi
+
 echo "=== Sumário ==="
 echo "  Violações HARD : ${HARD}"
 [ "${HARD}" -eq 0 ] && { echo "OK ✓ — nenhuma violação HARD."; exit 0; }

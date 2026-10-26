@@ -101,6 +101,26 @@ out="$(_saida "$d/.codex/validation/lint-artifacts.sh")"
 if printf '%s' "${out}" | grep -q 'R-LINK não pode julgar'; then ok "(k) sem baseline o R-LINK falha FECHADA"
 else bad "(k) sem baseline o R-LINK passou em silêncio — fail-open"; fi
 
+# (l) MUTANTE R-HOOKS — a forma ANTIGA do porte (eventos no topo, sem `hooks`). É JSON válido,
+#     e foi por isso que passou desde a migração de 2026-06-04: o Codex 0.164.0 a recusa e roda sem hook.
+printf '{"SessionStart": [{"hooks": [{"type": "command", "command": "true"}]}]}\n' > "$d/.codex/hooks.json"
+out="$(_saida "$d/.codex/validation/lint-artifacts.sh")"
+if printf '%s' "${out}" | grep -q 'R-HOOKS'; then ok "(l) R-HOOKS pega evento no topo sem a chave 'hooks'"
+else bad "(l) R-HOOKS NÃO pegou a forma antiga — a guarda está morta"; fi
+
+# (m) MUTANTE R-HOOKS — chave de topo fora do que a doc aceita, mesmo com `hooks` presente
+printf '{"hooks": {}, "versao": 1}\n' > "$d/.codex/hooks.json"
+out="$(_saida "$d/.codex/validation/lint-artifacts.sh")"
+if printf '%s' "${out}" | grep -q 'R-HOOKS'; then ok "(m) R-HOOKS pega chave de topo não aceita"
+else bad "(m) R-HOOKS NÃO pegou chave de topo estranha"; fi
+
+# (n) POSITIVO R-HOOKS — a forma da doc, com `description` opcional, NÃO pode reprovar
+printf '{"description": "x", "hooks": {"SessionStart": [{"hooks": [{"type": "command", "command": "true"}]}]}}\n' > "$d/.codex/hooks.json"
+out="$(_saida "$d/.codex/validation/lint-artifacts.sh")"
+if printf '%s' "${out}" | grep -q 'R-HOOKS'; then bad "(n) R-HOOKS acusou a forma certa (falso positivo)"
+else ok "(n) R-HOOKS aceita {description?, hooks: {...}}"; fi
+rm -f "$d/.codex/hooks.json"
+
 rm -rf "$d"
 
 echo "=== Sumário ==="; echo "  Passaram: ${PASS} · Falharam: ${FAIL}"
