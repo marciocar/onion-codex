@@ -1,14 +1,16 @@
 {
-  "SessionStart": [
-    {
-      "hooks": [
-        {
-          "type": "command",
-          "command": "python .codex/hooks/session-start-provider.py",
-          "timeout": 5,
-          "statusMessage": "Detectando Task Manager provider (Onion)"
-        }
-      ]
-    }
-  ]
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .codex/hooks/session-start-provider.py",
+            "timeout": 5,
+            "statusMessage": "Detectando Task Manager provider (Onion)"
+          }
+        ]
+      }
+    ]
+  }
 }

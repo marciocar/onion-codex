@@ -13,7 +13,7 @@ Este é o **Sistema Onion** — um **framework template em `.codex/` + `.agents/
 
 **Inventário atual**:
 
-- ~92 skills invocáveis por categoria (`product`, `git`, `engineer`, `docs`, `meta`, `validate`, `test`, `development`, `quick`) — invocadas por `$skill-slug` ou `/skills`; fragmentos compartilhados em `docs/onion/shared/`
+- 82 skills invocáveis por categoria (`product`, `git`, `engineer`, `docs`, `meta`, `validate`, `test`, `development`, `quick`) — invocadas por `$skill-slug` ou `/skills`; fragmentos compartilhados em `docs/onion/shared/`
 - 49 subagentes especializados em `.codex/agents/*.toml` (9 domínios: `compliance`, `deployment`, `development`, `git`, `meta`, `product`, `research`, `review`, `testing`)
 - 4 skills-base em `.agents/skills/` (`onion` — orquestrador; `onion-patterns`; `onion-validation`; `language-standards`)
 - **Task Manager Abstraction** plugável (Jira, ClickUp, Asana, Linear) via `.agents/skills/task-manager/references/`
